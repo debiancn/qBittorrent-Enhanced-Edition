@@ -1,0 +1,4 @@
+version=4
+opts="filenamemangle=s%(?:.*?)?release-(\d[\d.]*)\.tar\.gz%qbittorrent-enhanced-$1.tar.gz%" \
+   https://github.com/c0re100/qBittorrent-Enhanced-Edition/tags \
+   (?:.*?/)release-(\d[\d.]*)\.tar\.gz debian uupdate

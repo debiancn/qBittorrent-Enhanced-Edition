@@ -1,0 +1,19 @@
+Description: Let the build system honor flags obtained through dpkg-buildflags.
+Origin: vendor
+Forwarded: no
+Author: Cristian Greco <cristian@debian.org>
+
+--- a/unixconf.pri
++++ b/unixconf.pri
+@@ -12,8 +12,9 @@
+ # COMPILATION SPECIFIC
+ !nogui:dbus: QT += dbus
+ 
+-QMAKE_CXXFLAGS += -Wall -Wextra -Wpedantic -Wformat-security
+-!haiku: QMAKE_LFLAGS_APP += -rdynamic
++QMAKE_CXXFLAGS += -Wall -Wextra -Wpedantic -Wformat-security $$(CXXFLAGS) $$(CPPFLAGS)
++QMAKE_LFLAGS_RELEASE += $$(LDFLAGS)
++!haiku: QMAKE_LFLAGS_APP += -rdynamic $$(LDFLAGS)
+ 
+ # Man page
+ nogui {
