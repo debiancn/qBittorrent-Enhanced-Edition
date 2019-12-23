@@ -29,9 +29,13 @@
 #include "transfercontroller.h"
 
 #include <QJsonObject>
+#include <QVector>
 
-#include "base/logger.h"
+#include "base/bittorrent/peeraddress.h"
+#include "base/bittorrent/peerinfo.h"
 #include "base/bittorrent/session.h"
+#include "base/global.h"
+#include "apierror.h"
 
 const char KEY_TRANSFER_DLSPEED[] = "dl_info_speed";
 const char KEY_TRANSFER_DLDATA[] = "dl_info_data";
@@ -86,7 +90,7 @@ void TransferController::downloadLimitAction()
 
 void TransferController::setUploadLimitAction()
 {
-    checkParams({"limit"});
+    requireParams({"limit"});
     qlonglong limit = params()["limit"].toLongLong();
     if (limit == 0) limit = -1;
 
@@ -95,7 +99,7 @@ void TransferController::setUploadLimitAction()
 
 void TransferController::setDownloadLimitAction()
 {
-    checkParams({"limit"});
+    requireParams({"limit"});
     qlonglong limit = params()["limit"].toLongLong();
     if (limit == 0) limit = -1;
 
@@ -113,36 +117,14 @@ void TransferController::speedLimitsModeAction()
     setResult(QString::number(BitTorrent::Session::instance()->isAltGlobalSpeedLimitEnabled()));
 }
 
-void TransferController::tempblockPeerAction()
+void TransferController::banPeersAction()
 {
-    checkParams({"ip"});
-    QString ip = params()["ip"];
-    boost::system::error_code ec;
-    boost::asio::ip::address addr = boost::asio::ip::address::from_string(ip.toStdString(), ec);
-    bool isBanned = BitTorrent::Session::instance()->checkAccessFlags(QString::fromStdString(addr.to_string()));
+    requireParams({"peers"});
 
-    if (ip.isEmpty()) {
-        setResult(QLatin1String("IP field should not be empty."));
-        return;
+    const QStringList peers = params()["peers"].split('|');
+    for (const QString &peer : peers) {
+        const BitTorrent::PeerAddress addr = BitTorrent::PeerAddress::parse(peer.trimmed());
+        if (!addr.ip.isNull())
+            BitTorrent::Session::instance()->banIP(addr.ip.toString());
     }
-
-    if (ec) {
-        setResult(QLatin1String("The given IP address is not valid."));
-        return;
-    }
-
-    if (isBanned) {
-        setResult(QLatin1String("The given IP address already exists."));
-        return;
-    }
-
-    BitTorrent::Session::instance()->tempblockIP(ip);
-    Logger::instance()->addMessage(tr("Peer '%1' banned via Web API.").arg(ip));
-    setResult(QLatin1String("Done."));
-}
-
-void TransferController::resetIPFilterAction()
-{
-    BitTorrent::Session::instance()->eraseIPFilter();
-    setResult(QLatin1String("Erased."));
 }

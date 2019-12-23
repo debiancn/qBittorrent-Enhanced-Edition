@@ -28,50 +28,37 @@
 
 #include "misc.h"
 
-#include <boost/version.hpp>
-#include <libtorrent/version.hpp>
-
 #ifdef Q_OS_WIN
 #include <windows.h>
+#include <powrprof.h>
 #include <Shlobj.h>
 #else
 #include <sys/types.h>
 #include <unistd.h>
 #endif
 
-#ifdef Q_OS_MAC
-#include <CoreServices/CoreServices.h>
+#ifdef Q_OS_MACOS
 #include <Carbon/Carbon.h>
+#include <CoreServices/CoreServices.h>
 #endif
 
-#include <QByteArray>
-#include <QDebug>
-#include <QFileInfo>
-#include <QProcess>
-#include <QRegularExpression>
-#include <QSysInfo>
-#include <QUrl>
+#include <boost/version.hpp>
+#include <openssl/opensslv.h>
+#include <libtorrent/version.hpp>
+#include <zlib.h>
 
-#ifdef DISABLE_GUI
 #include <QCoreApplication>
-#else
-#include <QApplication>
-#include <QDesktopServices>
-#include <QDesktopWidget>
-#include <QStyle>
-#if (defined(Q_OS_UNIX) && !defined(Q_OS_MAC)) && defined(QT_DBUS_LIB)
-#include <QDBusInterface>
-#include <QDBusMessage>
-#endif
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-#include "base/utils/version.h"
-#endif
-#endif // DISABLE_GUI
+#include <QRegularExpression>
+#include <QSet>
+#include <QSysInfo>
 
-#include "base/logger.h"
+#if (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)) && defined(QT_DBUS_LIB)
+#include <QDBusInterface>
+#endif
+
+#include "base/types.h"
 #include "base/unicodestrings.h"
 #include "base/utils/string.h"
-#include "fs.h"
 
 namespace
 {
@@ -95,13 +82,13 @@ namespace
         if (sizeInBytes < 0) return false;
 
         int i = 0;
-        qreal rawVal = static_cast<qreal>(sizeInBytes);
+        val = static_cast<qreal>(sizeInBytes);
 
-        while ((rawVal >= 1024.) && (i <= static_cast<int>(Utils::Misc::SizeUnit::ExbiByte))) {
-            rawVal /= 1024.;
+        while ((val >= 1024.) && (i <= static_cast<int>(Utils::Misc::SizeUnit::ExbiByte))) {
+            val /= 1024.;
             ++i;
         }
-        val = rawVal;
+
         unit = static_cast<Utils::Misc::SizeUnit>(i);
         return true;
     }
@@ -131,16 +118,11 @@ void Utils::Misc::shutdownComputer(const ShutdownDialogAction &action)
     if (GetLastError() != ERROR_SUCCESS)
         return;
 
-    using PSETSUSPENDSTATE = BOOLEAN (WINAPI *)(BOOLEAN, BOOLEAN, BOOLEAN);
-    const auto setSuspendState = Utils::Misc::loadWinAPI<PSETSUSPENDSTATE>("PowrProf.dll", "SetSuspendState");
-
     if (action == ShutdownDialogAction::Suspend) {
-        if (setSuspendState)
-            setSuspendState(false, false, false);
+        ::SetSuspendState(false, false, false);
     }
     else if (action == ShutdownDialogAction::Hibernate) {
-        if (setSuspendState)
-            setSuspendState(true, false, false);
+        ::SetSuspendState(true, false, false);
     }
     else {
         const QString msg = QCoreApplication::translate("misc", "qBittorrent will shutdown the computer now because all downloads are complete.");
@@ -153,7 +135,7 @@ void Utils::Misc::shutdownComputer(const ShutdownDialogAction &action)
     tkp.Privileges[0].Attributes = 0;
     AdjustTokenPrivileges(hToken, FALSE, &tkp, 0, (PTOKEN_PRIVILEGES) NULL, 0);
 
-#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_MACOS)
     AEEventID EventToSend;
     if (action != ShutdownDialogAction::Shutdown)
         EventToSend = kAESleep;
@@ -245,19 +227,6 @@ void Utils::Misc::shutdownComputer(const ShutdownDialogAction &action)
 #endif
 }
 
-#ifndef DISABLE_GUI
-QPoint Utils::Misc::screenCenter(const QWidget *w)
-{
-    // Returns the QPoint which the widget will be placed center on screen (where parent resides)
-
-    QWidget *parent = w->parentWidget();
-    QDesktopWidget *desktop = QApplication::desktop();
-    int scrn = desktop->screenNumber(parent);  // fallback to `primaryScreen` when parent is invalid
-    QRect r = desktop->availableGeometry(scrn);
-    return QPoint(r.x() + (r.width() - w->frameSize().width()) / 2, r.y() + (r.height() - w->frameSize().height()) / 2);
-}
-#endif
-
 QString Utils::Misc::unitString(const SizeUnit unit, const bool isSpeed)
 {
     const auto &unitString = units[static_cast<int>(unit)];
@@ -267,7 +236,7 @@ QString Utils::Misc::unitString(const SizeUnit unit, const bool isSpeed)
     return ret;
 }
 
-QString Utils::Misc::friendlyUnit(qint64 bytesValue, bool isSpeed)
+QString Utils::Misc::friendlyUnit(const qint64 bytesValue, const bool isSpeed)
 {
     SizeUnit unit;
     qreal friendlyVal;
@@ -278,16 +247,23 @@ QString Utils::Misc::friendlyUnit(qint64 bytesValue, bool isSpeed)
            + unitString(unit, isSpeed);
 }
 
-int Utils::Misc::friendlyUnitPrecision(SizeUnit unit)
+int Utils::Misc::friendlyUnitPrecision(const SizeUnit unit)
 {
     // friendlyUnit's number of digits after the decimal point
-    if (unit == SizeUnit::Byte) return 0;
-    if (unit <= SizeUnit::MebiByte) return 1;
-    else if (unit == SizeUnit::GibiByte) return 2;
-    else return 3;
+    switch (unit) {
+    case SizeUnit::Byte:
+        return 0;
+    case SizeUnit::KibiByte:
+    case SizeUnit::MebiByte:
+        return 1;
+    case SizeUnit::GibiByte:
+        return 2;
+    default:
+        return 3;
+    }
 }
 
-qlonglong Utils::Misc::sizeInBytes(qreal size, Utils::Misc::SizeUnit unit)
+qlonglong Utils::Misc::sizeInBytes(qreal size, const Utils::Misc::SizeUnit unit)
 {
     for (int i = 0; i < static_cast<int>(unit); ++i)
         size *= 1024;
@@ -343,11 +319,11 @@ bool Utils::Misc::isPreviewable(const QString &extension)
     return multimediaExtensions.contains(extension.toUpper());
 }
 
-// Take a number of seconds and return an user-friendly
-// time duration like "1d 2h 10m".
-QString Utils::Misc::userFriendlyDuration(qlonglong seconds)
+QString Utils::Misc::userFriendlyDuration(const qlonglong seconds, const qlonglong maxCap)
 {
-    if ((seconds < 0) || (seconds >= MAX_ETA))
+    if (seconds < 0)
+        return QString::fromUtf8(C_INFINITY);
+    if ((maxCap >= 0) && (seconds >= maxCap))
         return QString::fromUtf8(C_INFINITY);
 
     if (seconds == 0)
@@ -356,21 +332,25 @@ QString Utils::Misc::userFriendlyDuration(qlonglong seconds)
     if (seconds < 60)
         return QCoreApplication::translate("misc", "< 1m", "< 1 minute");
 
-    qlonglong minutes = seconds / 60;
+    qlonglong minutes = (seconds / 60);
     if (minutes < 60)
         return QCoreApplication::translate("misc", "%1m", "e.g: 10minutes").arg(QString::number(minutes));
 
-    qlonglong hours = minutes / 60;
-    minutes -= hours * 60;
-    if (hours < 24)
+    qlonglong hours = (minutes / 60);
+    if (hours < 24) {
+        minutes -= (hours * 60);
         return QCoreApplication::translate("misc", "%1h %2m", "e.g: 3hours 5minutes").arg(QString::number(hours), QString::number(minutes));
+    }
 
-    qlonglong days = hours / 24;
-    hours -= days * 24;
-    if (days < 100)
+    qlonglong days = (hours / 24);
+    if (days < 365) {
+        hours -= (days * 24);
         return QCoreApplication::translate("misc", "%1d %2h", "e.g: 2days 10hours").arg(QString::number(days), QString::number(hours));
+    }
 
-    return QString::fromUtf8(C_INFINITY);
+    qlonglong years = (days / 365);
+    days -= (years * 365);
+    return QCoreApplication::translate("misc", "%1y %2d", "e.g: 2years 10days").arg(QString::number(years), QString::number(days));
 }
 
 QString Utils::Misc::getUserIDString()
@@ -386,38 +366,6 @@ QString Utils::Misc::getUserIDString()
     uid = QString::number(getuid());
 #endif
     return uid;
-}
-
-QStringList Utils::Misc::toStringList(const QList<bool> &l)
-{
-    QStringList ret;
-    for (const bool b : l)
-        ret << (b ? "1" : "0");
-    return ret;
-}
-
-QList<int> Utils::Misc::intListfromStringList(const QStringList &l)
-{
-    QList<int> ret;
-    for (const QString &s : l)
-        ret << s.toInt();
-    return ret;
-}
-
-QList<bool> Utils::Misc::boolListfromStringList(const QStringList &l)
-{
-    QList<bool> ret;
-    for (const QString &s : l)
-        ret << (s == "1");
-    return ret;
-}
-
-bool Utils::Misc::isUrl(const QString &s)
-{
-    static const QRegularExpression reURLScheme(
-                "http[s]?|ftp", QRegularExpression::CaseInsensitiveOption);
-
-    return reURLScheme.match(QUrl(s).scheme()).hasMatch();
 }
 
 QString Utils::Misc::parseHtmlLinks(const QString &rawText)
@@ -482,73 +430,6 @@ QString Utils::Misc::parseHtmlLinks(const QString &rawText)
     return result;
 }
 
-#ifndef DISABLE_GUI
-// Open the given path with an appropriate application
-void Utils::Misc::openPath(const QString &absolutePath)
-{
-    const QString path = Utils::Fs::fromNativePath(absolutePath);
-    // Hack to access samba shares with QDesktopServices::openUrl
-    if (path.startsWith("//"))
-        QDesktopServices::openUrl(Utils::Fs::toNativePath("file:" + path));
-    else
-        QDesktopServices::openUrl(QUrl::fromLocalFile(path));
-}
-
-// Open the parent directory of the given path with a file manager and select
-// (if possible) the item at the given path
-void Utils::Misc::openFolderSelect(const QString &absolutePath)
-{
-    const QString path = Utils::Fs::fromNativePath(absolutePath);
-    // If the item to select doesn't exist, try to open its parent
-    if (!QFileInfo::exists(path)) {
-        openPath(path.left(path.lastIndexOf('/')));
-        return;
-    }
-#ifdef Q_OS_WIN
-    HRESULT hresult = ::CoInitializeEx(nullptr, COINIT_MULTITHREADED);
-    PIDLIST_ABSOLUTE pidl = ::ILCreateFromPathW(reinterpret_cast<PCTSTR>(Utils::Fs::toNativePath(path).utf16()));
-    if (pidl) {
-        ::SHOpenFolderAndSelectItems(pidl, 0, nullptr, 0);
-        ::ILFree(pidl);
-    }
-    if ((hresult == S_OK) || (hresult == S_FALSE))
-        ::CoUninitialize();
-#elif defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    QProcess proc;
-    proc.start("xdg-mime", {"query", "default", "inode/directory"});
-    proc.waitForFinished();
-    QString output = proc.readLine().simplified();
-    if ((output == "dolphin.desktop") || (output == "org.kde.dolphin.desktop")) {
-        proc.startDetached("dolphin", {"--select", Utils::Fs::toNativePath(path)});
-    }
-    else if ((output == "nautilus.desktop") || (output == "org.gnome.Nautilus.desktop")
-                 || (output == "nautilus-folder-handler.desktop")) {
-        proc.start("nautilus", {"--version"});
-        proc.waitForFinished();
-        const QString nautilusVerStr = QString(proc.readLine()).remove(QRegularExpression("[^0-9.]"));
-        using NautilusVersion = Utils::Version<int, 3>;
-        if (NautilusVersion::tryParse(nautilusVerStr, {1, 0, 0}) > NautilusVersion {3, 28})
-            proc.startDetached("nautilus", {Utils::Fs::toNativePath(path)});
-        else
-            proc.startDetached("nautilus", {"--no-desktop", Utils::Fs::toNativePath(path)});
-    }
-    else if (output == "nemo.desktop") {
-        proc.startDetached("nemo", {"--no-desktop", Utils::Fs::toNativePath(path)});
-    }
-    else if ((output == "konqueror.desktop") || (output == "kfmclient_dir.desktop")) {
-        proc.startDetached("konqueror", {"--select", Utils::Fs::toNativePath(path)});
-    }
-    else {
-        // "caja" manager can't pinpoint the file, see: https://github.com/qbittorrent/qBittorrent/issues/5003
-        openPath(path.left(path.lastIndexOf('/')));
-    }
-#else
-    openPath(path.left(path.lastIndexOf('/')));
-#endif
-}
-
-#endif // DISABLE_GUI
-
 QString Utils::Misc::osName()
 {
     // static initialization for usage in signal handler
@@ -575,6 +456,19 @@ QString Utils::Misc::libtorrentVersionString()
     // static initialization for usage in signal handler
     static const QString ver = LIBTORRENT_VERSION;
     return ver;
+}
+
+QString Utils::Misc::opensslVersionString()
+{
+    const QString version {OPENSSL_VERSION_TEXT};
+    return version.splitRef(' ', QString::SkipEmptyParts)[1].toString();
+}
+
+QString Utils::Misc::zlibVersionString()
+{
+    // static initialization for usage in signal handler
+    static const QString version {ZLIB_VERSION};
+    return version;
 }
 
 #ifdef Q_OS_WIN

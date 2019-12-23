@@ -31,6 +31,10 @@
 #include <type_traits>
 #include <QtGlobal>
 
+#if (QT_POINTER_SIZE == 8)
+#define QBT_APP_64BIT
+#endif
+
 const char C_TORRENT_FILE_EXTENSION[] = ".torrent";
 const int MAX_TORRENT_SIZE = 100 * 1024 * 1024; // 100 MiB
 

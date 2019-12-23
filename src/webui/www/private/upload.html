@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8" />
     <title>QBT_TR(Upload local torrent)QBT_TR[CONTEXT=HttpServer]</title>
-    <link rel="stylesheet" href="css/style.css" type="text/css" />
-    <link rel="stylesheet" href="css/Window.css" type="text/css" />
+    <link rel="stylesheet" href="css/style.css?v=${CACHEID}" type="text/css" />
+    <link rel="stylesheet" href="css/Window.css?v=${CACHEID}" type="text/css" />
     <script src="scripts/lib/mootools-1.2-core-yc.js"></script>
-    <script src="scripts/download.js"></script>
+    <script src="scripts/download.js?v=${CACHEID}"></script>
 </head>
 
 <body>
     <iframe id="upload_frame" name="upload_frame" class="invisible" src="javascript:false;"></iframe>
-    <form action="api/v2/torrents/add" enctype="multipart/form-data" method="post" id="uploadForm" style="text-align: center;" target="upload_frame">
+    <form action="api/v2/torrents/add" enctype="multipart/form-data" method="post" id="uploadForm" style="text-align: center;" target="upload_frame" autocorrect="off" autocapitalize="none">
         <div style="margin-top: 25px; display: inline-block; border: 1px solid lightgrey; border-radius: 4px;">
             <input type="file" id="fileselect" name="fileselect[]" multiple="multiple" />
         </div>
@@ -23,7 +23,7 @@
                         <label for="autoTMM">QBT_TR(Torrent Management Mode:)QBT_TR[CONTEXT=AddNewTorrentDialog]</label>
                     </td>
                     <td>
-                        <select id="autoTMM" name="autoTMM" onchange="changeTMM(this)">
+                        <select id="autoTMM" name="autoTMM" onchange="qBittorrent.Download.changeTMM(this)">
                             <option selected value="false">Manual</option>
                             <option value="true">Automatic</option>
                         </select>
@@ -51,7 +51,7 @@
                     </td>
                     <td>
                         <div class="select-watched-folder-editable">
-                            <select id="categorySelect" onchange="changeCategorySelect(this)">
+                            <select id="categorySelect" onchange="qBittorrent.Download.changeCategorySelect(this)">
                                 <option selected value="\other"></option>
                             </select>
                             <input name="category" type="text" value="" />
@@ -125,7 +125,9 @@
         </fieldset>
     </form>
     <script>
-        var submitted = false;
+        'use strict';
+
+        let submitted = false;
 
         $('uploadForm').addEventListener("submit", function() {
             $('startTorrentHidden').value = $('startTorrent').checked ? 'false' : 'true';

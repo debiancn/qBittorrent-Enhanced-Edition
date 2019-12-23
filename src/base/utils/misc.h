@@ -29,9 +29,6 @@
 #ifndef UTILS_MISC_H
 #define UTILS_MISC_H
 
-#include <ctime>
-#include <vector>
-
 #include <QtGlobal>
 
 #ifdef Q_OS_WIN
@@ -39,14 +36,9 @@
 #include <Windows.h>
 #endif
 
-#include <QDir>
-#include <QPoint>
-#include <QSize>
 #include <QString>
-#include <QStringList>
-#include <QUrl>
 
-#include "base/types.h"
+enum class ShutdownDialogAction;
 
 /*  Miscellaneous functions that can be useful */
 
@@ -71,13 +63,14 @@ namespace Utils
         };
 
         QString parseHtmlLinks(const QString &rawText);
-        bool isUrl(const QString &s);
 
         void shutdownComputer(const ShutdownDialogAction &action);
 
         QString osName();
         QString boostVersionString();
         QString libtorrentVersionString();
+        QString opensslVersionString();
+        QString zlibVersionString();
 
         QString unitString(SizeUnit unit, bool isSpeed = false);
 
@@ -91,20 +84,8 @@ namespace Utils
 
         // Take a number of seconds and return a user-friendly
         // time duration like "1d 2h 10m".
-        QString userFriendlyDuration(qlonglong seconds);
+        QString userFriendlyDuration(qlonglong seconds, qlonglong maxCap = -1);
         QString getUserIDString();
-
-        // Convert functions
-        QStringList toStringList(const QList<bool> &l);
-        QList<int> intListfromStringList(const QStringList &l);
-        QList<bool> boolListfromStringList(const QStringList &l);
-
-#ifndef DISABLE_GUI
-        void openPath(const QString &absolutePath);
-        void openFolderSelect(const QString &absolutePath);
-
-        QPoint screenCenter(const QWidget *w);
-#endif
 
 #ifdef Q_OS_WIN
         QString windowsSystemPath();

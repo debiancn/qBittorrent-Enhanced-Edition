@@ -5,7 +5,7 @@
     <name>AboutDlg</name>
     <message>
         <source>About</source>
-        <translation>Про програму</translation>
+        <translation type="vanished">Про програму</translation>
     </message>
 </context>
 <context>
@@ -28,7 +28,7 @@
     </message>
     <message>
         <source>Torrent Management Mode:</source>
-        <translation>Режим керування торентом:</translation>
+        <translation>Режим керування торрентом:</translation>
     </message>
 </context>
 <context>
@@ -326,14 +326,38 @@
     </message>
     <message>
         <source>Download rate threshold must be greater than 0.</source>
-        <translation type="unfinished" />
+        <translation>Поріг швидкості завантаження повинен бути більше 0.</translation>
     </message>
     <message>
         <source>qBittorrent has been shutdown</source>
         <translation>qBittorrent вимкнено.</translation>
     </message>
     <message>
+        <source>Open documentation</source>
+        <translation>Відкрити документацію</translation>
+    </message>
+    <message>
+        <source>Register to handle magnet links...</source>
+        <translation>Зареєструйтесь, щоб обробляти Magnet-посилання...</translation>
+    </message>
+    <message>
+        <source>Unable to add peers. Please ensure you are adhering to the IP:port format.</source>
+        <translation>Не вдається додати пірів. Будь ласка, дотримуйтеся формату IP:port.</translation>
+    </message>
+    <message>
         <source>JavaScript Required! You must enable JavaScript for the Web UI to work properly</source>
+        <translation>Вимагається JavaScript! Ви повинні увімкнути JavaScript для правильної роботи Веб-інтерфейсу</translation>
+    </message>
+    <message>
+        <source>Name cannot be empty</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Name is unchanged</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Failed to update name</source>
         <translation type="unfinished" />
     </message>
 </context>
@@ -366,22 +390,6 @@
     <message>
         <source>Resume</source>
         <translation>Продовжити</translation>
-    </message>
-    <message>
-        <source>Minimum Priority</source>
-        <translation>Найнижчий пріоритет</translation>
-    </message>
-    <message>
-        <source>Top Priority</source>
-        <translation>Найвищий пріоритет</translation>
-    </message>
-    <message>
-        <source>Decrease Priority</source>
-        <translation>Зменшити пріоритет</translation>
-    </message>
-    <message>
-        <source>Increase Priority</source>
-        <translation>Збільшити пріоритет</translation>
     </message>
     <message>
         <source>Top Toolbar</source>
@@ -480,6 +488,46 @@
         <source>Transfers</source>
         <translation>Завантаження</translation>
     </message>
+    <message>
+        <source>Move up in the queue</source>
+        <translation>Перемістити вгору по черзі</translation>
+    </message>
+    <message>
+        <source>Move Up Queue</source>
+        <translation>Перемістити вгору по черзі</translation>
+    </message>
+    <message>
+        <source>Bottom of Queue</source>
+        <translation>В кінець черги</translation>
+    </message>
+    <message>
+        <source>Move to the bottom of the queue</source>
+        <translation>Перемістити в кінець черги</translation>
+    </message>
+    <message>
+        <source>Top of Queue</source>
+        <translation>На початок черги</translation>
+    </message>
+    <message>
+        <source>Move Down Queue</source>
+        <translation>Перемістити вниз по черзі</translation>
+    </message>
+    <message>
+        <source>Move down in the queue</source>
+        <translation>Перемістити вниз по черзі</translation>
+    </message>
+    <message>
+        <source>Move to the top of the queue</source>
+        <translation>Перемістити в початок черги</translation>
+    </message>
+    <message>
+        <source>Your browser does not support this feature</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>To use this feature, the WebUI needs to be accessed over HTTPS</source>
+        <translation type="unfinished" />
+    </message>
 </context>
 <context>
     <name>OptionsDialog</name>
@@ -534,10 +582,6 @@
     <message>
         <source>Torrent Queueing</source>
         <translation>Черга торрентів</translation>
-    </message>
-    <message>
-        <source>Seed torrents until their seeding time reaches</source>
-        <translation>Сідувати торренти, доки час їх роздачі не досягне</translation>
     </message>
     <message>
         <source>Automatically add these trackers to new downloads:</source>
@@ -696,10 +740,6 @@
         <translation>Використовувати проксі для з'єднання з пірами</translation>
     </message>
     <message>
-        <source>Disable connections not supported by proxies</source>
-        <translation>Вимкнути з'єднання, які не підтримуються проксі-серверами.</translation>
-    </message>
-    <message>
         <source>Use proxy only for torrents</source>
         <translation>Використовувати проксі лише для торрентів</translation>
     </message>
@@ -790,10 +830,6 @@
         <translation>Режим шифрування:</translation>
     </message>
     <message>
-        <source>Prefer encryption</source>
-        <translation>Надавати перевагу шифруванню</translation>
-    </message>
-    <message>
         <source>Require encryption</source>
         <translation>Вимагати шифрування</translation>
     </message>
@@ -822,24 +858,8 @@
         <translation>Не враховувати повільні торренти до цих обмежень</translation>
     </message>
     <message>
-        <source>Share Ratio Limiting</source>
-        <translation>Обмеження вивантаження</translation>
-    </message>
-    <message>
-        <source>Seed torrents until their ratio reaches</source>
-        <translation>Сідувати торренти, доки їх коефіцієнт не досягне</translation>
-    </message>
-    <message>
         <source>then</source>
         <translation>а тоді</translation>
-    </message>
-    <message>
-        <source>Pause them</source>
-        <translation>Призупинити їх</translation>
-    </message>
-    <message>
-        <source>Remove them</source>
-        <translation>Видалити їх</translation>
     </message>
     <message>
         <source>Use UPnP / NAT-PMP to forward the port from my router</source>
@@ -872,10 +892,6 @@
     <message>
         <source>%L: Category</source>
         <translation>%L: Категорія</translation>
-    </message>
-    <message>
-        <source>%G: Tags (seperated by comma)</source>
-        <translation type="vanished">%G: Мітки (розділені комами)</translation>
     </message>
     <message>
         <source>%F: Content path (same as root path for multifile torrent)</source>
@@ -927,11 +943,11 @@
     </message>
     <message>
         <source>Enable clickjacking protection</source>
-        <translation type="unfinished" />
+        <translation>Увімкнути захист від клікджекінгу</translation>
     </message>
     <message>
         <source>Enable Cross-Site Request Forgery (CSRF) protection</source>
-        <translation type="unfinished" />
+        <translation>Увімкнути захист від міжсайтової підробки запиту (CSRF)</translation>
     </message>
     <message>
         <source>Delete .torrent files afterwards</source>
@@ -939,7 +955,7 @@
     </message>
     <message>
         <source>Download rate threshold:</source>
-        <translation type="unfinished" />
+        <translation>Поріг завантаження:</translation>
     </message>
     <message>
         <source>Upload rate threshold:</source>
@@ -963,7 +979,7 @@
     </message>
     <message>
         <source>The alternative Web UI files location cannot be blank.</source>
-        <translation type="unfinished" />
+        <translation>Розташування альтернативних файлів Веб-інтерфейсу не може бути порожнім.</translation>
     </message>
     <message>
         <source>Do not start the download automatically</source>
@@ -979,11 +995,11 @@
     </message>
     <message>
         <source>Relocate affected torrents</source>
-        <translation type="unfinished" />
+        <translation>Перемістити відповідні торренти</translation>
     </message>
     <message>
         <source>Apply rate limit to peers on LAN</source>
-        <translation type="unfinished" />
+        <translation>Застосувати обмеження для пірів з LAN</translation>
     </message>
     <message>
         <source>0 means unlimited</source>
@@ -999,7 +1015,7 @@
     </message>
     <message>
         <source>Enable Host header validation</source>
-        <translation type="unfinished" />
+        <translation>Увімкнути перевірку заголовку хоста</translation>
     </message>
     <message>
         <source>Security</source>
@@ -1019,7 +1035,7 @@
     </message>
     <message>
         <source>Switch affected torrents to Manual Mode</source>
-        <translation type="unfinished" />
+        <translation>Перемкнути відповідні торренти до ручного режиму</translation>
     </message>
     <message>
         <source>Files location:</source>
@@ -1039,11 +1055,235 @@
     </message>
     <message>
         <source>When adding a torrent</source>
-        <translation type="unfinished" />
+        <translation>При додаванні торрента</translation>
+    </message>
+    <message>
+        <source>Info: The password is saved unencrypted</source>
+        <translation>Примітка: Пароль буде збережений в нешифрованому вигляді</translation>
+    </message>
+    <message>
+        <source>Strict super seeding:</source>
+        <translation>Традиційний суперсід:</translation>
+    </message>
+    <message>
+        <source>μTP-TCP mixed mode algorithm:</source>
+        <translation>Алгоритм змішаного режиму μTP-TCP:</translation>
+    </message>
+    <message>
+        <source>Upload rate based</source>
+        <translation>На основі швидкості віддачі</translation>
     </message>
     <message>
         <source>%G: Tags (separated by comma)</source>
-        <translation type="unfinished" />
+        <translation>%G: Мітки (розділені комами)</translation>
+    </message>
+    <message>
+        <source>Socket backlog size:</source>
+        <translation>Розмір черги сокета:</translation>
+    </message>
+    <message>
+        <source>Enable super seeding for torrent</source>
+        <translation>Задіяти режим суперсіда для торрента</translation>
+    </message>
+    <message>
+        <source>Prefer TCP</source>
+        <translation>Віддавати перевагу TCP</translation>
+    </message>
+    <message>
+        <source>Outstanding memory when checking torrents:</source>
+        <translation>Накладна пам'ять при перевірці торрентів:</translation>
+    </message>
+    <message>
+        <source>Anti-leech</source>
+        <translation>Анти-ліч</translation>
+    </message>
+    <message>
+        <source>Enable OS cache:</source>
+        <translation>Дозволити кеш ОС:</translation>
+    </message>
+    <message>
+        <source>When ratio reaches</source>
+        <translation>При досягненні коефіцієнта роздачі</translation>
+    </message>
+    <message>
+        <source>sec</source>
+        <translation>с</translation>
+    </message>
+    <message>
+        <source>When seeding time reaches</source>
+        <translation>По досягненню часу роздачі</translation>
+    </message>
+    <message>
+        <source>Allow multiple connections from the same IP address:</source>
+        <translation>Дозволити декілька з'єднань з однієї IP-адреси:</translation>
+    </message>
+    <message>
+        <source>File pool size:</source>
+        <translation>Розміру пулу файлів:</translation>
+    </message>
+    <message>
+        <source>Any interface</source>
+        <translation>Будь-який інтерфейс</translation>
+    </message>
+    <message>
+        <source>Always announce to all tiers:</source>
+        <translation>Завжди анонсувати на всі рівні:</translation>
+    </message>
+    <message>
+        <source>Embedded tracker port:</source>
+        <translation>Порт вбудованого трекера:</translation>
+    </message>
+    <message>
+        <source>Optional IP Address to bind to (requires restart):</source>
+        <translation>Адреса IP для прив'язки (потрібен перезапуск):</translation>
+    </message>
+    <message>
+        <source>Fastest upload</source>
+        <translation>Найшвидша віддача</translation>
+    </message>
+    <message>
+        <source>Pause torrent</source>
+        <translation>Призупинити торрент</translation>
+    </message>
+    <message>
+        <source>Remove torrent and its files</source>
+        <translation>Видалити торрент і його файли</translation>
+    </message>
+    <message>
+        <source>qBittorrent Section</source>
+        <translation>Розділ qBittorrent</translation>
+    </message>
+    <message>
+        <source>Send buffer watermark factor:</source>
+        <translation>Множник рівня буфера відправки:</translation>
+    </message>
+    <message>
+        <source>libtorrent Section</source>
+        <translation>Розділ libtorrent</translation>
+    </message>
+    <message>
+        <source>Coalesce reads &amp; writes:</source>
+        <translation>Об'єднувати операції читання і запису:</translation>
+    </message>
+    <message>
+        <source>Outgoing ports (Min) [0: Disabled]:</source>
+        <translation>Мінімум вихідних портів [0: Вимкнено]:</translation>
+    </message>
+    <message>
+        <source>IP Address to report to trackers (requires restart):</source>
+        <translation>IP для повідомлення трекерам (потрібно перезапуск):</translation>
+    </message>
+    <message>
+        <source>Recheck torrents on completion:</source>
+        <translation>Перевірити торрент після закінчення завантаження:</translation>
+    </message>
+    <message>
+        <source>Allow encryption</source>
+        <translation>Дозволити шифрування</translation>
+    </message>
+    <message>
+        <source>Send upload piece suggestions:</source>
+        <translation>Відправляти пропозиції частин віддачі:</translation>
+    </message>
+    <message>
+        <source>Disk cache:</source>
+        <translation>Кеш диску:</translation>
+    </message>
+    <message>
+        <source>Enable embedded tracker:</source>
+        <translation>Увімкнути вбудований трекер:</translation>
+    </message>
+    <message>
+        <source>Remove torrent</source>
+        <translation>Видалити торрент</translation>
+    </message>
+    <message>
+        <source>Outgoing ports (Max) [0: Disabled]:</source>
+        <translation>Максимум вихідних портів [0: Вимкнено]:</translation>
+    </message>
+    <message>
+        <source>Asynchronous I/O threads:</source>
+        <translation>Потоки асинхронного введення-виведення:</translation>
+    </message>
+    <message>
+        <source>s</source>
+        <translation>с</translation>
+    </message>
+    <message>
+        <source>Send buffer watermark:</source>
+        <translation>Рівень буфера відправки:</translation>
+    </message>
+    <message>
+        <source>Disk cache expiry interval:</source>
+        <translation>Інтервал очищення дискового кешу:</translation>
+    </message>
+    <message>
+        <source>Peer proportional (throttles TCP)</source>
+        <translation>Пропорційно пірам (регулювання TCP)</translation>
+    </message>
+    <message>
+        <source>Fixed slots</source>
+        <translation>Фіксовані слоти</translation>
+    </message>
+    <message>
+        <source>Resolve peer countries (GeoIP):</source>
+        <translation>Дізнаватись країну пірів (GeoIP):</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Додатково</translation>
+    </message>
+    <message>
+        <source>min</source>
+        <translation>хв</translation>
+    </message>
+    <message>
+        <source>Upload choking algorithm:</source>
+        <translation>Алгоритм приглушення відвантаження:</translation>
+    </message>
+    <message>
+        <source>Seeding Limits</source>
+        <translation>Обмеження роздачі</translation>
+    </message>
+    <message>
+        <source>KiB</source>
+        <translation>КіБ</translation>
+    </message>
+    <message>
+        <source>Round-robin</source>
+        <translation>По колу</translation>
+    </message>
+    <message>
+        <source>Upload slots behavior:</source>
+        <translation>Поведінка слотів віддачі:</translation>
+    </message>
+    <message>
+        <source>Network Interface (requires restart):</source>
+        <translation>Мережевий інтерфейс (потрібен перезапуск):</translation>
+    </message>
+    <message>
+        <source>MiB</source>
+        <translation>МіБ</translation>
+    </message>
+    <message>
+        <source>Send buffer low watermark:</source>
+        <translation>Мінімальний рівень буфера відправки:</translation>
+    </message>
+    <message>
+        <source>Save resume data interval:</source>
+        <translation>Період збереження даних відновлення:</translation>
+    </message>
+    <message>
+        <source>Always announce to all trackers in a tier:</source>
+        <translation>Завжди анонсувати на всі трекери в рівні:</translation>
+    </message>
+    <message>
+        <source>Session timeout:</source>
+        <translation>Перерва в сеансі:</translation>
+    </message>
+    <message>
+        <source>Listen on IPv6 address (requires restart):</source>
+        <translation>Слухати адресу IPv6 (потрібно перезапуск):</translation>
     </message>
 </context>
 <context>
@@ -1058,7 +1298,7 @@
     </message>
     <message>
         <source>Flags</source>
-        <translation>Прапори</translation>
+        <translation>Властивості</translation>
     </message>
     <message>
         <source>Connection</source>
@@ -1108,6 +1348,22 @@
         <source>Country</source>
         <translation>Країна</translation>
     </message>
+    <message>
+        <source>Ban peer permanently</source>
+        <translation>Заблокувати піра назавжди</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to permanently ban the selected peers?</source>
+        <translation>Ви впевнені, що хочете назавжди заблокувати виділених пірів?</translation>
+    </message>
+    <message>
+        <source>Copy IP:port</source>
+        <translation>Копіювати IP:порт</translation>
+    </message>
+    <message>
+        <source>Add a new peer...</source>
+        <translation>Додати нового піра…</translation>
+    </message>
 </context>
 <context>
     <name>PropListDelegate</name>
@@ -1125,6 +1381,14 @@
         <source>Maximum</source>
         <comment>Maximum (priority)</comment>
         <translation>Максимальний</translation>
+    </message>
+    <message>
+        <source>Mixed</source>
+        <translation>Змішаний</translation>
+    </message>
+    <message>
+        <source>Do not download</source>
+        <translation>Не завантажувати</translation>
     </message>
 </context>
 <context>
@@ -1291,6 +1555,18 @@
     </message>
     <message>
         <source>Upload limit:</source>
+        <translation>Обмеження відвантаження</translation>
+    </message>
+    <message>
+        <source>Priority</source>
+        <translation>Пріоритет</translation>
+    </message>
+    <message>
+        <source>Filter files...</source>
+        <translation>Фільтр файлів…</translation>
+    </message>
+    <message>
+        <source>Rename...</source>
         <translation type="unfinished" />
     </message>
 </context>
@@ -1356,7 +1632,7 @@
     </message>
     <message>
         <source>Session waste:</source>
-        <translation type="unfinished" />
+        <translation>Змарновано за сеанс:</translation>
     </message>
     <message>
         <source>All-time upload:</source>
@@ -1472,31 +1748,7 @@
 </context>
 <context>
     <name>TorrentContentModel</name>
-    <message>
-        <source>Name</source>
-        <translation>Назва</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation>Розмір</translation>
-    </message>
-    <message>
-        <source>Progress</source>
-        <translation>Прогрес</translation>
-    </message>
-    <message>
-        <source>Download Priority</source>
-        <translation>Пріоритет завантаження</translation>
-    </message>
-    <message>
-        <source>Remaining</source>
-        <translation>Залишилось</translation>
-    </message>
-    <message>
-        <source>Availability</source>
-        <translation>Доступно</translation>
-    </message>
-</context>
+    </context>
 <context>
     <name>TransferListModel</name>
     <message>
@@ -1641,6 +1893,10 @@
         <comment>i.e. Size including unwanted data</comment>
         <translation>Загальний розмір</translation>
     </message>
+    <message>
+        <source>Availability</source>
+        <translation>Доступно</translation>
+    </message>
 </context>
 <context>
     <name>TrackerListWidget</name>
@@ -1674,7 +1930,7 @@
     </message>
     <message>
         <source>Working</source>
-        <translation type="unfinished" />
+        <translation>Працює</translation>
     </message>
     <message>
         <source>Disabled</source>
@@ -1683,10 +1939,6 @@
     <message>
         <source>Not contacted yet</source>
         <translation>Ще не зв'язувався</translation>
-    </message>
-    <message>
-        <source>#</source>
-        <translation>№</translation>
     </message>
     <message>
         <source>N/A</source>
@@ -1702,7 +1954,7 @@
     </message>
     <message>
         <source>Copy tracker URL</source>
-        <translation type="unfinished" />
+        <translation>Скопіювати посилання на трекер</translation>
     </message>
     <message>
         <source>Add a new tracker...</source>
@@ -1714,7 +1966,7 @@
     </message>
     <message>
         <source>Tracker editing</source>
-        <translation type="unfinished" />
+        <translation>Редагувати трекер</translation>
     </message>
     <message>
         <source>Leeches</source>
@@ -1723,6 +1975,34 @@
     <message>
         <source>Remove tracker</source>
         <translation>Вилучити трекер</translation>
+    </message>
+    <message>
+        <source>Remaining</source>
+        <translation>Залишилось</translation>
+    </message>
+    <message>
+        <source>Availability</source>
+        <translation>Доступно</translation>
+    </message>
+    <message>
+        <source>Tier</source>
+        <translation>Рівень</translation>
+    </message>
+    <message>
+        <source>Download Priority</source>
+        <translation>Пріоритет завантаження</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Назва</translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation>Прогрес</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation>Розмір</translation>
     </message>
 </context>
 <context>
@@ -1745,7 +2025,7 @@
     </message>
     <message>
         <source>Allocating</source>
-        <translation type="unfinished" />
+        <translation>Резервування</translation>
     </message>
     <message>
         <source>Paused</source>
@@ -1817,6 +2097,10 @@
     <message>
         <source>Categories</source>
         <translation>Категорії</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Мітки</translation>
     </message>
 </context>
 <context>
@@ -1890,14 +2174,6 @@
         <translation>Змінити розташування...</translation>
     </message>
     <message>
-        <source>Copy name</source>
-        <translation>Копіювати назву</translation>
-    </message>
-    <message>
-        <source>Copy hash</source>
-        <translation>Скопіювати хеш</translation>
-    </message>
-    <message>
         <source>Download first and last pieces first</source>
         <translation>Спочатку завантажувати першу і останню частину</translation>
     </message>
@@ -1920,16 +2196,8 @@
         <translation>Забрати</translation>
     </message>
     <message>
-        <source>Priority</source>
-        <translation>Пріоритет</translation>
-    </message>
-    <message>
         <source>Force recheck</source>
         <translation>Примусова перевірка</translation>
-    </message>
-    <message>
-        <source>Copy magnet link</source>
-        <translation>Копіювати magnet-посилання</translation>
     </message>
     <message>
         <source>Super seeding mode</source>
@@ -1975,6 +2243,46 @@
         <source>Save path</source>
         <translation>Шлях збереження</translation>
     </message>
+    <message>
+        <source>Comma-separated tags:</source>
+        <translation>Мітки, розділені комами:</translation>
+    </message>
+    <message>
+        <source>Add Tags</source>
+        <translation>Додати мітки</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Мітки</translation>
+    </message>
+    <message>
+        <source>Magnet link</source>
+        <translation>Magnet-посилання</translation>
+    </message>
+    <message>
+        <source>Hash</source>
+        <translation>Хеш:</translation>
+    </message>
+    <message>
+        <source>Remove All</source>
+        <translation>Вилучити всі</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Назва</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Копіювати</translation>
+    </message>
+    <message>
+        <source>Queue</source>
+        <translation>Черга</translation>
+    </message>
+    <message>
+        <source>Add...</source>
+        <translation>Додати...</translation>
+    </message>
 </context>
 <context>
     <name>UpDownRatioDialog</name>
@@ -1992,7 +2300,7 @@
     </message>
     <message>
         <source>Set share limit to</source>
-        <translation type="unfinished" />
+        <translation>Встановити обмеження відвантаження</translation>
     </message>
     <message>
         <source>ratio</source>
@@ -2005,23 +2313,7 @@
 </context>
 <context>
     <name>about</name>
-    <message>
-        <source>An advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar.</source>
-        <translation>Потужний клієнт BitTorrent, запрограмований на C++, на основі бібліотек Qt та libtorrent-rasterbar.</translation>
-    </message>
-    <message>
-        <source>Home Page:</source>
-        <translation>Домашня сторінка:</translation>
-    </message>
-    <message>
-        <source>Forum:</source>
-        <translation>Форум:</translation>
-    </message>
-    <message>
-        <source>Bug Tracker:</source>
-        <translation>Трекер помилок:</translation>
-    </message>
-</context>
+    </context>
 <context>
     <name>confirmDeletionDlg</name>
     <message>
@@ -2124,7 +2416,7 @@
     <name>TorrentsController</name>
     <message>
         <source>Save path is empty</source>
-        <translation type="unfinished" />
+        <translation>Шлях збереження порожній</translation>
     </message>
 </context>
 <context>
@@ -2185,20 +2477,8 @@
         <translation>Шукати у:</translation>
     </message>
     <message>
-        <source>Copy description page URL</source>
-        <translation>Скопіювати URL сторінки опису</translation>
-    </message>
-    <message>
-        <source>Go to description page</source>
-        <translation>Перейти до сторінки опису</translation>
-    </message>
-    <message>
         <source>Results (showing</source>
         <translation>Результати (показано</translation>
-    </message>
-    <message>
-        <source>Download</source>
-        <translation>Завантажити</translation>
     </message>
     <message>
         <source>Filter</source>
@@ -2300,6 +2580,211 @@
     <message>
         <source>Version</source>
         <translation>Версія</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished" />
+    </message>
+</context>
+<context>
+    <name>PeersAdditionDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translation>Скасувати</translation>
+    </message>
+    <message>
+        <source>Add Peers</source>
+        <translation>Додати пірів</translation>
+    </message>
+    <message>
+        <source>List of peers to add (one IP per line):</source>
+        <translation>Список пірів, яких ви хочете додати (один IP на рядок):</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Гаразд</translation>
+    </message>
+    <message>
+        <source>Format: IPv4:port / [IPv6]:port</source>
+        <translation>Формат: IPv4:порт / [IPv6]:порт</translation>
+    </message>
+</context>
+<context>
+    <name>TagFilterWidget</name>
+    <message>
+        <source>New Tag</source>
+        <translation>Нова мітка</translation>
+    </message>
+    <message>
+        <source>Add tag...</source>
+        <translation>Додати мітку...</translation>
+    </message>
+    <message>
+        <source>Delete torrents</source>
+        <translation>Видалити торренти</translation>
+    </message>
+    <message>
+        <source>Tag:</source>
+        <translation>Мітка:</translation>
+    </message>
+    <message>
+        <source>Pause torrents</source>
+        <translation>Призупинити торренти</translation>
+    </message>
+    <message>
+        <source>Resume torrents</source>
+        <translation>Продовжити торренти</translation>
+    </message>
+    <message>
+        <source>Remove unused tags</source>
+        <translation>Вилучити невикористовувані мітки</translation>
+    </message>
+    <message>
+        <source>Invalid tag name</source>
+        <translation>Некоректна назва мітки</translation>
+    </message>
+    <message>
+        <source>Remove tag</source>
+        <translation>Вилучити мітку</translation>
+    </message>
+</context>
+<context>
+    <name>TagFilterModel</name>
+    <message>
+        <source>All</source>
+        <translation>Всі</translation>
+    </message>
+    <message>
+        <source>Untagged</source>
+        <translation>Без мітки</translation>
+    </message>
+</context>
+<context>
+    <name>AboutDialog</name>
+    <message>
+        <source>Bug Tracker:</source>
+        <translation>Баг-трекер:</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation>Про qBittorrent</translation>
+    </message>
+    <message>
+        <source>Forum:</source>
+        <translation>Форум:</translation>
+    </message>
+    <message>
+        <source>E-mail:</source>
+        <translation>E-mail:</translation>
+    </message>
+    <message>
+        <source>Current maintainer</source>
+        <translation>Поточний супровідник</translation>
+    </message>
+    <message>
+        <source>Home Page:</source>
+        <translation>Домашня сторінка:</translation>
+    </message>
+    <message>
+        <source>Greece</source>
+        <translation>Греція</translation>
+    </message>
+    <message>
+        <source>Special Thanks</source>
+        <translation>Особлива подяка</translation>
+    </message>
+    <message>
+        <source>An advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar.</source>
+        <translation>Потужний клієнт BitTorrent, запрограмований на C++, на основі бібліотек Qt та libtorrent-rasterbar.</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Ім’я:</translation>
+    </message>
+    <message>
+        <source>About qBittorrent</source>
+        <translation>Про qBittorrent</translation>
+    </message>
+    <message>
+        <source>Libraries</source>
+        <translation>Бібліотеки</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Ліцензія</translation>
+    </message>
+    <message>
+        <source>Translators</source>
+        <translation>Перекладачі</translation>
+    </message>
+    <message>
+        <source>qBittorrent was built with the following libraries:</source>
+        <translation>qBittorrent було збудовано з наступними бібліотеками:</translation>
+    </message>
+    <message>
+        <source>Nationality:</source>
+        <translation>Країна:</translation>
+    </message>
+    <message>
+        <source>Author</source>
+        <translation>Автор</translation>
+    </message>
+</context>
+<context>
+    <name>OptionDialog</name>
+    <message>
+        <source>All addresses</source>
+        <translation>Всі адреси</translation>
+    </message>
+    <message>
+        <source>All IPv6 addresses</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>All IPv4 addresses</source>
+        <translation type="unfinished" />
+    </message>
+</context>
+<context>
+    <name>SearchJobWidget</name>
+    <message>
+        <source>Copy</source>
+        <translation>Копіювати</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation>Завантажити</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Назва</translation>
+    </message>
+    <message>
+        <source>Description page URL</source>
+        <translation>URL-адреса сторінки з описом</translation>
+    </message>
+    <message>
+        <source>Open description page</source>
+        <translation>Відкрити сторінку опису</translation>
+    </message>
+    <message>
+        <source>Download link</source>
+        <translation>Сторінка завантаження</translation>
+    </message>
+</context>
+<context>
+    <name>TorrentContentTreeView</name>
+    <message>
+        <source>Renaming</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>New name:</source>
+        <translation type="unfinished" />
     </message>
 </context>
 </TS>

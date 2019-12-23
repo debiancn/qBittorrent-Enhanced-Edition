@@ -30,18 +30,16 @@
 
 #include <QtGlobal>
 
-#if defined(Q_OS_MAC) || defined(Q_OS_FREEBSD) || defined(Q_OS_OPENBSD)
+#if defined(Q_OS_MACOS) || defined(Q_OS_FREEBSD) || defined(Q_OS_OPENBSD)
 #include <cstring>
 #include <sys/mount.h>
 #include <sys/param.h>
 #endif
 
 #include "base/algorithm.h"
-#include "base/bittorrent/magneturi.h"
 #include "base/bittorrent/torrentinfo.h"
 #include "base/global.h"
 #include "base/logger.h"
-#include "base/preferences.h"
 #include "base/utils/fs.h"
 
 namespace
@@ -122,7 +120,7 @@ void FileSystemWatcher::processPartialTorrents()
     QStringList noLongerPartial;
 
     // Check which torrents are still partial
-    Dict::removeIf(m_partialTorrents, [&noLongerPartial](const QString &torrentPath, int &value)
+    Algorithm::removeIf(m_partialTorrents, [&noLongerPartial](const QString &torrentPath, int &value)
     {
         if (!QFile::exists(torrentPath))
             return true;

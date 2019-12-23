@@ -4,6 +4,7 @@ src/qbittorrent
 src/qbittorrent-nox
 src/release
 src/debug
+CMakeLists.txt.user*
 qbittorrent.pro.user*
 conf.pri
 Makefile*
@@ -36,4 +37,8 @@ src/icons/qbt-theme/build-icons/node_modules/
 src/icons/skin/build-icons/node_modules/
 src/icons/skin/build-icons/icons/*.png
 
-dist/*
+# Web UI tools
+node_modules
+package-lock.json
+
+/dist/*

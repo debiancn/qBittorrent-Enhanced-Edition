@@ -32,7 +32,6 @@ Section $(inst_qbt_req) ;"qBittorrent (required)"
   File "qbittorrent.exe"
   File "qbittorrent.pdb"
   File "qt.conf"
-  File "ipfilter.dat"
   File /oname=translations\qt_ar.qm "translations\qt_ar.qm"
   File /oname=translations\qt_bg.qm "translations\qt_bg.qm"
   File /oname=translations\qt_ca.qm "translations\qt_ca.qm"
@@ -199,6 +198,11 @@ Function .onInit
 
   !insertmacro Init "installer"
   !insertmacro MUI_LANGDLL_DISPLAY
+  
+  ${IfNot} ${AtLeastWin7}
+    MessageBox MB_OK|MB_ICONEXCLAMATION $(inst_requires_win7)
+    Abort
+  ${EndIf}
 
   !ifdef APP64BIT
     ${IfNot} ${RunningX64}

@@ -28,17 +28,15 @@
 
 #include "torrentcontentmodelitem.h"
 
-#include <QDebug>
+#include <QVariant>
 
-#include "base/utils/misc.h"
-#include "base/utils/fs.h"
 #include "torrentcontentmodelfolder.h"
 
 TorrentContentModelItem::TorrentContentModelItem(TorrentContentModelFolder *parent)
     : m_parentItem(parent)
     , m_size(0)
     , m_remaining(0)
-    , m_priority(BitTorrent::FilePriority::Normal)
+    , m_priority(BitTorrent::DownloadPriority::Normal)
     , m_progress(0)
     , m_availability(-1.)
 {
@@ -80,7 +78,7 @@ qreal TorrentContentModelItem::progress() const
 qulonglong TorrentContentModelItem::remaining() const
 {
     Q_ASSERT(!isRootItem());
-    return m_remaining;
+    return (m_priority == BitTorrent::DownloadPriority::Ignored) ? 0 : m_remaining;
 }
 
 qreal TorrentContentModelItem::availability() const
@@ -90,7 +88,7 @@ qreal TorrentContentModelItem::availability() const
     return (m_size > 0) ? m_availability : 0;
 }
 
-BitTorrent::FilePriority TorrentContentModelItem::priority() const
+BitTorrent::DownloadPriority TorrentContentModelItem::priority() const
 {
     Q_ASSERT(!isRootItem());
     return m_priority;
@@ -121,7 +119,7 @@ QVariant TorrentContentModelItem::data(int column) const
         return availability();
     default:
         Q_ASSERT(false);
-        return QVariant();
+        return {};
     }
 }
 

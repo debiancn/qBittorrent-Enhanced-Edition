@@ -1,4 +1,4 @@
-AC_INIT([qbittorrent], [v4.1.8], [bugs.qbittorrent.org], [], [https://www.qbittorrent.org/])
+AC_INIT([qbittorrent], [v4.2.1], [bugs.qbittorrent.org], [], [https://www.qbittorrent.org/])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 AC_PROG_CC
@@ -13,12 +13,6 @@ QBT_CC="$CC"
 QBT_CXX="$CXX"
 
 # Define --wth-* and --enable-* arguments
-
-AC_ARG_WITH(qtsingleapplication,
-            [AS_HELP_STRING([--with-qtsingleapplication=@<:@system|shipped@:>@],
-                            [Use the shipped qtsingleapplication library or the system one (default=shipped)])],
-            [],
-            [with_qtsingleapplication=shipped])
 
 AC_ARG_ENABLE(debug,
               [AS_HELP_STRING([--enable-debug],
@@ -163,7 +157,7 @@ AS_CASE(["x$enable_qt_dbus"],
         AC_MSG_ERROR([Unknown option "$enable_qt_dbus". Use either "yes" or "no".])])
 
 
-AX_BOOST_BASE([1.35],
+AX_BOOST_BASE([1.40],
               [AC_MSG_NOTICE([Boost CXXFLAGS: "$BOOST_CPPFLAGS"])
                AC_MSG_NOTICE([Boost LDFLAGS: "$BOOST_LDFLAGS"])],
               [AC_MSG_ERROR([Could not find Boost])])
@@ -183,58 +177,51 @@ AX_BOOST_SYSTEM()
 AC_MSG_NOTICE([Boost.System LIB: "$BOOST_SYSTEM_LIB"])
 LIBS="$BOOST_SYSTEM_LIB $LIBS"
 
-AC_MSG_CHECKING([which qtsingleapplication to use])
-AS_CASE(["x$with_qtsingleapplication"],
-        ["xshipped"],
-                   [AC_MSG_RESULT([shipped])
-                   QBT_REMOVE_CONFIG="$QBT_REMOVE_CONFIG usesystemqtsingleapplication"],
-        ["xsystem"],
-                  [AC_MSG_RESULT([system])
-                  QBT_ADD_CONFIG="$QBT_ADD_CONFIG usesystemqtsingleapplication"],
-        [AC_MSG_RESULT([$with_qtsingleapplication])
-        AC_MSG_ERROR([Unknown option "$with_qtsingleapplication". Use either "system" or "shipped".])])
-
 PKG_CHECK_MODULES(libtorrent,
-                  [libtorrent-rasterbar >= 1.0.6],
+                  [libtorrent-rasterbar >= 1.1.10],
                   [CXXFLAGS="$libtorrent_CFLAGS $CXXFLAGS"
                   LIBS="$libtorrent_LIBS $LIBS"])
+
+PKG_CHECK_MODULES(openssl,
+                  [openssl >= 1.0],
+                  [CXXFLAGS="$openssl_CFLAGS $CXXFLAGS"
+                  LIBS="$openssl_LIBS $LIBS"])
 
 PKG_CHECK_MODULES(zlib,
                  [zlib >= 1.2.5.2],
                  [CXXFLAGS="$zlib_CFLAGS $CXXFLAGS"
                  LIBS="$zlib_LIBS $LIBS"])
 
-# Check if already in >= C++11 mode because of the flags returned by one of the above packages
-AC_MSG_CHECKING([if compiler is using C++11 or later mode])
-AC_COMPILE_IFELSE([DETECT_CPP11_PROGRAM()],
+# Check if already in >= C++14 mode because of the flags returned by one of the above packages
+TMP_CXXFLAGS="$CXXFLAGS"
+CXXFLAGS=""
+AC_MSG_CHECKING([if compiler defaults to C++14 or later mode])
+AC_COMPILE_IFELSE([DETECT_CPP14_PROGRAM()],
                   [AC_MSG_RESULT([yes])
-                   QBT_CXX11_FOUND="yes"],
+                   QBT_CXX14_FOUND="yes"],
                   [AC_MSG_RESULT([no])
-                   QBT_CXX11_FOUND="no"])
-                  
-# In case of no, check if the compiler can support at least C++11
+                   QBT_CXX14_FOUND="no"])
+
+# In case of no, check if the compiler can support at least C++14
 # and if yes, enable it leaving a warning to the user
-AS_IF([test "x$QBT_CXX11_FOUND" = "xno"],
-      [AC_MSG_CHECKING([if compiler supports C++11])
-       TMP_CXXFLAGS="$CXXFLAGS"
-       CXXFLAGS="$CXXFLAGS -std=c++11"
-       AC_COMPILE_IFELSE([DETECT_CPP11_PROGRAM()],
+AS_IF([test "x$QBT_CXX14_FOUND" = "xno"],
+      [AC_MSG_CHECKING([if compiler supports C++14])
+       CXXFLAGS="-std=c++14"
+       AC_COMPILE_IFELSE([DETECT_CPP14_PROGRAM()],
                         [AC_MSG_RESULT([yes])
-                         AC_MSG_CHECKING([if C++11 is disabled by the set compiler flags])
+                         AC_MSG_CHECKING([if C++14 is disabled by the set compiler flags])
                          # prepend the flag so it won't override conflicting user defined flags
-                         CXXFLAGS="-std=c++11 $TMP_CXXFLAGS"
-                         AC_COMPILE_IFELSE([DETECT_CPP11_PROGRAM()],
+                         CXXFLAGS="-std=c++14 $TMP_CXXFLAGS"
+                         AC_COMPILE_IFELSE([DETECT_CPP14_PROGRAM()],
                                            [AC_MSG_RESULT([no])
-                                            CXXFLAGS="$TMP_CXXFLAGS -std=c++11"
-                                            AC_MSG_WARN([C++11 mode is now force enabled.
-Make sure you use the same C++ mode for qBittorrent and its dependencies.
-To explicitly set qBittorrent to a later mode use CXXFLAGS.
-Example: `CXXFLAGS="\$CXXFLAGS -std=c++14" ./configure`])],
+                                            QBT_ADD_CONFIG="$QBT_ADD_CONFIG c++14"
+                                            AC_MSG_WARN([C++14 mode is now force enabled. The C++ mode should match the mode that other libraries were built with, otherwise you'll likely get linking errors.])],
                                            [AC_MSG_RESULT([yes])
-                                            AC_MSG_ERROR([The compiler supports C++11 but the user or a dependency has explicitly enabled a lower mode.])])],
+                                            AC_MSG_ERROR([The compiler supports C++14 but the user or a dependency has explicitly enabled a lower mode.])])],
                         [AC_MSG_RESULT([no])
-                         AC_MSG_ERROR([A compiler supporting C++11 is required.])])
+                         AC_MSG_ERROR([A compiler supporting C++14 is required.])])
       ])
+CXXFLAGS="$TMP_CXXFLAGS"
 
 # These are required because autoconf doesn't expand these **particular**
 # vars automatically. And qmake cannot autoexpand them.
@@ -287,17 +274,14 @@ AC_OUTPUT(conf.pri)
 AS_IF([test "x$enable_systemd" = "xyes"],
       [AC_OUTPUT(dist/unix/systemd/qbittorrent-nox@.service)])
 
-
-
 AC_MSG_NOTICE([Running qmake to generate the makefile...])
-CONFDIR="$( cd "$( dirname "$0" )" && pwd )"
-
-$QT_QMAKE -r [$CONFDIR]/qbittorrent.pro "QMAKE_LRELEASE=$QMAKE_LRELEASE"
-
-ret="$?"
+TOPDIR="$(cd "$(dirname "$0")" && pwd)"
+$QT_QMAKE -r "$TOPDIR/qbittorrent.pro" "QMAKE_LRELEASE=$QMAKE_LRELEASE"
+qmake_ret="$?"
 
 AS_ECHO()
-AS_IF([test "x$ret" = "x0"],
-      [AC_MSG_NOTICE([Good, your configure finished.])],
-      [AC_MSG_ERROR([Failed running $QT_QMAKE to generate the makefile])])
+AS_IF([test "x$qmake_ret" != "x0"],
+      [AC_MSG_ERROR([$QT_QMAKE failed to generate the makefile])])
+
+AC_MSG_NOTICE([Good, the configure finished.])
 AS_ECHO()

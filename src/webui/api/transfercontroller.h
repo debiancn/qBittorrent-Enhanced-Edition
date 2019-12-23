@@ -46,6 +46,5 @@ private slots:
     void downloadLimitAction();
     void setUploadLimitAction();
     void setDownloadLimitAction();
-    void tempblockPeerAction();
-    void resetIPFilterAction();
+    void banPeersAction();
 };

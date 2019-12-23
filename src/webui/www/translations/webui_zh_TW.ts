@@ -5,7 +5,7 @@
     <name>AboutDlg</name>
     <message>
         <source>About</source>
-        <translation>關於</translation>
+        <translation type="vanished">關於</translation>
     </message>
 </context>
 <context>
@@ -333,7 +333,31 @@
         <translation>qBittorrent 已經關閉</translation>
     </message>
     <message>
+        <source>Open documentation</source>
+        <translation>開啟文件</translation>
+    </message>
+    <message>
+        <source>Register to handle magnet links...</source>
+        <translation>註冊以處理磁力連結……</translation>
+    </message>
+    <message>
+        <source>Unable to add peers. Please ensure you are adhering to the IP:port format.</source>
+        <translation>無法新增 peers。請確保您遵循 IP:連接埠號 格式。</translation>
+    </message>
+    <message>
         <source>JavaScript Required! You must enable JavaScript for the Web UI to work properly</source>
+        <translation>需要 JavaScript！您必須啟用 JavaScript 以讓 WebUI 正常運作</translation>
+    </message>
+    <message>
+        <source>Name cannot be empty</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Name is unchanged</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Failed to update name</source>
         <translation type="unfinished" />
     </message>
 </context>
@@ -366,22 +390,6 @@
     <message>
         <source>Resume</source>
         <translation>繼續</translation>
-    </message>
-    <message>
-        <source>Minimum Priority</source>
-        <translation>最低優先度</translation>
-    </message>
-    <message>
-        <source>Top Priority</source>
-        <translation>最高優先度</translation>
-    </message>
-    <message>
-        <source>Decrease Priority</source>
-        <translation>減少優先度</translation>
-    </message>
-    <message>
-        <source>Increase Priority</source>
-        <translation>增加優先度</translation>
     </message>
     <message>
         <source>Top Toolbar</source>
@@ -480,6 +488,46 @@
         <source>Transfers</source>
         <translation>傳輸</translation>
     </message>
+    <message>
+        <source>Move up in the queue</source>
+        <translation>在佇列中向上移動</translation>
+    </message>
+    <message>
+        <source>Move Up Queue</source>
+        <translation>向上移動佇列</translation>
+    </message>
+    <message>
+        <source>Bottom of Queue</source>
+        <translation>佇列底部</translation>
+    </message>
+    <message>
+        <source>Move to the bottom of the queue</source>
+        <translation>移動到佇列底部</translation>
+    </message>
+    <message>
+        <source>Top of Queue</source>
+        <translation>佇列頂部</translation>
+    </message>
+    <message>
+        <source>Move Down Queue</source>
+        <translation>在佇列中向下移動</translation>
+    </message>
+    <message>
+        <source>Move down in the queue</source>
+        <translation>在佇列中向下移動</translation>
+    </message>
+    <message>
+        <source>Move to the top of the queue</source>
+        <translation>移動到佇列頂部</translation>
+    </message>
+    <message>
+        <source>Your browser does not support this feature</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>To use this feature, the WebUI needs to be accessed over HTTPS</source>
+        <translation type="unfinished" />
+    </message>
 </context>
 <context>
     <name>OptionsDialog</name>
@@ -534,10 +582,6 @@
     <message>
         <source>Torrent Queueing</source>
         <translation>Torrent 佇列</translation>
-    </message>
-    <message>
-        <source>Seed torrents until their seeding time reaches</source>
-        <translation>對 torrent 做種直到達到做種時間</translation>
     </message>
     <message>
         <source>Automatically add these trackers to new downloads:</source>
@@ -696,10 +740,6 @@
         <translation>使用代理伺服器來連線下載者</translation>
     </message>
     <message>
-        <source>Disable connections not supported by proxies</source>
-        <translation>停用不被代理伺服器所支援的連線</translation>
-    </message>
-    <message>
         <source>Use proxy only for torrents</source>
         <translation>只對 torrent 使用代理伺服器</translation>
     </message>
@@ -790,10 +830,6 @@
         <translation>加密模式：</translation>
     </message>
     <message>
-        <source>Prefer encryption</source>
-        <translation>偏好加密</translation>
-    </message>
-    <message>
         <source>Require encryption</source>
         <translation>要求加密</translation>
     </message>
@@ -822,24 +858,8 @@
         <translation>在這些限制中不要計算速率慢的 torrent</translation>
     </message>
     <message>
-        <source>Share Ratio Limiting</source>
-        <translation>分享率限制</translation>
-    </message>
-    <message>
-        <source>Seed torrents until their ratio reaches</source>
-        <translation>對 torrent 做種直到達到分享率</translation>
-    </message>
-    <message>
         <source>then</source>
         <translation>然後</translation>
-    </message>
-    <message>
-        <source>Pause them</source>
-        <translation>暫停它們</translation>
-    </message>
-    <message>
-        <source>Remove them</source>
-        <translation>移除它們</translation>
     </message>
     <message>
         <source>Use UPnP / NAT-PMP to forward the port from my router</source>
@@ -872,10 +892,6 @@
     <message>
         <source>%L: Category</source>
         <translation>%L：分類</translation>
-    </message>
-    <message>
-        <source>%G: Tags (seperated by comma)</source>
-        <translation type="vanished">%G：標籤 (以逗號分隔)</translation>
     </message>
     <message>
         <source>%F: Content path (same as root path for multifile torrent)</source>
@@ -1042,8 +1058,232 @@
         <translation>當增加 torrent 時</translation>
     </message>
     <message>
+        <source>Info: The password is saved unencrypted</source>
+        <translation>資訊：密碼以未加密的形式儲存</translation>
+    </message>
+    <message>
+        <source>Strict super seeding:</source>
+        <translation>嚴格超級種子</translation>
+    </message>
+    <message>
+        <source>μTP-TCP mixed mode algorithm:</source>
+        <translation>μTP-TCP 混合模式演算法</translation>
+    </message>
+    <message>
+        <source>Upload rate based</source>
+        <translation>上傳速率基於</translation>
+    </message>
+    <message>
         <source>%G: Tags (separated by comma)</source>
-        <translation type="unfinished" />
+        <translation>%G：標籤（以逗號分隔）</translation>
+    </message>
+    <message>
+        <source>Socket backlog size:</source>
+        <translation>Socket 紀錄檔大小：</translation>
+    </message>
+    <message>
+        <source>Enable super seeding for torrent</source>
+        <translation>為 torrent 啟用超級做種</translation>
+    </message>
+    <message>
+        <source>Prefer TCP</source>
+        <translation>偏好 TCP</translation>
+    </message>
+    <message>
+        <source>Outstanding memory when checking torrents:</source>
+        <translation>檢查 torrent 時的未完成記憶：</translation>
+    </message>
+    <message>
+        <source>Anti-leech</source>
+        <translation>反蝗族</translation>
+    </message>
+    <message>
+        <source>Enable OS cache:</source>
+        <translation>啟用作業系統快取：</translation>
+    </message>
+    <message>
+        <source>When ratio reaches</source>
+        <translation>當分享率達到</translation>
+    </message>
+    <message>
+        <source>sec</source>
+        <translation>秒</translation>
+    </message>
+    <message>
+        <source>When seeding time reaches</source>
+        <translation>當做種時間達到</translation>
+    </message>
+    <message>
+        <source>Allow multiple connections from the same IP address:</source>
+        <translation>允許從同一個 IP 位置而來的多重連線：</translation>
+    </message>
+    <message>
+        <source>File pool size:</source>
+        <translation>檔案叢集大小：</translation>
+    </message>
+    <message>
+        <source>Any interface</source>
+        <translation>任何介面</translation>
+    </message>
+    <message>
+        <source>Always announce to all tiers:</source>
+        <translation>總是發佈到所有追蹤者群組</translation>
+    </message>
+    <message>
+        <source>Embedded tracker port:</source>
+        <translation>嵌入追蹤者埠：</translation>
+    </message>
+    <message>
+        <source>Optional IP Address to bind to (requires restart):</source>
+        <translation>可選擇綁紮的 IP 位置（需要重新啟動）：</translation>
+    </message>
+    <message>
+        <source>Fastest upload</source>
+        <translation>上傳最快</translation>
+    </message>
+    <message>
+        <source>Pause torrent</source>
+        <translation>暫停 torrent</translation>
+    </message>
+    <message>
+        <source>Remove torrent and its files</source>
+        <translation>移除 torrent 與其檔案</translation>
+    </message>
+    <message>
+        <source>qBittorrent Section</source>
+        <translation>qBittorrent 小節</translation>
+    </message>
+    <message>
+        <source>Send buffer watermark factor:</source>
+        <translation>傳送緩衝浮水印因子：</translation>
+    </message>
+    <message>
+        <source>libtorrent Section</source>
+        <translation>libtorrent 小節</translation>
+    </message>
+    <message>
+        <source>Coalesce reads &amp; writes:</source>
+        <translation>合併讀取與寫入：</translation>
+    </message>
+    <message>
+        <source>Outgoing ports (Min) [0: Disabled]:</source>
+        <translation>連出埠（最小）[0：停用]：</translation>
+    </message>
+    <message>
+        <source>IP Address to report to trackers (requires restart):</source>
+        <translation>回報至追蹤者的 IP 位置（需要重新啟動）：</translation>
+    </message>
+    <message>
+        <source>Recheck torrents on completion:</source>
+        <translation>完成後重新檢查 torrent：</translation>
+    </message>
+    <message>
+        <source>Allow encryption</source>
+        <translation>允許加密</translation>
+    </message>
+    <message>
+        <source>Send upload piece suggestions:</source>
+        <translation>傳送上傳分塊建議：</translation>
+    </message>
+    <message>
+        <source>Disk cache:</source>
+        <translation>磁碟快取：</translation>
+    </message>
+    <message>
+        <source>Enable embedded tracker:</source>
+        <translation>啟用嵌入追蹤者：</translation>
+    </message>
+    <message>
+        <source>Remove torrent</source>
+        <translation>移除 torrent</translation>
+    </message>
+    <message>
+        <source>Outgoing ports (Max) [0: Disabled]:</source>
+        <translation>連出埠（最大）[0：停用]：</translation>
+    </message>
+    <message>
+        <source>Asynchronous I/O threads:</source>
+        <translation>異步 I/O 執行緒：</translation>
+    </message>
+    <message>
+        <source>s</source>
+        <translation>s</translation>
+    </message>
+    <message>
+        <source>Send buffer watermark:</source>
+        <translation>傳送緩衝浮水印：</translation>
+    </message>
+    <message>
+        <source>Disk cache expiry interval:</source>
+        <translation>磁碟快取到期區間</translation>
+    </message>
+    <message>
+        <source>Peer proportional (throttles TCP)</source>
+        <translation>下載者比例（TCP 節流）</translation>
+    </message>
+    <message>
+        <source>Fixed slots</source>
+        <translation>固定通道</translation>
+    </message>
+    <message>
+        <source>Resolve peer countries (GeoIP):</source>
+        <translation>解析下載者的國家 (GeoIP)：</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>進階</translation>
+    </message>
+    <message>
+        <source>min</source>
+        <translation>分鐘</translation>
+    </message>
+    <message>
+        <source>Upload choking algorithm:</source>
+        <translation>是否上傳演算法：</translation>
+    </message>
+    <message>
+        <source>Seeding Limits</source>
+        <translation>種子限制</translation>
+    </message>
+    <message>
+        <source>KiB</source>
+        <translation>KiB</translation>
+    </message>
+    <message>
+        <source>Round-robin</source>
+        <translation>循環</translation>
+    </message>
+    <message>
+        <source>Upload slots behavior:</source>
+        <translation>上傳通道行為：</translation>
+    </message>
+    <message>
+        <source>Network Interface (requires restart):</source>
+        <translation>網路介面（需要重新啟動）：</translation>
+    </message>
+    <message>
+        <source>MiB</source>
+        <translation>MiB</translation>
+    </message>
+    <message>
+        <source>Send buffer low watermark:</source>
+        <translation>傳送緩衝低浮水印：</translation>
+    </message>
+    <message>
+        <source>Save resume data interval:</source>
+        <translation>儲存復原資料區間：</translation>
+    </message>
+    <message>
+        <source>Always announce to all trackers in a tier:</source>
+        <translation>總是發佈到同一追蹤者群組內所有的追蹤者：</translation>
+    </message>
+    <message>
+        <source>Session timeout:</source>
+        <translation>工作階段逾時：</translation>
+    </message>
+    <message>
+        <source>Listen on IPv6 address (requires restart):</source>
+        <translation>監聽 IPv6 位置（需要重新啟動）：</translation>
     </message>
 </context>
 <context>
@@ -1108,6 +1348,22 @@
         <source>Country</source>
         <translation>國籍</translation>
     </message>
+    <message>
+        <source>Ban peer permanently</source>
+        <translation>永遠封鎖下載者</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to permanently ban the selected peers?</source>
+        <translation>您確定要永遠封鎖選定的下載者嗎？</translation>
+    </message>
+    <message>
+        <source>Copy IP:port</source>
+        <translation>複製 IP:埠</translation>
+    </message>
+    <message>
+        <source>Add a new peer...</source>
+        <translation>新增下載者……</translation>
+    </message>
 </context>
 <context>
     <name>PropListDelegate</name>
@@ -1125,6 +1381,14 @@
         <source>Maximum</source>
         <comment>Maximum (priority)</comment>
         <translation>最高</translation>
+    </message>
+    <message>
+        <source>Mixed</source>
+        <translation>混合</translation>
+    </message>
+    <message>
+        <source>Do not download</source>
+        <translation>不要下載</translation>
     </message>
 </context>
 <context>
@@ -1292,6 +1556,18 @@
     <message>
         <source>Upload limit:</source>
         <translation>上傳限制：</translation>
+    </message>
+    <message>
+        <source>Priority</source>
+        <translation>優先度</translation>
+    </message>
+    <message>
+        <source>Filter files...</source>
+        <translation>過濾檔案……</translation>
+    </message>
+    <message>
+        <source>Rename...</source>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -1472,31 +1748,7 @@
 </context>
 <context>
     <name>TorrentContentModel</name>
-    <message>
-        <source>Name</source>
-        <translation>名稱</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation>大小</translation>
-    </message>
-    <message>
-        <source>Progress</source>
-        <translation>進度</translation>
-    </message>
-    <message>
-        <source>Download Priority</source>
-        <translation>下載優先度</translation>
-    </message>
-    <message>
-        <source>Remaining</source>
-        <translation>剩餘的</translation>
-    </message>
-    <message>
-        <source>Availability</source>
-        <translation>可得性</translation>
-    </message>
-</context>
+    </context>
 <context>
     <name>TransferListModel</name>
     <message>
@@ -1641,6 +1893,10 @@
         <comment>i.e. Size including unwanted data</comment>
         <translation>總大小</translation>
     </message>
+    <message>
+        <source>Availability</source>
+        <translation>可得性</translation>
+    </message>
 </context>
 <context>
     <name>TrackerListWidget</name>
@@ -1685,10 +1941,6 @@
         <translation>尚未連線</translation>
     </message>
     <message>
-        <source>#</source>
-        <translation>#</translation>
-    </message>
-    <message>
         <source>N/A</source>
         <translation>N/A</translation>
     </message>
@@ -1723,6 +1975,34 @@
     <message>
         <source>Remove tracker</source>
         <translation>移除追蹤者</translation>
+    </message>
+    <message>
+        <source>Remaining</source>
+        <translation>剩餘的</translation>
+    </message>
+    <message>
+        <source>Availability</source>
+        <translation>可得性</translation>
+    </message>
+    <message>
+        <source>Tier</source>
+        <translation>層</translation>
+    </message>
+    <message>
+        <source>Download Priority</source>
+        <translation>下載優先度</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>名稱</translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation>進度</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation>大小</translation>
     </message>
 </context>
 <context>
@@ -1818,6 +2098,10 @@
         <source>Categories</source>
         <translation>分類</translation>
     </message>
+    <message>
+        <source>Tags</source>
+        <translation>標籤</translation>
+    </message>
 </context>
 <context>
     <name>TransferListWidget</name>
@@ -1890,14 +2174,6 @@
         <translation>設定位置…</translation>
     </message>
     <message>
-        <source>Copy name</source>
-        <translation>複製名稱</translation>
-    </message>
-    <message>
-        <source>Copy hash</source>
-        <translation>複製雜湊值</translation>
-    </message>
-    <message>
         <source>Download first and last pieces first</source>
         <translation>先下載第一和最後一塊</translation>
     </message>
@@ -1920,16 +2196,8 @@
         <translation>重設</translation>
     </message>
     <message>
-        <source>Priority</source>
-        <translation>優先度</translation>
-    </message>
-    <message>
         <source>Force recheck</source>
         <translation>強制重新檢查</translation>
-    </message>
-    <message>
-        <source>Copy magnet link</source>
-        <translation>複製磁力連結</translation>
     </message>
     <message>
         <source>Super seeding mode</source>
@@ -1975,6 +2243,46 @@
         <source>Save path</source>
         <translation>儲存路徑</translation>
     </message>
+    <message>
+        <source>Comma-separated tags:</source>
+        <translation>逗號分隔標籤：</translation>
+    </message>
+    <message>
+        <source>Add Tags</source>
+        <translation>新增標籤</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>標籤</translation>
+    </message>
+    <message>
+        <source>Magnet link</source>
+        <translation>磁力連結</translation>
+    </message>
+    <message>
+        <source>Hash</source>
+        <translation>雜湊值</translation>
+    </message>
+    <message>
+        <source>Remove All</source>
+        <translation>移除所有</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>名稱</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>複製</translation>
+    </message>
+    <message>
+        <source>Queue</source>
+        <translation>佇列</translation>
+    </message>
+    <message>
+        <source>Add...</source>
+        <translation>新增……</translation>
+    </message>
 </context>
 <context>
     <name>UpDownRatioDialog</name>
@@ -2005,23 +2313,7 @@
 </context>
 <context>
     <name>about</name>
-    <message>
-        <source>An advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar.</source>
-        <translation>一個以 C++ 撰寫，基於 Qt 工具箱和 libtorrent-rasterbar 的進階 BitTorrent 客戶端。</translation>
-    </message>
-    <message>
-        <source>Home Page:</source>
-        <translation>首頁：</translation>
-    </message>
-    <message>
-        <source>Forum:</source>
-        <translation>論壇：</translation>
-    </message>
-    <message>
-        <source>Bug Tracker:</source>
-        <translation>遞交錯誤報告：</translation>
-    </message>
-</context>
+    </context>
 <context>
     <name>confirmDeletionDlg</name>
     <message>
@@ -2185,20 +2477,8 @@
         <translation>搜尋：</translation>
     </message>
     <message>
-        <source>Copy description page URL</source>
-        <translation>複製描述頁面的 URL</translation>
-    </message>
-    <message>
-        <source>Go to description page</source>
-        <translation>到描述頁</translation>
-    </message>
-    <message>
         <source>Results (showing</source>
         <translation>搜尋結果 (顯示</translation>
-    </message>
-    <message>
-        <source>Download</source>
-        <translation>下載</translation>
     </message>
     <message>
         <source>Filter</source>
@@ -2300,6 +2580,211 @@
     <message>
         <source>Version</source>
         <translation>版本</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished" />
+    </message>
+</context>
+<context>
+    <name>PeersAdditionDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Add Peers</source>
+        <translation>新增下載者</translation>
+    </message>
+    <message>
+        <source>List of peers to add (one IP per line):</source>
+        <translation>要新增的下載者清單（每行一個 IP）：</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>確定</translation>
+    </message>
+    <message>
+        <source>Format: IPv4:port / [IPv6]:port</source>
+        <translation>格式：IPv4:埠／[IPv6]:埠</translation>
+    </message>
+</context>
+<context>
+    <name>TagFilterWidget</name>
+    <message>
+        <source>New Tag</source>
+        <translation>新標籤</translation>
+    </message>
+    <message>
+        <source>Add tag...</source>
+        <translation>新增標籤……</translation>
+    </message>
+    <message>
+        <source>Delete torrents</source>
+        <translation>刪除 torrent</translation>
+    </message>
+    <message>
+        <source>Tag:</source>
+        <translation>標籤：</translation>
+    </message>
+    <message>
+        <source>Pause torrents</source>
+        <translation>暫停 torrent</translation>
+    </message>
+    <message>
+        <source>Resume torrents</source>
+        <translation>繼續 torrent</translation>
+    </message>
+    <message>
+        <source>Remove unused tags</source>
+        <translation>移除未使用的標籤</translation>
+    </message>
+    <message>
+        <source>Invalid tag name</source>
+        <translation>無效的標籤名稱</translation>
+    </message>
+    <message>
+        <source>Remove tag</source>
+        <translation>移除標籤</translation>
+    </message>
+</context>
+<context>
+    <name>TagFilterModel</name>
+    <message>
+        <source>All</source>
+        <translation>所有</translation>
+    </message>
+    <message>
+        <source>Untagged</source>
+        <translation>未標籤</translation>
+    </message>
+</context>
+<context>
+    <name>AboutDialog</name>
+    <message>
+        <source>Bug Tracker:</source>
+        <translation>臭蟲追蹤處：</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation>關於</translation>
+    </message>
+    <message>
+        <source>Forum:</source>
+        <translation>論壇：</translation>
+    </message>
+    <message>
+        <source>E-mail:</source>
+        <translation>電子郵件：</translation>
+    </message>
+    <message>
+        <source>Current maintainer</source>
+        <translation>目前的維護者</translation>
+    </message>
+    <message>
+        <source>Home Page:</source>
+        <translation>首頁：</translation>
+    </message>
+    <message>
+        <source>Greece</source>
+        <translation>希臘</translation>
+    </message>
+    <message>
+        <source>Special Thanks</source>
+        <translation>特別感謝</translation>
+    </message>
+    <message>
+        <source>An advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar.</source>
+        <translation>一個以 C++ 撰寫，基於 Qt 工具箱和 libtorrent-rasterbar 的進階 BitTorrent 客戶端。</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>名稱：</translation>
+    </message>
+    <message>
+        <source>About qBittorrent</source>
+        <translation>關於 qBittorrent</translation>
+    </message>
+    <message>
+        <source>Libraries</source>
+        <translation>函式庫</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>授權條款</translation>
+    </message>
+    <message>
+        <source>Translators</source>
+        <translation>翻譯者</translation>
+    </message>
+    <message>
+        <source>qBittorrent was built with the following libraries:</source>
+        <translation>qBittorrent 是使用下列函式庫建構：</translation>
+    </message>
+    <message>
+        <source>Nationality:</source>
+        <translation>國籍：</translation>
+    </message>
+    <message>
+        <source>Author</source>
+        <translation>作者</translation>
+    </message>
+</context>
+<context>
+    <name>OptionDialog</name>
+    <message>
+        <source>All addresses</source>
+        <translation>所有位置</translation>
+    </message>
+    <message>
+        <source>All IPv6 addresses</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>All IPv4 addresses</source>
+        <translation type="unfinished" />
+    </message>
+</context>
+<context>
+    <name>SearchJobWidget</name>
+    <message>
+        <source>Copy</source>
+        <translation>複製</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation>下載</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>名稱</translation>
+    </message>
+    <message>
+        <source>Description page URL</source>
+        <translation>描述頁面的 URL</translation>
+    </message>
+    <message>
+        <source>Open description page</source>
+        <translation>開啟描述頁面</translation>
+    </message>
+    <message>
+        <source>Download link</source>
+        <translation>下載連結</translation>
+    </message>
+</context>
+<context>
+    <name>TorrentContentTreeView</name>
+    <message>
+        <source>Renaming</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>New name:</source>
+        <translation type="unfinished" />
     </message>
 </context>
 </TS>
