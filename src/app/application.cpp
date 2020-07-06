@@ -61,6 +61,7 @@
 #endif // Q_OS_MACOS
 #endif
 
+#include "base/bittorrent/infohash.h"
 #include "base/bittorrent/session.h"
 #include "base/bittorrent/torrenthandle.h"
 #include "base/exceptions.h"
@@ -126,14 +127,14 @@ namespace
 #endif
 }
 
-Application::Application(const QString &id, int &argc, char **argv)
+Application::Application(int &argc, char **argv)
     : BaseApplication(argc, argv)
-    , m_instanceManager(new ApplicationInstanceManager {id, this})
     , m_running(false)
     , m_shutdownAct(ShutdownDialogAction::Exit)
     , m_commandLineArgs(parseCommandLine(this->arguments()))
 {
     qRegisterMetaType<Log::Msg>("Log::Msg");
+    qRegisterMetaType<Log::Peer>("Log::Peer");
 
     setApplicationName("qBittorrent");
     setOrganizationDomain("qbittorrent.org");
@@ -144,12 +145,21 @@ Application::Application(const QString &id, int &argc, char **argv)
     QPixmapCache::setCacheLimit(PIXMAP_CACHE_SIZE);
 #endif
 
-    const bool portableModeEnabled = m_commandLineArgs.profileDir.isEmpty() && QDir(QCoreApplication::applicationDirPath()).exists(DEFAULT_PORTABLE_MODE_PROFILE_DIR);
+    const bool portableModeEnabled = m_commandLineArgs.profileDir.isEmpty()
+            && QDir(QCoreApplication::applicationDirPath()).exists(DEFAULT_PORTABLE_MODE_PROFILE_DIR);
 
     const QString profileDir = portableModeEnabled
         ? QDir(QCoreApplication::applicationDirPath()).absoluteFilePath(DEFAULT_PORTABLE_MODE_PROFILE_DIR)
         : m_commandLineArgs.profileDir;
-    Profile::initialize(profileDir, m_commandLineArgs.configurationName,
+#ifdef Q_OS_WIN
+    const QString instanceId = (profileDir + (m_commandLineArgs.configurationName.isEmpty() ? QString {} : ('/' + m_commandLineArgs.configurationName))).toLower();
+#else
+    const QString instanceId = profileDir + (m_commandLineArgs.configurationName.isEmpty() ? QString {} : ('/' + m_commandLineArgs.configurationName));
+#endif
+    const QString appId = QLatin1String("qBittorrent-") + Utils::Misc::getUserIDString() + '@' + instanceId;
+    m_instanceManager = new ApplicationInstanceManager {appId, this};
+
+    Profile::initInstance(profileDir, m_commandLineArgs.configurationName,
                         (m_commandLineArgs.relativeFastresumePaths || portableModeEnabled));
 
     Logger::initInstance();
@@ -177,7 +187,7 @@ Application::Application(const QString &id, int &argc, char **argv)
             Logger::instance()->addMessage(tr("Redundant command line flag detected: \"%1\". Portable mode implies relative fastresume.").arg("--relative-fastresume"), Log::WARNING); // to avoid translating the `--relative-fastresume` string
     }
     else {
-        Logger::instance()->addMessage(tr("Using config directory: %1").arg(Profile::instance().location(SpecialFolder::Config)));
+        Logger::instance()->addMessage(tr("Using config directory: %1").arg(Profile::instance()->location(SpecialFolder::Config)));
     }
 }
 
@@ -301,12 +311,9 @@ void Application::processMessage(const QString &message)
 void Application::runExternalProgram(const BitTorrent::TorrentHandle *torrent) const
 {
     QString program = Preferences::instance()->getAutoRunProgram().trimmed();
-    program.replace("%N", torrent->name());
-    program.replace("%L", torrent->category());
 
     QStringList tags = torrent->tags().values();
     std::sort(tags.begin(), tags.end(), Utils::String::naturalLessThan<Qt::CaseInsensitive>);
-    program.replace("%G", tags.join(','));
 
 #if defined(Q_OS_WIN)
     const auto chopPathSep = [](const QString &str) -> QString
@@ -315,40 +322,126 @@ void Application::runExternalProgram(const BitTorrent::TorrentHandle *torrent) c
             return str.mid(0, (str.length() -1));
         return str;
     };
+    program.replace("%N", torrent->name());
+    program.replace("%L", torrent->category());
+    program.replace("%G", tags.join(','));
     program.replace("%F", chopPathSep(Utils::Fs::toNativePath(torrent->contentPath())));
     program.replace("%R", chopPathSep(Utils::Fs::toNativePath(torrent->rootPath())));
     program.replace("%D", chopPathSep(Utils::Fs::toNativePath(torrent->savePath())));
-#else
-    program.replace("%F", Utils::Fs::toNativePath(torrent->contentPath()));
-    program.replace("%R", Utils::Fs::toNativePath(torrent->rootPath()));
-    program.replace("%D", Utils::Fs::toNativePath(torrent->savePath()));
-#endif
     program.replace("%C", QString::number(torrent->filesCount()));
     program.replace("%Z", QString::number(torrent->totalSize()));
     program.replace("%T", torrent->currentTracker());
     program.replace("%I", torrent->hash());
+#else
+    const auto quoteString = [](const QString &str, bool needQuote) -> QString
+    {
+        QString result = str;
+        if (needQuote)
+            result.replace(QLatin1String("\""), QLatin1String("\"\"\""));
+        return result;
+    };
+    QString p = "";
+    bool inQuote = false;
+    int last = 0;
+    for (int i = 0, len = program.size() - 1; i <= len; ++i) {
+        switch (program[i].toLatin1()) {
+        case '"':
+            if (inQuote && i + 2 <= len && program[i+1] == '"' && program[i+2] == '"')
+                i += 2;
+            else
+                inQuote = !inQuote;
+            break;
+        case '%':
+            if (i < len) {
+                p.append(program.midRef(last, i - last));
+                last = i + 2;
+                switch (program[++i].toLatin1()) {
+                case 'N':
+                    p.append(quoteString(torrent->name(), inQuote));
+                    break;
+                case 'L':
+                    p.append(quoteString(torrent->category(), inQuote));
+                    break;
+                case 'G':
+                    p.append(quoteString(tags.join(','), inQuote));
+                    break;
+                case 'F':
+                    p.append(quoteString(Utils::Fs::toNativePath(torrent->contentPath()), inQuote));
+                    break;
+                case 'R':
+                    p.append(quoteString(Utils::Fs::toNativePath(torrent->rootPath()), inQuote));
+                    break;
+                case 'D':
+                    p.append(quoteString(Utils::Fs::toNativePath(torrent->savePath()), inQuote));
+                    break;
+                case 'C':
+                    p.append(quoteString(QString::number(torrent->filesCount()), inQuote));
+                    break;
+                case 'Z':
+                    p.append(quoteString(QString::number(torrent->totalSize()), inQuote));
+                    break;
+                case 'T':
+                    p.append(quoteString(torrent->currentTracker(), inQuote));
+                    break;
+                case 'I':
+                    p.append(quoteString(torrent->hash(), inQuote));
+                    break;
+                default:
+                    last = --i;
+                }
+            }
+            break;
+        }
+    }
+    p.append(program.midRef(last));
+    program = p;
+#endif
 
     Logger *logger = Logger::instance();
     logger->addMessage(tr("Torrent: %1, running external program, command: %2").arg(torrent->name(), program));
 
 #if defined(Q_OS_WIN)
-    std::unique_ptr<wchar_t[]> programWchar(new wchar_t[program.length() + 1] {});
+    auto programWchar = std::make_unique<wchar_t[]>(program.length() + 1);
     program.toWCharArray(programWchar.get());
 
     // Need to split arguments manually because QProcess::startDetached(QString)
     // will strip off empty parameters.
     // E.g. `python.exe "1" "" "3"` will become `python.exe "1" "3"`
     int argCount = 0;
-    LPWSTR *args = ::CommandLineToArgvW(programWchar.get(), &argCount);
+    std::unique_ptr<LPWSTR[], decltype(&::LocalFree)> args {::CommandLineToArgvW(programWchar.get(), &argCount), ::LocalFree};
 
     QStringList argList;
     for (int i = 1; i < argCount; ++i)
         argList += QString::fromWCharArray(args[i]);
 
-    QProcess::startDetached(QString::fromWCharArray(args[0]), argList);
-
-    ::LocalFree(args);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
+    QProcess proc;
+    proc.setProgram(QString::fromWCharArray(args[0]));
+    proc.setArguments(argList);
+    proc.setCreateProcessArgumentsModifier([](QProcess::CreateProcessArguments *args)
+    {
+        if (Preferences::instance()->isAutoRunConsoleEnabled()) {
+            args->flags |= CREATE_NEW_CONSOLE;
+            args->flags &= ~(CREATE_NO_WINDOW | DETACHED_PROCESS);
+        }
+        else {
+            args->flags |= CREATE_NO_WINDOW;
+            args->flags &= ~(CREATE_NEW_CONSOLE | DETACHED_PROCESS);
+        }
+        args->inheritHandles = false;
+        args->startupInfo->dwFlags &= ~STARTF_USESTDHANDLES;
+        ::CloseHandle(args->startupInfo->hStdInput);
+        ::CloseHandle(args->startupInfo->hStdOutput);
+        ::CloseHandle(args->startupInfo->hStdError);
+        args->startupInfo->hStdInput = nullptr;
+        args->startupInfo->hStdOutput = nullptr;
+        args->startupInfo->hStdError = nullptr;
+    });
+    proc.startDetached();
 #else
+    QProcess::startDetached(QString::fromWCharArray(args[0]), argList);
+#endif // QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+#else // Q_OS_WIN
     // Cannot give users shell environment by default, as doing so could
     // enable command injection via torrent name and other arguments
     // (especially when some automated download mechanism has been setup).
@@ -526,7 +619,7 @@ int Application::exec(const QStringList &params)
 #ifndef DISABLE_COUNTRIES_RESOLUTION
         Net::GeoIPManager::initInstance();
 #endif
-        ScanFoldersModel::initInstance(this);
+        ScanFoldersModel::initInstance();
 
 #ifndef DISABLE_WEBUI
         m_webui = new WebUI;
@@ -559,7 +652,7 @@ int Application::exec(const QStringList &params)
 #ifndef DISABLE_WEBUI
     Preferences *const pref = Preferences::instance();
     // Display some information to the user
-    const QString mesg = QString("\n******** %1 ********\n").arg(tr("Information"))
+    const QString mesg = QString::fromLatin1("\n******** %1 ********\n").arg(tr("Information"))
         + tr("To control qBittorrent, access the Web UI at %1")
             .arg(QString("http://localhost:") + QString::number(pref->getWebUiPort())) + '\n';
     printf("%s", qUtf8Printable(mesg));
@@ -739,6 +832,8 @@ void Application::cleanup()
         UIThemeManager::freeInstance();
     }
 #endif // DISABLE_GUI
+
+    Profile::freeInstance();
 
     if (m_shutdownAct != ShutdownDialogAction::Exit) {
         qDebug() << "Sending computer shutdown/suspend/hibernate signal...";

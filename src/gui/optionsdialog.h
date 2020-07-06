@@ -30,6 +30,7 @@
 #define OPTIONSDIALOG_H
 
 #include <QDialog>
+#include "base/net/downloadmanager.h"
 
 class QAbstractButton;
 class QCloseEvent;
@@ -56,7 +57,7 @@ namespace Ui
     class OptionsDialog;
 }
 
-class OptionsDialog : public QDialog
+class OptionsDialog final : public QDialog
 {
     Q_OBJECT
     using ThisType = OptionsDialog;
@@ -82,7 +83,7 @@ class OptionsDialog : public QDialog
 public:
     // Constructor / Destructor
     OptionsDialog(QWidget *parent = nullptr);
-    ~OptionsDialog();
+    ~OptionsDialog() override;
 
 public slots:
     void showConnectionTab();
@@ -111,14 +112,14 @@ private slots:
     void setLocale(const QString &localeStr);
     void webUIHttpsCertChanged(const QString &path, ShowError showError);
     void webUIHttpsKeyChanged(const QString &path, ShowError showError);
+    void on_fetchButton_clicked();
+    void handlePublicTrackersListChanged(const Net::DownloadResult &result);
 
 private:
     // Methods
     void saveOptions();
     void loadOptions();
     void initializeLanguageCombo();
-    void initializeThemeCombo();
-    static QString languageToLocalizedString(const QLocale &locale);
     // General options
     QString getLocale() const;
 #ifndef Q_OS_MACOS
@@ -184,7 +185,6 @@ private:
     AdvancedSettings *m_advancedSettings;
     QList<QString> m_addedScanDirs;
     QList<QString> m_removedScanDirs;
-    QString m_uiThemeFilePath;
 };
 
 #endif // OPTIONSDIALOG_H

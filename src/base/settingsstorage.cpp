@@ -126,7 +126,9 @@ namespace
             {"BitTorrent/Session/uTPEnabled", "Preferences/Bittorrent/uTP"},
             {"BitTorrent/Session/uTPRateLimited", "Preferences/Bittorrent/uTP_rate_limited"},
             {"BitTorrent/Session/AutoBanUnknownPeer", "Preferences/Advanced/AutoBanUnknownPeer"},
+            {"BitTorrent/Session/AutoBanBTPlayerPeer", "Preferences/Advanced/AutoBanBTPlayePeer"},
             {"BitTorrent/Session/AutoUpdateTrackersEnabled", "Preferences/Bittorrent/AutoUpdateTrackers"},
+            {"BitTorrent/Session/PublicTrackersList", "Preferences/Bittorrent/PublicTrackersList"},
             {"BitTorrent/TrackerEnabled", "Preferences/Advanced/trackerEnabled"},
             {"Network/Proxy/OnlyForTorrents", "Preferences/Connection/ProxyOnlyForTorrents"},
             {"Network/Proxy/Type", "Preferences/Connection/ProxyType"},
@@ -281,7 +283,7 @@ bool TransactionalSettings::write(const QVariantHash &data) const
 
 QString TransactionalSettings::deserialize(const QString &name, QVariantHash &data) const
 {
-    SettingsPtr settings = Profile::instance().applicationSettings(name);
+    SettingsPtr settings = Profile::instance()->applicationSettings(name);
 
     if (settings->allKeys().isEmpty())
         return {};
@@ -297,7 +299,7 @@ QString TransactionalSettings::deserialize(const QString &name, QVariantHash &da
 
 QString TransactionalSettings::serialize(const QString &name, const QVariantHash &data) const
 {
-    SettingsPtr settings = Profile::instance().applicationSettings(name);
+    SettingsPtr settings = Profile::instance()->applicationSettings(name);
     for (auto i = data.begin(); i != data.end(); ++i)
         settings->setValue(i.key(), i.value());
 

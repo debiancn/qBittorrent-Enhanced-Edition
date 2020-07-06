@@ -43,10 +43,6 @@
 #endif
 
 #include <QDebug>
-#include <QProcess>
-#include <QString>
-#include <QStringList>
-#include <QTextCodec>
 #include <QThread>
 
 #ifndef DISABLE_GUI
@@ -82,21 +78,9 @@ Q_IMPORT_PLUGIN(QICOPlugin)
 
 #include "base/preferences.h"
 #include "base/profile.h"
-#include "base/utils/misc.h"
 #include "application.h"
 #include "cmdoptions.h"
 #include "upgrade.h"
-
-#if defined(Q_OS_MAC)
-#include <sys/sysctl.h>
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <string>
-#include <algorithm>
-#include <iterator>
-#include <cassert>
-#endif
 
 #ifndef DISABLE_GUI
 #include "gui/utils.h"
@@ -138,63 +122,6 @@ void showSplashScreen();
 void adjustFileDescriptorLimit();
 #endif
 
-#if defined(Q_OS_MAC)
-/// code from https://gist.github.com/konstantinwirz/5450970
-/// returns the maximum size of argument in bytes
-/// returns 0 if failed
-unsigned int get_max_arguments_size() {
-    int mib[2] = {CTL_KERN, KERN_ARGMAX};
-    unsigned int result = 0;
-    std::size_t size =  sizeof(result);
-    if(sysctl(mib, 2, &result, &size, nullptr, 0) == -1)
-        perror("sysctl");
-    return result;
-}
-
-/// returns the command line arguments of a process with given pid
-/// if failed - returns an empty vector
-QString get_process_arguments(pid_t pid) {
-    std::vector<std::string> arguments;
-    int mib[3] = {CTL_KERN, KERN_PROCARGS2, pid};
-    size_t max_arguments_number = get_max_arguments_size();
-    assert(max_arguments_number);
-    char *buffer = new char[max_arguments_number];
-    assert(buffer);
-
-    if (sysctl(mib, 3, buffer, &max_arguments_number, nullptr, 0) == -1) {
-        perror("sysctl");
-    } else {
-        // first element in buffer is argc
-        const int real_arguments_number = static_cast<int>(*buffer);
-        std::string word;
-        // elements are '\0' separated
-        for(int i=0; i<max_arguments_number; ++i) {
-            if(isprint(buffer[i])) {
-                word.push_back(buffer[i]);
-            } else {
-                if(!word.empty()) {
-                    arguments.push_back(word);
-                    word.clear();
-                }
-            }
-        }
-        // first arg is exec_path - skip it
-        // we need the next real_arguments_number arguments
-        if(arguments.size()>=real_arguments_number+1) {
-            arguments = std::vector<std::string>(arguments.begin() + 1,
-                                                 arguments.begin() + 1 + real_arguments_number);
-        } else { // something is wrong(not enough elements in vector) - clear it
-            arguments.clear();
-        }
-    }
-
-    std::ostringstream args;
-    std::copy(arguments.begin(), arguments.end(), std::ostream_iterator<std::string>(args, "^@"));
-
-    return QString::fromStdString(args.str());
-}
-#endif
-
 // Main
 int main(int argc, char *argv[])
 {
@@ -205,13 +132,20 @@ int main(int argc, char *argv[])
     // We must save it here because QApplication constructor may change it
     bool isOneArg = (argc == 2);
 
+#if !defined(DISABLE_GUI) && (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    // Attribute Qt::AA_EnableHighDpiScaling must be set before QCoreApplication is created
+    if (qgetenv("QT_ENABLE_HIGHDPI_SCALING").isEmpty() && qgetenv("QT_AUTO_SCREEN_SCALE_FACTOR").isEmpty())
+        Application::setAttribute(Qt::AA_EnableHighDpiScaling, true);
+    // HighDPI scale factor policy must be set before QGuiApplication is created
+    if (qgetenv("QT_SCALE_FACTOR_ROUNDING_POLICY").isEmpty())
+        Application::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+#endif
+
     try {
         // Create Application
-        const QString appId = QLatin1String("qBittorrent-") + Utils::Misc::getUserIDString();
-        std::unique_ptr<Application> app(new Application(appId, argc, argv));
+        auto app = std::make_unique<Application>(argc, argv);
 
         const QBtCommandLineParameters params = app->commandLineArgs();
-
         if (!params.unknownParameter.isEmpty()) {
             throw CommandLineParameterError(QObject::tr("%1 is an unknown command line parameter.",
                                                         "--random-parameter is an unknown command line parameter.")
@@ -240,117 +174,41 @@ int main(int argc, char *argv[])
         if (!qputenv("QBITTORRENT", QBT_VERSION))
             fprintf(stderr, "Couldn't set environment variable...\n");
 
+        const bool firstTimeUser = !Preferences::instance()->getAcceptedLegal();
+        if (firstTimeUser) {
 #ifndef DISABLE_GUI
-        if (!userAgreesWithLegalNotice())
-            return EXIT_SUCCESS;
+            if (!userAgreesWithLegalNotice())
+                return EXIT_SUCCESS;
 
 #elif defined(Q_OS_WIN)
-        if (_isatty(_fileno(stdin))
-            && _isatty(_fileno(stdout))
-            && !userAgreesWithLegalNotice())
-            return EXIT_SUCCESS;
+            if (_isatty(_fileno(stdin))
+                && _isatty(_fileno(stdout))
+                && !userAgreesWithLegalNotice())
+                return EXIT_SUCCESS;
 #else
-        if (!params.shouldDaemonize
-            && isatty(fileno(stdin))
-            && isatty(fileno(stdout))
-            && !userAgreesWithLegalNotice())
-            return EXIT_SUCCESS;
+            if (!params.shouldDaemonize
+                && isatty(fileno(stdin))
+                && isatty(fileno(stdout))
+                && !userAgreesWithLegalNotice())
+                return EXIT_SUCCESS;
 #endif
+        }
 
         // Check if qBittorrent is already running for this user
         if (app->isRunning()) {
-            qDebug("qBittorrent is already running for this user, trying to open new qBt instance.");
+#if defined(DISABLE_GUI) && !defined(Q_OS_WIN)
+            if (params.shouldDaemonize) {
+                throw CommandLineParameterError(QObject::tr("You cannot use %1: qBittorrent is already running for this user.")
+                                     .arg(QLatin1String("-d (or --daemon)")));
+            }
+            else
+#endif
+            qDebug("qBittorrent is already running for this user.");
 
             QThread::msleep(300);
-            bool isRunning = false;
-            QStringList qBitList;
-            QRegExp arg("--configuration=(.+)");
+            app->sendParams(params.paramList());
 
-            QProcess process;
-            process.setReadChannel(QProcess::StandardOutput);
-            process.setProcessChannelMode(QProcess::MergedChannels);
-
-    #if defined(Q_OS_WIN)
-            process.start("wmic /OUTPUT:STDOUT process where \"name like '%qbittorrent%'\" get ProcessID /format:list"); // use wmic to get qbittorrent process id
-            process.waitForFinished();
-
-            QString list = QString(process.readAll());
-            QRegExp winArg("--configuration=\"([^\"]*)\"");
-            QStringList pidList = list.remove("ProcessId=").split("\r\r\n");
-            pidList.removeAll(QString(""));
-
-            foreach (QString pid, pidList) {
-                if (QString::number(app->applicationPid()) == pid) continue;
-                process.start("wmic /OUTPUT:STDOUT process where handle='"+pid+"' get CommandLine /format:list"); // use wmic to get qbittorrent command line
-                process.waitForFinished();
-                qBitList.append(QString(process.readAll()).remove("CommandLine=").remove("\r\r\n"));
-            }
-    #else
-            process.start("sh", QStringList() << "-c" << "ps -ax | grep '[q]bittorrent' | awk '{ print $1 }'");
-            process.waitForFinished();
-
-            QString list = QString(process.readAll());
-            QStringList pidList = list.split("\n");
-            pidList.removeLast(); // remove empty line
-
-            foreach (QString pid, pidList) {
-                if (QString::number(app->applicationPid()) == pid) continue;
-                #if defined(Q_OS_MAC)
-                    QString args = get_process_arguments(pid.toInt());
-                    qBitList.append(args);
-                #else
-                    process.start("sh", QStringList() << "-c" << "cat -v /proc/"+pid+"/cmdline");
-                    process.waitForFinished();
-                    qBitList.append(QString(process.readAll()));
-                #endif
-            }
-    #endif
-
-            // Check configuration name first if the system is Windows
-    #if defined(Q_OS_WIN)
-            process.start("wmic /OUTPUT:STDOUT process where handle='"+QString::number(app->applicationPid())+"' get CommandLine /format:list"); // use wmic to get qbittorrent command line
-            process.waitForFinished();
-            QString cmd = QString(process.readAll());
-            if (cmd.contains("configuration=")) {
-                arg.indexIn(cmd);
-                if (arg.cap(1).at(0) != '"') {
-                    throw CommandLineParameterError(QObject::tr("configuration name must be included with \"\""));
-                }
-            }
-    #endif
-
-            foreach (QString qb, qBitList) {
-                arg.indexIn(qb);
-                QString cfgArg = arg.cap(1);
-                if (cfgArg != "") {
-    #if defined(Q_OS_WIN)
-                        if (cfgArg.at(0) != '"') {
-                            throw CommandLineParameterError(QObject::tr("configuration name must be included with \"\""));
-                        } else {
-                            winArg.indexIn(qb);
-                            cfgArg = winArg.cap(1);
-                        }
-    #endif
-                    if (cfgArg.indexOf("^@") != -1) {
-                        cfgArg.remove(cfgArg.indexOf("^@"), cfgArg.size()-cfgArg.indexOf("^@"));
-                    }
-                    if (cfgArg == params.configurationName) {
-                        isRunning = true;
-                    }
-                } else {
-                    if (params.configurationName == "") {
-                        isRunning = true;
-                    }
-                }
-            }
-
-            if (params.configurationName == "") {
-                app->sendParams(params.paramList());
-            }
-
-            if (isRunning) {
-                return EXIT_SUCCESS;
-            }
+            return EXIT_SUCCESS;
         }
 
 #if defined(Q_OS_WIN)
@@ -384,21 +242,29 @@ int main(int argc, char *argv[])
         app->setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
 
+        if (!firstTimeUser) {
+            handleChangedDefaults(DefaultPreferencesMode::Legacy);
+
 #ifndef DISABLE_GUI
-        if (!upgrade()) return EXIT_FAILURE;
+            if (!upgrade()) return EXIT_FAILURE;
 #elif defined(Q_OS_WIN)
-        if (!upgrade(_isatty(_fileno(stdin))
-                     && _isatty(_fileno(stdout)))) return EXIT_FAILURE;
+            if (!upgrade(_isatty(_fileno(stdin))
+                         && _isatty(_fileno(stdout)))) return EXIT_FAILURE;
 #else
-        if (!upgrade(!params.shouldDaemonize
-                     && isatty(fileno(stdin))
-                     && isatty(fileno(stdout)))) return EXIT_FAILURE;
+            if (!upgrade(!params.shouldDaemonize
+                         && isatty(fileno(stdin))
+                         && isatty(fileno(stdout)))) return EXIT_FAILURE;
 #endif
+        }
+        else {
+            handleChangedDefaults(DefaultPreferencesMode::Current);
+        }
+
 #if defined(DISABLE_GUI) && !defined(Q_OS_WIN)
         if (params.shouldDaemonize) {
             app.reset(); // Destroy current application
             if (daemon(1, 0) == 0) {
-                app.reset(new Application(appId, argc, argv));
+                app = std::make_unique<Application>(argc, argv);
                 if (app->isRunning()) {
                     // Another instance had time to start.
                     return EXIT_FAILURE;
@@ -529,11 +395,10 @@ void displayBadArgMessage(const QString &message)
 bool userAgreesWithLegalNotice()
 {
     Preferences *const pref = Preferences::instance();
-    if (pref->getAcceptedLegal()) // Already accepted once
-        return true;
+    Q_ASSERT(!pref->getAcceptedLegal());
 
 #ifdef DISABLE_GUI
-    const QString eula = QString("\n*** %1 ***\n").arg(QObject::tr("Legal Notice"))
+    const QString eula = QString::fromLatin1("\n*** %1 ***\n").arg(QObject::tr("Legal Notice"))
         + QObject::tr("qBittorrent is a file sharing program. When you run a torrent, its data will be made available to others by means of upload. Any content you share is your sole responsibility.") + "\n\n"
         + QObject::tr("No further notices will be issued.") + "\n\n"
         + QObject::tr("Press %1 key to accept and continue...").arg("'y'") + '\n';

@@ -24,11 +24,9 @@ PeerID: `-qB421[A-Z]-`, example: `-qB421A-`
 
 4. _Auto Ban Unknown Peer from China_ Option(Default: OFF)
 
-5. Show Tracker Authentication Window(Default: ON)
+5. Auto Update Public Trackers List(Default: OFF)
 
-6. Auto Update Public Trackers List(Default: OFF)**
-
-7. Multiple qBittorrent instances
+6. Auto Ban BitTorrent Media Player Peer Option(Default: OFF)
 ********************************
 ### Description:
 qBittorrent is a bittorrent client programmed in C++ / Qt that uses
@@ -38,8 +36,7 @@ It aims to be a good alternative to all other bittorrent clients
 out there. qBittorrent is fast, stable and provides unicode
 support as well as many features.
 
-This product includes GeoLite data created by MaxMind, available from
-https://www.maxmind.com/
+The free [IP to Country Lite database](https://db-ip.com/db/download/ip-to-country-lite) by [DB-IP](https://db-ip.com/) is used for resolving the countries of peers. The database is licensed under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).
 
 ### Installation:
 For installation, follow the instructions from INSTALL file, but simple:
@@ -79,6 +76,12 @@ Latest AppImage download: [qBittorrent-Enhanced-Edition.AppImage](https://github
 ### macOS (Homebrew) (Maintainer: [AlexaraWu](https://github.com/AlexaraWu))
 ```
 brew cask install c0re100-qbittorrent
+```
+
+### Windows (Chocolatey) (Maintainer: [iYato](https://github.com/iYato))
+
+```
+choco install qbittorrent-enhanced
 ```
 
 ### Misc:
