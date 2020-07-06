@@ -10,7 +10,7 @@ Build-Depends: debhelper (>= 10),
                qtbase5-dev (>= 5.2.0),
                qttools5-dev-tools,
                zlib1g-dev
-Standards-Version: 4.3.0
+Standards-Version: 4.5.0
 Vcs-Git: https://github.com/debiancn/qBittorrent-Enhanced-Edition.git
 Vcs-Browser: https://github.com/debiancn/qBittorrent-Enhanced-Edition
 Homepage: http://www.qbittorrent.org/
@@ -18,7 +18,7 @@ Homepage: http://www.qbittorrent.org/
 Package: qbittorrent-enhanced
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
-         python (>= 2.5), geoip-database
+         python3, geoip-database
 Provides: qbittorrent
 Conflicts: qbittorrent
 Replaces: qbittorrent
@@ -91,8 +91,8 @@ Package: qbittorrent-enhanced-dbg
 Architecture: any
 Section: debug
 Depends: qbittorrent-enhanced (= ${binary:Version}) | qbittorrent-enhanced-nox (= ${binary:Version}), ${misc:Depends}
-Replaces: qbittorrent-dbg (<< 4.1.6.1-1~)
-Breaks: qbittorrent-dbg (<< 4.1.6.1-1~)
+Replaces: qbittorrent-dbg
+Breaks: qbittorrent-dbg
 Description: debug symbols for qbittorrent-enhanced and qbittorrent-enhanced-nox
  BitTorrent client written in C++ and based on libtorrent-rasterbar with a Qt5
  user interface. qBittorrent is a feature rich but lightweight client that is
