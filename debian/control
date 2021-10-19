@@ -2,31 +2,22 @@ Source: qbittorrent-enhanced
 Section: net
 Priority: optional
 Maintainer: Yangfl <mmyangfl@gmail.com>
-Build-Depends: debhelper (>= 10),
-               dpkg-dev (>= 1.16.1),
-               libtorrent-rasterbar-dev (>= 1.1.2),
-               libboost-dev,
-               libqt5svg5-dev,
-               qtbase5-dev (>= 5.2.0),
-               qttools5-dev-tools,
-               zlib1g-dev
-Standards-Version: 4.5.0
-Vcs-Git: https://github.com/debiancn/qBittorrent-Enhanced-Edition.git
-Vcs-Browser: https://github.com/debiancn/qBittorrent-Enhanced-Edition
 Homepage: http://www.qbittorrent.org/
+Standards-Version: 4.6.0
+Build-Depends: debhelper-compat (= 13), libtorrent-rasterbar-dev (>= 1.1.2),
+ libboost-dev, libqt5svg5-dev, qtbase5-dev (>= 5.2.0), qttools5-dev-tools,
+ zlib1g-dev
 
 Package: qbittorrent-enhanced
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends},
-         python3, geoip-database
+Depends: ${shlibs:Depends}, ${misc:Depends}, geoip-database
 Provides: qbittorrent
 Conflicts: qbittorrent
 Replaces: qbittorrent
-Suggests: qbittorrent-enhanced-dbg
 Description: bittorrent client based on libtorrent-rasterbar with a Qt5 GUI (Enhanced Edition)
- BitTorrent client written in C++ and based on libtorrent-rasterbar with a Qt5
- user interface. qBittorrent is a feature rich but lightweight client that is
- very similar to uTorrent. Its main features are:
+ BitTorrent client written in C++ and based on libtorrent-rasterbar with a
+ Qt5 user interface. qBittorrent is a feature rich but lightweight client
+ that is very similar to uTorrent. Its main features are:
  .
   * Polished uTorrent-like user interface
   * Well integrated and extensible search engine
@@ -58,13 +49,12 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Provides: qbittorrent-nox
 Conflicts: qbittorrent-nox
 Replaces: qbittorrent-nox
-Suggests: qbittorrent-enhanced-dbg
 Description: bittorrent client based on libtorrent-rasterbar (Enhanced Edition without X support)
  BitTorrent client written in C++ and based on libtorrent-rasterbar.
  qBittorrent-nox is a version of qBittorrent (Qt5 application) that does not
- require X and can be controlled via a WebUI, thus is more suitable for headless
- servers. It is a feature rich but lightweight client that is very similar to
- rTorrent. Its main features are:
+ require X and can be controlled via a WebUI, thus is more suitable for
+ headless servers. It is a feature rich but lightweight client that is very
+ similar to rTorrent. Its main features are:
  .
   * Remote control through a Web user interface
   * Vuze-compatible protocol encryption
@@ -86,17 +76,3 @@ Description: bittorrent client based on libtorrent-rasterbar (Enhanced Edition w
   * Auto Ban Unknown Peer from China Option (Default: OFF)
   * Show Tracker Authentication Window (Default: ON)
   * Auto Update Public Trackers List (Default: OFF)
-
-Package: qbittorrent-enhanced-dbg
-Architecture: any
-Section: debug
-Depends: qbittorrent-enhanced (= ${binary:Version}) | qbittorrent-enhanced-nox (= ${binary:Version}), ${misc:Depends}
-Replaces: qbittorrent-dbg
-Breaks: qbittorrent-dbg
-Description: debug symbols for qbittorrent-enhanced and qbittorrent-enhanced-nox
- BitTorrent client written in C++ and based on libtorrent-rasterbar with a Qt5
- user interface. qBittorrent is a feature rich but lightweight client that is
- very similar to uTorrent.
- .
- This package contains the debugging symbols for qbittorrent-enhanced and
- qbittorrent-enhanced-nox.
