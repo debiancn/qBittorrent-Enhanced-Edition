@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Bittorrent Client using Qt and libtorrent.
  * Copyright (C) 2016  Vladimir Golovnev <glassez@yandex.ru>
  * Copyright (C) 2014  sledgehammer999 <hammered999@gmail.com>
@@ -64,100 +64,12 @@ namespace
 
         const QString m_name;
     };
-
-    QString mapKey(const QString &key)
-    {
-        static const QHash<QString, QString> keyMapping = {
-            {"BitTorrent/Session/MaxRatioAction", "Preferences/Bittorrent/MaxRatioAction"},
-            {"BitTorrent/Session/DefaultSavePath", "Preferences/Downloads/SavePath"},
-            {"BitTorrent/Session/TempPath", "Preferences/Downloads/TempPath"},
-            {"BitTorrent/Session/TempPathEnabled", "Preferences/Downloads/TempPathEnabled"},
-            {"BitTorrent/Session/AddTorrentPaused", "Preferences/Downloads/StartInPause"},
-            {"BitTorrent/Session/RefreshInterval", "Preferences/General/RefreshInterval"},
-            {"BitTorrent/Session/Preallocation", "Preferences/Downloads/PreAllocation"},
-            {"BitTorrent/Session/AddExtensionToIncompleteFiles", "Preferences/Downloads/UseIncompleteExtension"},
-            {"BitTorrent/Session/TorrentExportDirectory", "Preferences/Downloads/TorrentExportDir"},
-            {"BitTorrent/Session/FinishedTorrentExportDirectory", "Preferences/Downloads/FinishedTorrentExportDir"},
-            {"BitTorrent/Session/GlobalUPSpeedLimit", "Preferences/Connection/GlobalUPLimit"},
-            {"BitTorrent/Session/GlobalDLSpeedLimit", "Preferences/Connection/GlobalDLLimit"},
-            {"BitTorrent/Session/AlternativeGlobalUPSpeedLimit", "Preferences/Connection/GlobalUPLimitAlt"},
-            {"BitTorrent/Session/AlternativeGlobalDLSpeedLimit", "Preferences/Connection/GlobalDLLimitAlt"},
-            {"BitTorrent/Session/UseAlternativeGlobalSpeedLimit", "Preferences/Connection/alt_speeds_on"},
-            {"BitTorrent/Session/BandwidthSchedulerEnabled", "Preferences/Scheduler/Enabled"},
-            {"BitTorrent/Session/Port", "Preferences/Connection/PortRangeMin"},
-            {"BitTorrent/Session/UseRandomPort", "Preferences/General/UseRandomPort"},
-            {"BitTorrent/Session/Interface", "Preferences/Connection/Interface"},
-            {"BitTorrent/Session/InterfaceName", "Preferences/Connection/InterfaceName"},
-            {"BitTorrent/Session/InterfaceAddress", "Preferences/Connection/InterfaceAddress"},
-            {"BitTorrent/Session/SaveResumeDataInterval", "Preferences/Downloads/SaveResumeDataInterval"},
-            {"BitTorrent/Session/Encryption", "Preferences/Bittorrent/Encryption"},
-            {"BitTorrent/Session/ForceProxy", "Preferences/Connection/ProxyForce"},
-            {"BitTorrent/Session/ProxyPeerConnections", "Preferences/Connection/ProxyPeerConnections"},
-            {"BitTorrent/Session/MaxConnections", "Preferences/Bittorrent/MaxConnecs"},
-            {"BitTorrent/Session/MaxUploads", "Preferences/Bittorrent/MaxUploads"},
-            {"BitTorrent/Session/MaxConnectionsPerTorrent", "Preferences/Bittorrent/MaxConnecsPerTorrent"},
-            {"BitTorrent/Session/MaxUploadsPerTorrent", "Preferences/Bittorrent/MaxUploadsPerTorrent"},
-            {"BitTorrent/Session/DHTEnabled", "Preferences/Bittorrent/DHT"},
-            {"BitTorrent/Session/LSDEnabled", "Preferences/Bittorrent/LSD"},
-            {"BitTorrent/Session/PeXEnabled", "Preferences/Bittorrent/PeX"},
-            {"BitTorrent/Session/AddTrackersEnabled", "Preferences/Bittorrent/AddTrackers"},
-            {"BitTorrent/Session/AdditionalTrackers", "Preferences/Bittorrent/TrackersList"},
-            {"BitTorrent/Session/IPFilteringEnabled", "Preferences/IPFilter/Enabled"},
-            {"BitTorrent/Session/TrackerFilteringEnabled", "Preferences/IPFilter/FilterTracker"},
-            {"BitTorrent/Session/IPFilter", "Preferences/IPFilter/File"},
-            {"BitTorrent/Session/GlobalMaxRatio", "Preferences/Bittorrent/MaxRatio"},
-            {"BitTorrent/Session/AnnounceToAllTrackers", "Preferences/Advanced/AnnounceToAllTrackers"},
-            {"BitTorrent/Session/DiskCacheSize", "Preferences/Downloads/DiskWriteCacheSize"},
-            {"BitTorrent/Session/DiskCacheTTL", "Preferences/Downloads/DiskWriteCacheTTL"},
-            {"BitTorrent/Session/UseOSCache", "Preferences/Advanced/osCache"},
-            {"BitTorrent/Session/AnonymousModeEnabled", "Preferences/Advanced/AnonymousMode"},
-            {"BitTorrent/Session/QueueingSystemEnabled", "Preferences/Queueing/QueueingEnabled"},
-            {"BitTorrent/Session/MaxActiveDownloads", "Preferences/Queueing/MaxActiveDownloads"},
-            {"BitTorrent/Session/MaxActiveUploads", "Preferences/Queueing/MaxActiveUploads"},
-            {"BitTorrent/Session/MaxActiveTorrents", "Preferences/Queueing/MaxActiveTorrents"},
-            {"BitTorrent/Session/IgnoreSlowTorrentsForQueueing", "Preferences/Queueing/IgnoreSlowTorrents"},
-            {"BitTorrent/Session/OutgoingPortsMin", "Preferences/Advanced/OutgoingPortsMin"},
-            {"BitTorrent/Session/OutgoingPortsMax", "Preferences/Advanced/OutgoingPortsMax"},
-            {"BitTorrent/Session/IgnoreLimitsOnLAN", "Preferences/Advanced/IgnoreLimitsLAN"},
-            {"BitTorrent/Session/IncludeOverheadInLimits", "Preferences/Advanced/IncludeOverhead"},
-            {"BitTorrent/Session/AnnounceIP", "Preferences/Connection/InetAddress"},
-            {"BitTorrent/Session/SuperSeedingEnabled", "Preferences/Advanced/SuperSeeding"},
-            {"BitTorrent/Session/MaxHalfOpenConnections", "Preferences/Connection/MaxHalfOpenConnec"},
-            {"BitTorrent/Session/uTPEnabled", "Preferences/Bittorrent/uTP"},
-            {"BitTorrent/Session/uTPRateLimited", "Preferences/Bittorrent/uTP_rate_limited"},
-            {"BitTorrent/Session/AutoBanUnknownPeer", "Preferences/Advanced/AutoBanUnknownPeer"},
-            {"BitTorrent/Session/AutoBanBTPlayerPeer", "Preferences/Advanced/AutoBanBTPlayePeer"},
-            {"BitTorrent/Session/AutoUpdateTrackersEnabled", "Preferences/Bittorrent/AutoUpdateTrackers"},
-            {"BitTorrent/Session/PublicTrackersList", "Preferences/Bittorrent/PublicTrackersList"},
-            {"BitTorrent/TrackerEnabled", "Preferences/Advanced/trackerEnabled"},
-            {"Network/Proxy/OnlyForTorrents", "Preferences/Connection/ProxyOnlyForTorrents"},
-            {"Network/Proxy/Type", "Preferences/Connection/ProxyType"},
-            {"Network/Proxy/Authentication", "Preferences/Connection/Proxy/Authentication"},
-            {"Network/Proxy/Username", "Preferences/Connection/Proxy/Username"},
-            {"Network/Proxy/Password", "Preferences/Connection/Proxy/Password"},
-            {"Network/Proxy/IP", "Preferences/Connection/Proxy/IP"},
-            {"Network/Proxy/Port", "Preferences/Connection/Proxy/Port"},
-            {"Network/PortForwardingEnabled", "Preferences/Connection/UPnP"},
-            {"AddNewTorrentDialog/TreeHeaderState", "AddNewTorrentDialog/qt5/treeHeaderState"},
-            {"AddNewTorrentDialog/Width", "AddNewTorrentDialog/width"},
-            {"AddNewTorrentDialog/Position", "AddNewTorrentDialog/y"},
-            {"AddNewTorrentDialog/Expanded", "AddNewTorrentDialog/expanded"},
-            {"AddNewTorrentDialog/SavePathHistory", "TorrentAdditionDlg/save_path_history"},
-            {"AddNewTorrentDialog/Enabled", "Preferences/Downloads/NewAdditionDialog"},
-            {"AddNewTorrentDialog/TopLevel", "Preferences/Downloads/NewAdditionDialogFront"},
-
-            {"State/BannedIPs", "Preferences/IPFilter/BannedIPs"}
-        };
-
-        return keyMapping.value(key, key);
-    }
 }
 
 SettingsStorage *SettingsStorage::m_instance = nullptr;
 
 SettingsStorage::SettingsStorage()
-    : m_data{TransactionalSettings(QLatin1String("qBittorrent")).read()}
-    , m_dirty(false)
+    : m_data {TransactionalSettings(QLatin1String("qBittorrent")).read()}
 {
     m_timer.setSingleShot(true);
     m_timer.setInterval(5 * 1000);
@@ -188,12 +100,12 @@ SettingsStorage *SettingsStorage::instance()
 
 bool SettingsStorage::save()
 {
-    if (!m_dirty) return true; // Obtaining the lock is expensive, let's check early
-    const QWriteLocker locker(&m_lock);  // to guard for `m_dirty`
-    if (!m_dirty) return true; // something might have changed while we were getting the lock
+    const QWriteLocker locker(&m_lock);  // guard for `m_dirty` too
+    if (!m_dirty) return true;
 
     const TransactionalSettings settings(QLatin1String("qBittorrent"));
-    if (!settings.write(m_data)) {
+    if (!settings.write(m_data))
+    {
         m_timer.start();
         return false;
     }
@@ -202,20 +114,18 @@ bool SettingsStorage::save()
     return true;
 }
 
-QVariant SettingsStorage::loadValue(const QString &key, const QVariant &defaultValue) const
+QVariant SettingsStorage::loadValueImpl(const QString &key, const QVariant &defaultValue) const
 {
-    const QString realKey = mapKey(key);
     const QReadLocker locker(&m_lock);
-    return m_data.value(realKey, defaultValue);
+    return m_data.value(key, defaultValue);
 }
 
-void SettingsStorage::storeValue(const QString &key, const QVariant &value)
+void SettingsStorage::storeValueImpl(const QString &key, const QVariant &value)
 {
-    const QString realKey = mapKey(key);
     const QWriteLocker locker(&m_lock);
-
-    QVariant &currentValue = m_data[realKey];
-    if (currentValue != value) {
+    QVariant &currentValue = m_data[key];
+    if (currentValue != value)
+    {
         m_dirty = true;
         currentValue = value;
         m_timer.start();
@@ -224,12 +134,22 @@ void SettingsStorage::storeValue(const QString &key, const QVariant &value)
 
 void SettingsStorage::removeValue(const QString &key)
 {
-    const QString realKey = mapKey(key);
     const QWriteLocker locker(&m_lock);
-    if (m_data.remove(realKey) > 0) {
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+    if (m_data.remove(key))
+#else
+    if (m_data.remove(key) > 0)
+#endif
+    {
         m_dirty = true;
         m_timer.start();
     }
+}
+
+bool SettingsStorage::hasKey(const QString &key) const
+{
+    const QReadLocker locker {&m_lock};
+    return m_data.contains(key);
 }
 
 QVariantHash TransactionalSettings::read() const
@@ -237,7 +157,8 @@ QVariantHash TransactionalSettings::read() const
     QVariantHash res;
 
     const QString newPath = deserialize(m_name + QLatin1String("_new"), res);
-    if (!newPath.isEmpty()) { // "_new" file is NOT empty
+    if (!newPath.isEmpty())
+    { // "_new" file is NOT empty
         // This means that the PC closed either due to power outage
         // or because the disk was full. In any case the settings weren't transferred
         // in their final position. So assume that qbittorrent_new.ini/qbittorrent_new.conf
@@ -253,7 +174,8 @@ QVariantHash TransactionalSettings::read() const
         Utils::Fs::forceRemove(finalPath);
         QFile::rename(newPath, finalPath);
     }
-    else {
+    else
+    {
         deserialize(m_name, res);
     }
 
@@ -268,7 +190,8 @@ bool TransactionalSettings::write(const QVariantHash &data) const
     // Write everything to qBittorrent_new.ini/qBittorrent_new.conf and if it succeeds
     // replace qBittorrent.ini/qBittorrent.conf with it.
     const QString newPath = serialize(m_name + QLatin1String("_new"), data);
-    if (newPath.isEmpty()) {
+    if (newPath.isEmpty())
+    {
         Utils::Fs::forceRemove(newPath);
         return false;
     }
@@ -292,7 +215,11 @@ QString TransactionalSettings::deserialize(const QString &name, QVariantHash &da
     // or that we don't touch directly in this code (eg disabled by ifdef). This ensures
     // that they will be copied over when save our settings to disk.
     for (const QString &key : asConst(settings->allKeys()))
-        data.insert(key, settings->value(key));
+    {
+        const QVariant value = settings->value(key);
+        if (value.isValid())
+            data[key] = value;
+    }
 
     return settings->fileName();
 }
@@ -305,7 +232,8 @@ QString TransactionalSettings::serialize(const QString &name, const QVariantHash
 
     settings->sync(); // Important to get error status
 
-    switch (settings->status()) {
+    switch (settings->status())
+    {
     case QSettings::NoError:
         return settings->fileName();
     case QSettings::AccessError:

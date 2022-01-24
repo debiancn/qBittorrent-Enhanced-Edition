@@ -26,8 +26,7 @@
  * exception statement from your version.
  */
 
-#ifndef UTILS_FS_H
-#define UTILS_FS_H
+#pragma once
 
 /**
  * Utility functions related to file system.
@@ -35,49 +34,58 @@
 
 #include <QString>
 
-namespace Utils
+namespace Utils::Fs
 {
-    namespace Fs
-    {
-        /**
-         * Converts a path to a string suitable for display.
-         * This function makes sure the directory separator used is consistent
-         * with the OS being run.
-         */
-        QString toNativePath(const QString &path);
-        /**
-         * Converts a path to a string suitable for processing.
-         * This function makes sure the directory separator used is independent
-         * from the OS being run so it is the same on all supported platforms.
-         * Slash ('/') is used as "uniform" directory separator.
-         */
-        QString toUniformPath(const QString &path);
+    /**
+     * Converts a path to a string suitable for display.
+     * This function makes sure the directory separator used is consistent
+     * with the OS being run.
+     */
+    QString toNativePath(const QString &path);
 
-        QString fileExtension(const QString &filename);
-        QString fileName(const QString &filePath);
-        QString folderName(const QString &filePath);
-        qint64 computePathSize(const QString &path);
-        bool sameFiles(const QString &path1, const QString &path2);
-        QString toValidFileSystemName(const QString &name, bool allowSeparators = false
-                , const QString &pad = QLatin1String(" "));
-        bool isValidFileSystemName(const QString &name, bool allowSeparators = false);
-        qint64 freeDiskSpaceOnPath(const QString &path);
-        QString branchPath(const QString &filePath, QString *removed = nullptr);
-        bool sameFileNames(const QString &first, const QString &second);
-        QString expandPath(const QString &path);
-        QString expandPathAbs(const QString &path);
-        bool isRegularFile(const QString &path);
+    /**
+     * Converts a path to a string suitable for processing.
+     * This function makes sure the directory separator used is independent
+     * from the OS being run so it is the same on all supported platforms.
+     * Slash ('/') is used as "uniform" directory separator.
+     */
+    QString toUniformPath(const QString &path);
 
-        bool smartRemoveEmptyFolderTree(const QString &path);
-        bool forceRemove(const QString &filePath);
-        void removeDirRecursive(const QString &path);
+    /**
+     * If `path is relative then resolves it against `basePath`, otherwise returns the `path` itself
+     */
+    QString resolvePath(const QString &relativePath, const QString &basePath);
 
-        QString tempPath();
+    /**
+     * Returns the file extension part of a file name.
+     */
+    QString fileExtension(const QString &filename);
+
+    QString fileName(const QString &filePath);
+    QString folderName(const QString &filePath);
+    qint64 computePathSize(const QString &path);
+    bool sameFiles(const QString &path1, const QString &path2);
+    QString toValidFileSystemName(const QString &name, bool allowSeparators = false
+            , const QString &pad = QLatin1String(" "));
+    bool isValidFileSystemName(const QString &name, bool allowSeparators = false);
+    qint64 freeDiskSpaceOnPath(const QString &path);
+    QString branchPath(const QString &filePath, QString *removed = nullptr);
+    bool sameFileNames(const QString &first, const QString &second);
+    QString expandPath(const QString &path);
+    QString expandPathAbs(const QString &path);
+    bool isRegularFile(const QString &path);
+
+    bool smartRemoveEmptyFolderTree(const QString &path);
+    bool forceRemove(const QString &filePath);
+    void removeDirRecursive(const QString &path);
+
+    QString tempPath();
+
+    QString findRootFolder(const QStringList &filePaths);
+    void stripRootFolder(QStringList &filePaths);
+    void addRootFolder(QStringList &filePaths, const QString &name);
 
 #if !defined Q_OS_HAIKU
-        bool isNetworkFileSystem(const QString &path);
+    bool isNetworkFileSystem(const QString &path);
 #endif
-    }
 }
-
-#endif // UTILS_FS_H

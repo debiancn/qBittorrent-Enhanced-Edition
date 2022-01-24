@@ -33,7 +33,7 @@
 #include <QList>
 #include <QObject>
 #include <QString>
-#include <QVector>
+#include <QtContainerFwd>
 
 class QProcess;
 class QTimer;
@@ -54,7 +54,7 @@ class SearchPluginManager;
 class SearchHandler : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(SearchHandler)
+    Q_DISABLE_COPY_MOVE(SearchHandler)
 
     friend class SearchPluginManager;
 
@@ -78,7 +78,7 @@ private:
     void readSearchOutput();
     void processFailed();
     void processFinished(int exitcode);
-    bool parseSearchResult(const QString &line, SearchResult &searchResult);
+    bool parseSearchResult(QStringView line, SearchResult &searchResult);
 
     const QString m_pattern;
     const QString m_category;

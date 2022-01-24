@@ -55,10 +55,11 @@
 #include <QDirIterator>
 #include <QFile>
 #include <QFileInfo>
+#include <QMimeDatabase>
 #include <QStorageInfo>
 #include <QRegularExpression>
 
-#include "base/bittorrent/torrenthandle.h"
+#include "base/bittorrent/common.h"
 #include "base/global.h"
 
 QString Utils::Fs::toNativePath(const QString &path)
@@ -71,14 +72,20 @@ QString Utils::Fs::toUniformPath(const QString &path)
     return QDir::fromNativeSeparators(path);
 }
 
-/**
- * Returns the file extension part of a file name.
- */
+QString Utils::Fs::resolvePath(const QString &relativePath, const QString &basePath)
+{
+    Q_ASSERT(QDir::isRelativePath(relativePath));
+    Q_ASSERT(QDir::isAbsolutePath(basePath));
+
+    return (relativePath.isEmpty() ? basePath : QDir(basePath).absoluteFilePath(relativePath));
+}
+
 QString Utils::Fs::fileExtension(const QString &filename)
 {
-    const QString ext = QString(filename).remove(QB_EXT);
-    const int pointIndex = ext.lastIndexOf('.');
-    return (pointIndex >= 0) ? ext.mid(pointIndex + 1) : QString();
+    const QString name = filename.endsWith(QB_EXT)
+        ? filename.chopped(QB_EXT.length())
+        : filename;
+    return QMimeDatabase().suffixForFileName(name);
 }
 
 QString Utils::Fs::fileName(const QString &filePath)
@@ -95,7 +102,7 @@ QString Utils::Fs::folderName(const QString &filePath)
     const QString path = toUniformPath(filePath);
     const int slashIndex = path.lastIndexOf('/');
     if (slashIndex == -1)
-        return path;
+        return {};
     return path.left(slashIndex);
 }
 
@@ -113,7 +120,8 @@ bool Utils::Fs::smartRemoveEmptyFolderTree(const QString &path)
     if (path.isEmpty() || !QDir(path).exists())
         return true;
 
-    const QStringList deleteFilesList = {
+    const QStringList deleteFilesList =
+    {
         // Windows
         QLatin1String("Thumbs.db"),
         QLatin1String("desktop.ini"),
@@ -132,7 +140,8 @@ bool Utils::Fs::smartRemoveEmptyFolderTree(const QString &path)
     std::sort(dirList.begin(), dirList.end()
               , [](const QString &l, const QString &r) { return l.count('/') > r.count('/'); });
 
-    for (const QString &p : asConst(dirList)) {
+    for (const QString &p : asConst(dirList))
+    {
         const QDir dir(p);
         // A deeper folder may have not been removed in the previous iteration
         // so don't remove anything from this folder either.
@@ -201,7 +210,8 @@ qint64 Utils::Fs::computePathSize(const QString &path)
     // Compute folder size based on its content
     qint64 size = 0;
     QDirIterator iter(path, QDir::Files | QDir::Hidden | QDir::NoSymLinks, QDirIterator::Subdirectories);
-    while (iter.hasNext()) {
+    while (iter.hasNext())
+    {
         iter.next();
         size += iter.fileInfo().size();
     }
@@ -220,7 +230,8 @@ bool Utils::Fs::sameFiles(const QString &path1, const QString &path2)
     if (!f2.open(QIODevice::ReadOnly)) return false;
 
     const int readSize = 1024 * 1024;  // 1 MiB
-    while (!f1.atEnd() && !f2.atEnd()) {
+    while (!f1.atEnd() && !f2.atEnd())
+    {
         if (f1.read(readSize) != f2.read(readSize))
             return false;
     }
@@ -243,15 +254,18 @@ bool Utils::Fs::isValidFileSystemName(const QString &name, const bool allowSepar
     if (name.isEmpty()) return false;
 
 #if defined(Q_OS_WIN)
-    const QRegularExpression regex {allowSeparators
+    const QRegularExpression regex
+    {allowSeparators
         ? QLatin1String("[:?\"*<>|]")
         : QLatin1String("[\\\\/:?\"*<>|]")};
 #elif defined(Q_OS_MACOS)
-    const QRegularExpression regex {allowSeparators
+    const QRegularExpression regex
+    {allowSeparators
         ? QLatin1String("[\\0:]")
         : QLatin1String("[\\0/:]")};
 #else
-    const QRegularExpression regex {allowSeparators
+    const QRegularExpression regex
+    {allowSeparators
         ? QLatin1String("[\\0]")
         : QLatin1String("[\\0/]")};
 #endif
@@ -260,8 +274,6 @@ bool Utils::Fs::isValidFileSystemName(const QString &name, const bool allowSepar
 
 qint64 Utils::Fs::freeDiskSpaceOnPath(const QString &path)
 {
-    if (path.isEmpty()) return -1;
-
     return QStorageInfo(path).bytesAvailable();
 }
 
@@ -271,7 +283,8 @@ QString Utils::Fs::branchPath(const QString &filePath, QString *removed)
     if (ret.endsWith('/'))
         ret.chop(1);
     const int slashIndex = ret.lastIndexOf('/');
-    if (slashIndex >= 0) {
+    if (slashIndex >= 0)
+    {
         if (removed)
             *removed = ret.mid(slashIndex + 1);
         ret = ret.left(slashIndex);
@@ -312,7 +325,8 @@ QString Utils::Fs::tempPath()
 bool Utils::Fs::isRegularFile(const QString &path)
 {
     struct ::stat st;
-    if (::stat(path.toUtf8().constData(), &st) != 0) {
+    if (::stat(path.toUtf8().constData(), &st) != 0)
+    {
         //  analyse erno and log the error
         const auto err = errno;
         qDebug("Could not get file stats for path '%s'. Error: %s"
@@ -331,9 +345,8 @@ bool Utils::Fs::isNetworkFileSystem(const QString &path)
     auto volumePath = std::make_unique<wchar_t[]>(path.length() + 1);
     if (!::GetVolumePathNameW(pathW.c_str(), volumePath.get(), (path.length() + 1)))
         return false;
-
     return (::GetDriveTypeW(volumePath.get()) == DRIVE_REMOTE);
-#elif defined(Q_OS_MACOS) || defined(Q_OS_OPENBSD)
+#else
     QString file = path;
     if (!file.endsWith('/'))
         file += '/';
@@ -343,32 +356,87 @@ bool Utils::Fs::isNetworkFileSystem(const QString &path)
     if (statfs(file.toLocal8Bit().constData(), &buf) != 0)
         return false;
 
-    // XXX: should we make sure HAVE_STRUCT_FSSTAT_F_FSTYPENAME is defined?
+#if defined(Q_OS_OPENBSD)
     return ((strncmp(buf.f_fstypename, "cifs", sizeof(buf.f_fstypename)) == 0)
         || (strncmp(buf.f_fstypename, "nfs", sizeof(buf.f_fstypename)) == 0)
         || (strncmp(buf.f_fstypename, "smbfs", sizeof(buf.f_fstypename)) == 0));
-#else // Q_OS_WIN
-    QString file = path;
-    if (!file.endsWith('/'))
-        file += '/';
-    file += '.';
-
-    struct statfs buf {};
-    if (statfs(file.toLocal8Bit().constData(), &buf) != 0)
-        return false;
-
-    // Magic number references:
-    // 1. /usr/include/linux/magic.h
-    // 2. https://github.com/coreutils/coreutils/blob/master/src/stat.c
-    switch (static_cast<unsigned int>(buf.f_type)) {
-    case 0xFF534D42:  // CIFS_MAGIC_NUMBER
-    case 0x6969:  // NFS_SUPER_MAGIC
-    case 0x517B:  // SMB_SUPER_MAGIC
-    case 0xFE534D42:  // S_MAGIC_SMB2
+#else
+    // Magic number reference:
+    // https://github.com/coreutils/coreutils/blob/master/src/stat.c
+    switch (static_cast<quint32>(buf.f_type))
+    {
+    case 0x0000517B:  // SMB
+    case 0x0000564C:  // NCP
+    case 0x00006969:  // NFS
+    case 0x00C36400:  // CEPH
+    case 0x01161970:  // GFS
+    case 0x013111A8:  // IBRIX
+    case 0x0BD00BD0:  // LUSTRE
+    case 0x19830326:  // FHGFS
+    case 0x47504653:  // GPFS
+    case 0x50495045:  // PIPEFS
+    case 0x5346414F:  // AFS
+    case 0x61636673:  // ACFS
+    case 0x61756673:  // AUFS
+    case 0x65735543:  // FUSECTL
+    case 0x65735546:  // FUSEBLK
+    case 0x6B414653:  // KAFS
+    case 0x6E667364:  // NFSD
+    case 0x73757245:  // CODA
+    case 0x7461636F:  // OCFS2
+    case 0x786F4256:  // VBOXSF
+    case 0x794C7630:  // OVERLAYFS
+    case 0x7C7C6673:  // PRL_FS
+    case 0xA501FCF5:  // VXFS
+    case 0xAAD7AAEA:  // OVERLAYFS
+    case 0xBACBACBC:  // VMHGFS
+    case 0xBEEFDEAD:  // SNFS
+    case 0xFE534D42:  // SMB2
+    case 0xFF534D42:  // CIFS
         return true;
     default:
-        return false;
+        break;
     }
-#endif // Q_OS_WIN
+
+    return false;
+#endif
+#endif
 }
 #endif // Q_OS_HAIKU
+
+QString Utils::Fs::findRootFolder(const QStringList &filePaths)
+{
+    QString rootFolder;
+    for (const QString &filePath : filePaths)
+    {
+        const auto filePathElements = QStringView(filePath).split(u'/');
+        // if at least one file has no root folder, no common root folder exists
+        if (filePathElements.count() <= 1)
+            return {};
+
+        if (rootFolder.isEmpty())
+            rootFolder = filePathElements.at(0).toString();
+        else if (rootFolder != filePathElements.at(0))
+            return {};
+    }
+
+    return rootFolder;
+}
+
+void Utils::Fs::stripRootFolder(QStringList &filePaths)
+{
+    const QString commonRootFolder = findRootFolder(filePaths);
+    if (commonRootFolder.isEmpty())
+        return;
+
+    for (QString &filePath : filePaths)
+        filePath = filePath.mid(commonRootFolder.size() + 1);
+}
+
+void Utils::Fs::addRootFolder(QStringList &filePaths, const QString &rootFolder)
+{
+    Q_ASSERT(!rootFolder.isEmpty());
+
+    for (QString &filePath : filePaths)
+        filePath = rootFolder + QLatin1Char('/') + filePath;
+}

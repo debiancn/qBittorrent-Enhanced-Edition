@@ -34,7 +34,7 @@
 #include <QSpacerItem>
 
 #include "base/global.h"
-#include "uithememanager.h"
+#include "gui/uithememanager.h"
 
 PropTabBar::PropTabBar(QWidget *parent)
     : QHBoxLayout(parent)
@@ -100,7 +100,7 @@ PropTabBar::PropTabBar(QWidget *parent)
     addWidget(speedButton);
     m_btnGroup->addButton(speedButton, SpeedTab);
     // SIGNAL/SLOT
-    connect(m_btnGroup, qOverload<int>(&QButtonGroup::buttonClicked)
+    connect(m_btnGroup, &QButtonGroup::idClicked
             , this, &PropTabBar::setCurrentIndex);
     // Disable buttons focus
     for (QAbstractButton *btn : asConst(m_btnGroup->buttons()))
@@ -117,8 +117,10 @@ void PropTabBar::setCurrentIndex(int index)
     if (index >= m_btnGroup->buttons().size())
         index = 0;
     // If asked to hide or if the currently selected tab is clicked
-    if ((index < 0) || (m_currentIndex == index)) {
-        if (m_currentIndex >= 0) {
+    if ((index < 0) || (m_currentIndex == index))
+    {
+        if (m_currentIndex >= 0)
+        {
           m_btnGroup->button(m_currentIndex)->setDown(false);
           m_currentIndex = -1;
           emit visibilityToggled(false);
@@ -126,10 +128,12 @@ void PropTabBar::setCurrentIndex(int index)
         return;
     }
     // Unselect previous tab
-    if (m_currentIndex >= 0) {
+    if (m_currentIndex >= 0)
+    {
         m_btnGroup->button(m_currentIndex)->setDown(false);
     }
-    else {
+    else
+    {
         // Nothing was selected, show!
         emit visibilityToggled(true);
     }

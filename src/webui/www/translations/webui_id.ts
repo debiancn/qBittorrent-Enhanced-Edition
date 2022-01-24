@@ -23,12 +23,24 @@
         <translation>Lewati pengecekan hash</translation>
     </message>
     <message>
+        <source>Torrent Management Mode:</source>
+        <translation>Mode Pengelolaan Torrent:</translation>
+    </message>
+    <message>
+        <source>Content layout:</source>
+        <translation>Tata letak konten:</translation>
+    </message>
+    <message>
+        <source>Original</source>
+        <translation>Orisinal</translation>
+    </message>
+    <message>
         <source>Create subfolder</source>
         <translation>Buat subfolder</translation>
     </message>
     <message>
-        <source>Torrent Management Mode:</source>
-        <translation>Mode Pengelolaan Torrent:</translation>
+        <source>Don't create subfolder</source>
+        <translation>Jangan buat subfolder</translation>
     </message>
 </context>
 <context>
@@ -62,7 +74,7 @@
     </message>
     <message>
         <source>Pause torrents</source>
-        <translation>Tangguhkan torrent</translation>
+        <translation>Jeda torrent</translation>
     </message>
     <message>
         <source>Delete torrents</source>
@@ -132,24 +144,16 @@
         <translation>Tidak bisa menyimpan preferensi program, qBittorrent mungkin tidak terjangkau.</translation>
     </message>
     <message>
-        <source>IRC: #qbittorrent on Freenode</source>
-        <translation>IRC: #qbittorrent di Freenode</translation>
-    </message>
-    <message>
         <source>Unknown</source>
         <translation>Tidak diketahui</translation>
     </message>
     <message>
         <source>Share ratio limit must be between 0 and 9998.</source>
-        <translation type="unfinished" />
+        <translation>Batas rasio berbagi harus antara 0 dan 9998.</translation>
     </message>
     <message>
         <source>Seeding time limit must be between 0 and 525600 minutes.</source>
-        <translation type="unfinished" />
-    </message>
-    <message>
-        <source>The port used for incoming connections must be between 1 and 65535.</source>
-        <translation>Port yang digunakan untuk koneksi masuk harus antara 1 dan 65535.</translation>
+        <translation>Batasan waktu seeding harus antara 0 dan 525600 menit.</translation>
     </message>
     <message>
         <source>The port used for the Web UI must be between 1 and 65535.</source>
@@ -176,10 +180,6 @@
         <translation>Masuk</translation>
     </message>
     <message>
-        <source>Original authors</source>
-        <translation>Pengembang asli</translation>
-    </message>
-    <message>
         <source>Apply</source>
         <translation>Terapkan</translation>
     </message>
@@ -199,10 +199,6 @@
     <message>
         <source>Cookie:</source>
         <translation>Kuki:</translation>
-    </message>
-    <message>
-        <source>Type folder here</source>
-        <translation>Tulis folder di sini</translation>
     </message>
     <message>
         <source>More information</source>
@@ -227,11 +223,6 @@
     <message>
         <source>Rename torrent</source>
         <translation>Ubah nama torrent</translation>
-    </message>
-    <message>
-        <source>Other...</source>
-        <comment>Save Files to: Watch Folder / Default Folder / Other...</comment>
-        <translation>Lainnya...</translation>
     </message>
     <message>
         <source>Monday</source>
@@ -294,15 +285,15 @@
     </message>
     <message>
         <source>Global number of upload slots limit must be greater than 0 or disabled.</source>
-        <translation type="unfinished" />
+        <translation>Batas jumlah slot unggah harus lebih besar dari 0 atau dinonaktifkan.</translation>
     </message>
     <message>
         <source>Invalid category name:\nPlease do not use any special characters in the category name.</source>
-        <translation type="unfinished" />
+        <translation>Nama kategori tidak valid:\nJangan gunakan karakter spesial dalam nama kategori.</translation>
     </message>
     <message>
         <source>Unable to create category</source>
-        <translation type="unfinished" />
+        <translation>Tidak bisa membuat kategori</translation>
     </message>
     <message>
         <source>Upload rate threshold must be greater than 0.</source>
@@ -310,19 +301,19 @@
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished" />
+        <translation>Sunting</translation>
     </message>
     <message>
         <source>Free space: %1</source>
-        <translation type="unfinished" />
+        <translation>Ruang kosong: %1</translation>
     </message>
     <message>
         <source>Torrent inactivity timer must be greater than 0.</source>
-        <translation type="unfinished" />
+        <translation>Waktu tidak aktif torrent harus lebih besar dari 0.</translation>
     </message>
     <message>
         <source>Saving Management</source>
-        <translation type="unfinished" />
+        <translation>Manajemen Penyimpanan</translation>
     </message>
     <message>
         <source>Download rate threshold must be greater than 0.</source>
@@ -330,15 +321,15 @@
     </message>
     <message>
         <source>qBittorrent has been shutdown</source>
-        <translation type="unfinished" />
+        <translation>qBittorrent telah ditutup</translation>
     </message>
     <message>
         <source>Open documentation</source>
-        <translation type="unfinished" />
+        <translation>Buka dokumentasi</translation>
     </message>
     <message>
         <source>Register to handle magnet links...</source>
-        <translation type="unfinished" />
+        <translation>Daftarkan untuk menangani tautan magnet...</translation>
     </message>
     <message>
         <source>Unable to add peers. Please ensure you are adhering to the IP:port format.</source>
@@ -346,18 +337,30 @@
     </message>
     <message>
         <source>JavaScript Required! You must enable JavaScript for the Web UI to work properly</source>
-        <translation type="unfinished" />
+        <translation>Membutuhkan JavaScript! Anda harus mengaktifkan JavaScript agar UI Web berfungsi dengan baik</translation>
     </message>
     <message>
         <source>Name cannot be empty</source>
-        <translation type="unfinished" />
+        <translation>Nama tidak boleh kosong</translation>
     </message>
     <message>
         <source>Name is unchanged</source>
-        <translation type="unfinished" />
+        <translation>Nama tidak berubah</translation>
     </message>
     <message>
         <source>Failed to update name</source>
+        <translation>Gagal memperbarui nama</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OKE</translation>
+    </message>
+    <message>
+        <source>The port used for incoming connections must be between 0 and 65535.</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Original author</source>
         <translation type="unfinished" />
     </message>
 </context>
@@ -445,7 +448,7 @@
     </message>
     <message>
         <source>Yes</source>
-        <translation>Ya</translation>
+        <translation>Iya</translation>
     </message>
     <message>
         <source>No</source>
@@ -461,7 +464,7 @@
     </message>
     <message>
         <source>Are you sure you want to quit qBittorrent?</source>
-        <translation type="unfinished" />
+        <translation>Apakah Anda yakin ingin keluar dari qBittorrent?</translation>
     </message>
     <message>
         <source>[D: %1, U: %2] qBittorrent %3</source>
@@ -470,63 +473,63 @@
     </message>
     <message>
         <source>Alternative speed limits</source>
-        <translation type="unfinished" />
+        <translation>Batas kecepatan alternatif</translation>
     </message>
     <message>
         <source>Search Engine</source>
-        <translation type="unfinished" />
+        <translation>Mesin Pencari</translation>
     </message>
     <message>
         <source>Filter torrent list...</source>
-        <translation type="unfinished" />
+        <translation>Filter daftar torrent...</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished" />
+        <translation>Cari</translation>
     </message>
     <message>
         <source>Transfers</source>
-        <translation type="unfinished" />
+        <translation>Transfer</translation>
     </message>
     <message>
         <source>Move up in the queue</source>
-        <translation type="unfinished" />
+        <translation>Pindah ke atas di dalam antrean</translation>
     </message>
     <message>
         <source>Move Up Queue</source>
-        <translation type="unfinished" />
+        <translation>Pindah Antrean ke Atas</translation>
     </message>
     <message>
         <source>Bottom of Queue</source>
-        <translation type="unfinished" />
+        <translation>Dasar dari Antrean</translation>
     </message>
     <message>
         <source>Move to the bottom of the queue</source>
-        <translation type="unfinished" />
+        <translation>Pindah ke antrean paling bawah</translation>
     </message>
     <message>
         <source>Top of Queue</source>
-        <translation type="unfinished" />
+        <translation>Puncak dari Antrean</translation>
     </message>
     <message>
         <source>Move Down Queue</source>
-        <translation type="unfinished" />
+        <translation>Pindah Antrean ke Bawah</translation>
     </message>
     <message>
         <source>Move down in the queue</source>
-        <translation type="unfinished" />
+        <translation>Pindah ke bawah di dalam antrean</translation>
     </message>
     <message>
         <source>Move to the top of the queue</source>
-        <translation type="unfinished" />
+        <translation>Pindah ke antrean paling atas</translation>
     </message>
     <message>
         <source>Your browser does not support this feature</source>
-        <translation type="unfinished" />
+        <translation>Peramban Anda tidak mendukung fitur ini</translation>
     </message>
     <message>
         <source>To use this feature, the WebUI needs to be accessed over HTTPS</source>
-        <translation type="unfinished" />
+        <translation>Untuk menggunakan fitur ini, WebUI harus diakses melalui HTTPS</translation>
     </message>
     <message>
         <source>Connection status: Firewalled</source>
@@ -534,31 +537,39 @@
     </message>
     <message>
         <source>Connection status: Connected</source>
-        <translation type="unfinished" />
+        <translation>Status koneksi: Tersambung</translation>
     </message>
     <message>
         <source>Alternative speed limits: Off</source>
-        <translation type="unfinished" />
+        <translation>Batas kecepatan alternatif: Nonaktif</translation>
     </message>
     <message>
         <source>Download speed icon</source>
-        <translation type="unfinished" />
+        <translation>Ikon kecepatan unduh</translation>
     </message>
     <message>
         <source>Connection status</source>
-        <translation type="unfinished" />
+        <translation>Status koneksi</translation>
     </message>
     <message>
         <source>Alternative speed limits: On</source>
-        <translation type="unfinished" />
+        <translation>Batas kecepatan alternatif: Aktif</translation>
     </message>
     <message>
         <source>Upload speed icon</source>
-        <translation type="unfinished" />
+        <translation>Ikon kecepatan unggah</translation>
     </message>
     <message>
         <source>Connection status: Disconnected</source>
-        <translation type="unfinished" />
+        <translation>Status koneksi: Terputus</translation>
+    </message>
+    <message>
+        <source>RSS Reader</source>
+        <translation>Pembaca RSS</translation>
+    </message>
+    <message>
+        <source>RSS</source>
+        <translation>RSS</translation>
     </message>
 </context>
 <context>
@@ -597,15 +608,15 @@
     </message>
     <message>
         <source>Email notification upon download completion</source>
-        <translation type="unfinished" />
+        <translation>Notifikasi surel saat unduhan selesai</translation>
     </message>
     <message>
         <source>Run external program on torrent completion</source>
-        <translation type="unfinished" />
+        <translation>Jalankan program eksternal saat torrent selesai</translation>
     </message>
     <message>
         <source>IP Filtering</source>
-        <translation type="unfinished" />
+        <translation>Penyaringan IP</translation>
     </message>
     <message>
         <source>Schedule the use of alternative rate limits</source>
@@ -633,15 +644,15 @@
     </message>
     <message>
         <source>Use HTTPS instead of HTTP</source>
-        <translation type="unfinished" />
+        <translation>Gunakan HTTPS</translation>
     </message>
     <message>
         <source>Bypass authentication for clients on localhost</source>
-        <translation type="unfinished" />
+        <translation>Lewati otentikasi untuk aplikasi di localhost</translation>
     </message>
     <message>
         <source>Bypass authentication for clients in whitelisted IP subnets</source>
-        <translation type="unfinished" />
+        <translation>Lewati otentikasi untuk klien dalam daftar putih IP subnet</translation>
     </message>
     <message>
         <source>Update my dynamic domain name</source>
@@ -649,7 +660,7 @@
     </message>
     <message>
         <source>Keep incomplete torrents in:</source>
-        <translation type="unfinished" />
+        <translation>Biarkan torrent belum selesai di:</translation>
     </message>
     <message>
         <source>Copy .torrent files to:</source>
@@ -657,11 +668,11 @@
     </message>
     <message>
         <source>Copy .torrent files for finished downloads to:</source>
-        <translation type="unfinished" />
+        <translation>Salin berkas .torrent untuk menyelesaikan unduhan ke:</translation>
     </message>
     <message>
         <source>Pre-allocate disk space for all files</source>
-        <translation type="unfinished" />
+        <translation>Pre-alokasi ruang disk untuk semua berkas</translation>
     </message>
     <message>
         <source>Append .!qB extension to incomplete files</source>
@@ -692,16 +703,12 @@
         <translation>Sandi:</translation>
     </message>
     <message>
-        <source>Enabled protocol:</source>
-        <translation>Protokol diaktifkan:</translation>
-    </message>
-    <message>
         <source>TCP and μTP</source>
         <translation>TCP dan μTP</translation>
     </message>
     <message>
         <source>Listening Port</source>
-        <translation type="unfinished" />
+        <translation>Memperhatikan port</translation>
     </message>
     <message>
         <source>Port used for incoming connections:</source>
@@ -710,10 +717,6 @@
     <message>
         <source>Use UPnP / NAT-PMP port forwarding from my router</source>
         <translation>Gunakan penerusan port UPnP / NAT-PMP dari router saya</translation>
-    </message>
-    <message>
-        <source>Use different port on each startup</source>
-        <translation type="unfinished" />
     </message>
     <message>
         <source>Connections Limits</source>
@@ -769,7 +772,7 @@
     </message>
     <message>
         <source>Use proxy for peer connections</source>
-        <translation type="unfinished" />
+        <translation>Gunakan proksi untuk koneksi sejawat</translation>
     </message>
     <message>
         <source>Use proxy only for torrents</source>
@@ -835,7 +838,7 @@
     </message>
     <message>
         <source>Apply rate limit to transport overhead</source>
-        <translation type="unfinished" />
+        <translation>Tentukan nilai batas untuk transport diatas</translation>
     </message>
     <message>
         <source>Apply rate limit to µTP protocol</source>
@@ -887,7 +890,7 @@
     </message>
     <message>
         <source>Do not count slow torrents in these limits</source>
-        <translation type="unfinished" />
+        <translation>Jangan hitung torrent lambat dari limit ini</translation>
     </message>
     <message>
         <source>then</source>
@@ -950,12 +953,8 @@
         <translation>%T: Pelacak saat ini</translation>
     </message>
     <message>
-        <source>%I: Info hash</source>
-        <translation>%I: Info hash</translation>
-    </message>
-    <message>
         <source>Tip: Encapsulate parameter with quotation marks to avoid text being cut off at whitespace (e.g., "%N")</source>
-        <translation type="unfinished" />
+        <translation>Tip: Merangkum parameter dengan tanda kutipan untuk menghindari teks terpotong di ruang putih (m.s., "%N")</translation>
     </message>
     <message>
         <source>The Web UI username must be at least 3 characters long.</source>
@@ -963,23 +962,23 @@
     </message>
     <message>
         <source>The Web UI password must be at least 6 characters long.</source>
-        <translation type="unfinished" />
+        <translation>Password Web UI harus setidaknya 6 karakter atau lebih.</translation>
     </message>
     <message>
         <source>minutes</source>
-        <translation type="unfinished" />
+        <translation>menit</translation>
     </message>
     <message>
         <source>KiB/s</source>
-        <translation type="unfinished" />
+        <translation>KiB/s</translation>
     </message>
     <message>
         <source>Enable clickjacking protection</source>
-        <translation type="unfinished" />
+        <translation>Aktifkan proteksi clickjacking</translation>
     </message>
     <message>
         <source>Enable Cross-Site Request Forgery (CSRF) protection</source>
-        <translation type="unfinished" />
+        <translation>Aktifkan proteksi Pemalsuan Permintaan Lintas-Situs (CSRF)</translation>
     </message>
     <message>
         <source>Delete .torrent files afterwards</source>
@@ -987,51 +986,51 @@
     </message>
     <message>
         <source>Download rate threshold:</source>
-        <translation type="unfinished" />
+        <translation>Nilai ambang unduh:</translation>
     </message>
     <message>
         <source>Upload rate threshold:</source>
-        <translation type="unfinished" />
+        <translation>Nilai ambang unggah:</translation>
     </message>
     <message>
         <source>Change current password</source>
-        <translation type="unfinished" />
+        <translation>Ubah sandi saat ini</translation>
     </message>
     <message>
         <source>Automatic</source>
-        <translation type="unfinished" />
+        <translation>Otomatis</translation>
     </message>
     <message>
         <source>Use alternative Web UI</source>
-        <translation type="unfinished" />
+        <translation>Gunakan UI Web alternatif</translation>
     </message>
     <message>
         <source>Default Save Path:</source>
-        <translation type="unfinished" />
+        <translation>Jalur Penyimpanan Baku:</translation>
     </message>
     <message>
         <source>The alternative Web UI files location cannot be blank.</source>
-        <translation type="unfinished" />
+        <translation>Lokasi berkas UI Web tidak boleh kosong.</translation>
     </message>
     <message>
         <source>Do not start the download automatically</source>
-        <translation type="unfinished" />
+        <translation>Jangan mulai mengunduh secara otomatis</translation>
     </message>
     <message>
         <source>Switch torrent to Manual Mode</source>
-        <translation type="unfinished" />
+        <translation>Pindahkan torrent ke Mode Manual</translation>
     </message>
     <message>
         <source>When Torrent Category changed:</source>
-        <translation type="unfinished" />
+        <translation>Ketika Kategori Torrent diubah:</translation>
     </message>
     <message>
         <source>Relocate affected torrents</source>
-        <translation type="unfinished" />
+        <translation>Cari-ulang torrent berpengaruh</translation>
     </message>
     <message>
         <source>Apply rate limit to peers on LAN</source>
-        <translation type="unfinished" />
+        <translation>Terapkan batas laju ke rekanan pada LAN</translation>
     </message>
     <message>
         <source>0 means unlimited</source>
@@ -1039,11 +1038,11 @@
     </message>
     <message>
         <source>Relocate torrent</source>
-        <translation type="unfinished" />
+        <translation>Cari-ulang torrent</translation>
     </message>
     <message>
         <source>When Default Save Path changed:</source>
-        <translation type="unfinished" />
+        <translation>Saat tempat penyimpanan biasa dirubah:</translation>
     </message>
     <message>
         <source>Enable Host header validation</source>
@@ -1051,14 +1050,10 @@
     </message>
     <message>
         <source>Security</source>
-        <translation type="unfinished" />
+        <translation>Keamanan</translation>
     </message>
     <message>
         <source>When Category Save Path changed:</source>
-        <translation type="unfinished" />
-    </message>
-    <message>
-        <source>Create subfolder for torrents with multiple files</source>
         <translation type="unfinished" />
     </message>
     <message>
@@ -1067,31 +1062,31 @@
     </message>
     <message>
         <source>Switch affected torrents to Manual Mode</source>
-        <translation type="unfinished" />
+        <translation>Ganti torrent berpengaruh ke Mode Manual</translation>
     </message>
     <message>
         <source>Files location:</source>
-        <translation type="unfinished" />
+        <translation>Lokasi berkas:</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished" />
+        <translation>Manual</translation>
     </message>
     <message>
         <source>Torrent inactivity timer:</source>
-        <translation type="unfinished" />
+        <translation>Durasi torrent tanpa aktifitas:</translation>
     </message>
     <message>
         <source>Default Torrent Management Mode:</source>
-        <translation type="unfinished" />
+        <translation>Mode Baku Pengelolaan Torrent:</translation>
     </message>
     <message>
         <source>When adding a torrent</source>
-        <translation type="unfinished" />
+        <translation>Ketika menambahkan torrent</translation>
     </message>
     <message>
         <source>Info: The password is saved unencrypted</source>
-        <translation type="unfinished" />
+        <translation>Info: Sandi disimpan tanpa enkripsi</translation>
     </message>
     <message>
         <source>μTP-TCP mixed mode algorithm:</source>
@@ -1111,7 +1106,7 @@
     </message>
     <message>
         <source>Enable super seeding for torrent</source>
-        <translation type="unfinished" />
+        <translation>Aktifkan berbagi super untuk torrent</translation>
     </message>
     <message>
         <source>Prefer TCP</source>
@@ -1131,11 +1126,11 @@
     </message>
     <message>
         <source>When ratio reaches</source>
-        <translation type="unfinished" />
+        <translation>Saat rasio telah tercapai</translation>
     </message>
     <message>
         <source>When seeding time reaches</source>
-        <translation type="unfinished" />
+        <translation>Saat waktu berbagi telah tercapai</translation>
     </message>
     <message>
         <source>Allow multiple connections from the same IP address:</source>
@@ -1158,20 +1153,16 @@
         <translation type="unfinished" />
     </message>
     <message>
-        <source>Optional IP Address to bind to (requires restart):</source>
-        <translation type="unfinished" />
-    </message>
-    <message>
         <source>Fastest upload</source>
         <translation type="unfinished" />
     </message>
     <message>
         <source>Pause torrent</source>
-        <translation type="unfinished" />
+        <translation>Jeda torrent</translation>
     </message>
     <message>
         <source>Remove torrent and its files</source>
-        <translation type="unfinished" />
+        <translation>Buang torrent dan berkasnya</translation>
     </message>
     <message>
         <source>qBittorrent Section</source>
@@ -1186,15 +1177,7 @@
         <translation type="unfinished" />
     </message>
     <message>
-        <source>Coalesce reads &amp; writes:</source>
-        <translation type="unfinished" />
-    </message>
-    <message>
         <source>Outgoing ports (Min) [0: Disabled]:</source>
-        <translation type="unfinished" />
-    </message>
-    <message>
-        <source>IP Address to report to trackers (requires restart):</source>
         <translation type="unfinished" />
     </message>
     <message>
@@ -1203,14 +1186,10 @@
     </message>
     <message>
         <source>Allow encryption</source>
-        <translation type="unfinished" />
+        <translation>Izinkan enkripsi</translation>
     </message>
     <message>
         <source>Send upload piece suggestions:</source>
-        <translation type="unfinished" />
-    </message>
-    <message>
-        <source>Disk cache:</source>
         <translation type="unfinished" />
     </message>
     <message>
@@ -1219,7 +1198,7 @@
     </message>
     <message>
         <source>Remove torrent</source>
-        <translation type="unfinished" />
+        <translation>Buang torrent</translation>
     </message>
     <message>
         <source>Outgoing ports (Max) [0: Disabled]:</source>
@@ -1238,10 +1217,6 @@
         <translation type="unfinished" />
     </message>
     <message>
-        <source>Disk cache expiry interval:</source>
-        <translation type="unfinished" />
-    </message>
-    <message>
         <source>Peer proportional (throttles TCP)</source>
         <translation type="unfinished" />
     </message>
@@ -1251,7 +1226,7 @@
     </message>
     <message>
         <source>Advanced</source>
-        <translation type="unfinished" />
+        <translation>Tingkat Lanjut</translation>
     </message>
     <message>
         <source>min</source>
@@ -1263,7 +1238,7 @@
     </message>
     <message>
         <source>Seeding Limits</source>
-        <translation type="unfinished" />
+        <translation>Batasan Berbagi</translation>
     </message>
     <message>
         <source>KiB</source>
@@ -1275,10 +1250,6 @@
     </message>
     <message>
         <source>Upload slots behavior:</source>
-        <translation type="unfinished" />
-    </message>
-    <message>
-        <source>Network Interface (requires restart):</source>
         <translation type="unfinished" />
     </message>
     <message>
@@ -1299,7 +1270,7 @@
     </message>
     <message>
         <source>Session timeout:</source>
-        <translation type="unfinished" />
+        <translation>Waktu habis sesi:</translation>
     </message>
     <message>
         <source>Resolve peer countries:</source>
@@ -1307,7 +1278,7 @@
     </message>
     <message>
         <source>ban for:</source>
-        <translation type="unfinished" />
+        <translation>diblokir karena:</translation>
     </message>
     <message>
         <source>Use piece extent affinity (requires libtorrent &gt;= 1.2.2):</source>
@@ -1323,7 +1294,7 @@
     </message>
     <message>
         <source>Enable cookie Secure flag (requires HTTPS)</source>
-        <translation type="unfinished" />
+        <translation>Aktifkan tanda kuki Aman (membutuhkan HTTPS)</translation>
     </message>
     <message>
         <source>UPnP lease duration [0: Permanent lease]:</source>
@@ -1335,6 +1306,174 @@
     </message>
     <message>
         <source>Add custom HTTP headers</source>
+        <translation>Tambahkan kustom HTTP headers</translation>
+    </message>
+    <message>
+        <source>Filters:</source>
+        <translation>Filter:</translation>
+    </message>
+    <message>
+        <source>Enable fetching RSS feeds</source>
+        <translation>Aktifkan pengambilan umpan RSS</translation>
+    </message>
+    <message>
+        <source>Hashing threads (requires libtorrent &gt;= 2.0):</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Coalesce reads &amp; writes (requires libtorrent &lt; 2.0):</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Peer turnover threshold percentage:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>RSS Torrent Auto Downloader</source>
+        <translation>RSS Torrent Unggah Otomatis</translation>
+    </message>
+    <message>
+        <source>RSS</source>
+        <translation>RSS</translation>
+    </message>
+    <message>
+        <source>Network interface:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>RSS Reader</source>
+        <translation>Pembaca RSS</translation>
+    </message>
+    <message>
+        <source>Edit auto downloading rules...</source>
+        <translation>Sunting aturan pengunduhan otomatis...</translation>
+    </message>
+    <message>
+        <source>Download REPACK/PROPER episodes</source>
+        <translation>Unduh episode REPACK/PROPER</translation>
+    </message>
+    <message>
+        <source>Feeds refresh interval:</source>
+        <translation>Interval penyegaran umpan:</translation>
+    </message>
+    <message>
+        <source>Peer turnover disconnect percentage:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Maximum number of articles per feed:</source>
+        <translation>Jumlah maksimum artikel per umpan:</translation>
+    </message>
+    <message>
+        <source>Max concurrent HTTP announces (requires libtorrent &gt;= 1.2.7):</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source> min</source>
+        <translation>min</translation>
+    </message>
+    <message>
+        <source>Peer turnover disconnect interval:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Optional IP address to bind to:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Disallow connection to peers on privileged ports:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Enable auto downloading of RSS torrents</source>
+        <translation>Aktifkan pengunduhan otomatis RSS torrent</translation>
+    </message>
+    <message>
+        <source>RSS Smart Episode Filter</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Disk cache (requires libtorrent &lt; 2.0):</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Disk cache expiry interval (requires libtorrent &lt; 2.0):</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Validate HTTPS tracker certificate:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Peer connection protocol:</source>
+        <translation>Protokol koneksi rekanan:</translation>
+    </message>
+    <message>
+        <source>Support internationalized domain name (IDN) (requires libtorrent &gt;= 1.2.12):</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Torrent content layout:</source>
+        <translation>Tata letak konten torrent:</translation>
+    </message>
+    <message>
+        <source>Create subfolder</source>
+        <translation>Buat subfolder</translation>
+    </message>
+    <message>
+        <source>Original</source>
+        <translation>Asli</translation>
+    </message>
+    <message>
+        <source>Don't create subfolder</source>
+        <translation>Jangan buat subfolder</translation>
+    </message>
+    <message>
+        <source>Type of service (ToS) for connections to peers</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Outgoing connections per second:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Random</source>
+        <translation>Acak</translation>
+    </message>
+    <message>
+        <source>%K: Torrent ID</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Reannounce to all trackers when IP or port changed:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Trusted proxies list:</source>
+        <translation>Daftar proxy terpercaya:</translation>
+    </message>
+    <message>
+        <source>Enable reverse proxy support</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>%J: Info hash v2</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>%I: Info hash v1</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>IP address reported to trackers (requires restart):</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Set to 0 to let your system pick an unused port</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Server-side request forgery (SSRF) mitigation:</source>
         <translation type="unfinished" />
     </message>
 </context>
@@ -1398,22 +1537,22 @@
     </message>
     <message>
         <source>Ban peer permanently</source>
-        <translation type="unfinished" />
+        <translation>Blokir rekanan secara permanen</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently ban the selected peers?</source>
-        <translation type="unfinished" />
+        <translation>Apakah Anda yakin ingin memblokir secara permanen rekanan yang dipilih?</translation>
     </message>
     <message>
         <source>Copy IP:port</source>
-        <translation type="unfinished" />
-    </message>
-    <message>
-        <source>Add a new peer...</source>
-        <translation type="unfinished" />
+        <translation>Salin IP:port</translation>
     </message>
     <message>
         <source>Country/Region</source>
+        <translation>Negara/Wilayah</translation>
+    </message>
+    <message>
+        <source>Add peers...</source>
         <translation type="unfinished" />
     </message>
 </context>
@@ -1566,10 +1705,6 @@
         <translation>Dibuat Pada:</translation>
     </message>
     <message>
-        <source>Torrent Hash:</source>
-        <translation>Hash Torrent:</translation>
-    </message>
-    <message>
         <source>Save Path:</source>
         <translation>Jalur Simpan:</translation>
     </message>
@@ -1611,33 +1746,61 @@
     </message>
     <message>
         <source>Priority</source>
-        <translation type="unfinished" />
+        <translation>Prioritas</translation>
     </message>
     <message>
         <source>Filter files...</source>
-        <translation type="unfinished" />
+        <translation>Filter berkas...</translation>
     </message>
     <message>
         <source>Rename...</source>
+        <translation>Ubah nama...</translation>
+    </message>
+    <message>
+        <source>%1 (seeded for %2)</source>
         <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Info Hash v2:</source>
+        <translation>Informasi Hash v2:</translation>
+    </message>
+    <message>
+        <source>Info Hash v1:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>N/A</source>
+        <translation>T/A</translation>
+    </message>
+    <message>
+        <source>Progress:</source>
+        <translation>Progres:</translation>
     </message>
 </context>
 <context>
     <name>ScanFoldersModel</name>
     <message>
         <source>Monitored Folder</source>
-        <translation type="unfinished" />
+        <translation>Pantau folder</translation>
     </message>
     <message>
         <source>Override Save Location</source>
-        <translation type="unfinished" />
+        <translation>Batalkan Lokasi Menyimpan:</translation>
     </message>
     <message>
         <source>Monitored folder</source>
-        <translation type="unfinished" />
+        <translation>Pantau folder</translation>
     </message>
     <message>
         <source>Default save location</source>
+        <translation>Tempat penyimpanan biasa</translation>
+    </message>
+    <message>
+        <source>Other...</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Type folder here</source>
         <translation type="unfinished" />
     </message>
 </context>
@@ -1664,35 +1827,35 @@
     </message>
     <message>
         <source>Read cache hits:</source>
-        <translation type="unfinished" />
+        <translation>Baca cache hits:</translation>
     </message>
     <message>
         <source>Average time in queue:</source>
-        <translation type="unfinished" />
+        <translation>Rata-rata waktu dalam antrian:</translation>
     </message>
     <message>
         <source>Connected peers:</source>
-        <translation type="unfinished" />
+        <translation>Sejawat tersambung:</translation>
     </message>
     <message>
         <source>All-time share ratio:</source>
-        <translation type="unfinished" />
+        <translation>Ratio waktu-semua pembagian:</translation>
     </message>
     <message>
         <source>All-time download:</source>
-        <translation type="unfinished" />
+        <translation>Semua-waktu unduh:</translation>
     </message>
     <message>
         <source>Session waste:</source>
-        <translation type="unfinished" />
+        <translation>Sesi terbuang:</translation>
     </message>
     <message>
         <source>All-time upload:</source>
-        <translation type="unfinished" />
+        <translation>Semua-waktu unggah:</translation>
     </message>
     <message>
         <source>Total buffer size:</source>
-        <translation type="unfinished" />
+        <translation>Total ukuran buffer:</translation>
     </message>
     <message>
         <source>Performance statistics</source>
@@ -1799,27 +1962,35 @@
     </message>
     <message>
         <source>Stalled Uploading (%1)</source>
-        <translation type="unfinished" />
+        <translation>Pengunggahan terhenti (%1)</translation>
     </message>
     <message>
         <source>Stalled Downloading (%1)</source>
-        <translation type="unfinished" />
+        <translation>Pengunduhan terhenti (%1)</translation>
     </message>
     <message>
         <source>Stalled Downloading (0)</source>
-        <translation type="unfinished" />
+        <translation>Pengunduhan terhenti (0)</translation>
     </message>
     <message>
         <source>Stalled (0)</source>
-        <translation type="unfinished" />
+        <translation>Terhenti (0)</translation>
     </message>
     <message>
         <source>Stalled Uploading (0)</source>
-        <translation type="unfinished" />
+        <translation>Pengunggahan terhenti (0)</translation>
     </message>
     <message>
         <source>Stalled (%1)</source>
-        <translation type="unfinished" />
+        <translation>Terhenti (%1)</translation>
+    </message>
+    <message>
+        <source>Checking (%1)</source>
+        <translation>Memeriksa (%1)</translation>
+    </message>
+    <message>
+        <source>Checking (0)</source>
+        <translation>Memeriksa (0)</translation>
     </message>
 </context>
 <context>
@@ -1994,55 +2165,55 @@
     </message>
     <message>
         <source>Downloaded</source>
-        <translation type="unfinished" />
+        <translation>Diunduh</translation>
     </message>
     <message>
         <source>Tracker URL:</source>
-        <translation type="unfinished" />
+        <translation>URL Pencari:</translation>
     </message>
     <message>
         <source>Updating...</source>
-        <translation type="unfinished" />
+        <translation>Membarui...</translation>
     </message>
     <message>
         <source>Working</source>
-        <translation type="unfinished" />
+        <translation>Berjalan</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished" />
+        <translation>Nonaktif</translation>
     </message>
     <message>
         <source>Not contacted yet</source>
-        <translation type="unfinished" />
+        <translation>Belum terhubung</translation>
     </message>
     <message>
         <source>N/A</source>
-        <translation type="unfinished" />
+        <translation>N/A</translation>
     </message>
     <message>
         <source>Seeds</source>
-        <translation type="unfinished" />
+        <translation>Benih</translation>
     </message>
     <message>
         <source>Not working</source>
-        <translation type="unfinished" />
+        <translation>Tak berjalan</translation>
     </message>
     <message>
         <source>Copy tracker URL</source>
-        <translation type="unfinished" />
+        <translation>Salin URL pencari</translation>
     </message>
     <message>
         <source>Add a new tracker...</source>
-        <translation type="unfinished" />
+        <translation>Tambahkan pencari baru...</translation>
     </message>
     <message>
         <source>Edit tracker URL...</source>
-        <translation type="unfinished" />
+        <translation>Ubah URL pelacak...</translation>
     </message>
     <message>
         <source>Tracker editing</source>
-        <translation type="unfinished" />
+        <translation>Pengubahan Pencari</translation>
     </message>
     <message>
         <source>Leeches</source>
@@ -2050,7 +2221,7 @@
     </message>
     <message>
         <source>Remove tracker</source>
-        <translation type="unfinished" />
+        <translation>Hapus pencari</translation>
     </message>
     <message>
         <source>Remaining</source>
@@ -2062,7 +2233,7 @@
     </message>
     <message>
         <source>Tier</source>
-        <translation type="unfinished" />
+        <translation>Tingkatan</translation>
     </message>
     <message>
         <source>Download Priority</source>
@@ -2100,16 +2271,12 @@
         <translation>%1 yang lalu</translation>
     </message>
     <message>
-        <source>Allocating</source>
-        <translation type="unfinished" />
-    </message>
-    <message>
         <source>Paused</source>
-        <translation type="unfinished" />
+        <translation>Ditangguhkan</translation>
     </message>
     <message>
         <source>Completed</source>
-        <translation type="unfinished" />
+        <translation>Komplet</translation>
     </message>
     <message>
         <source>Moving</source>
@@ -2145,7 +2312,7 @@
     </message>
     <message>
         <source>Missing Files</source>
-        <translation type="unfinished" />
+        <translation>Berkas Hilang</translation>
     </message>
     <message>
         <source>Queued for checking</source>
@@ -2153,7 +2320,7 @@
     </message>
     <message>
         <source>Downloading</source>
-        <translation type="unfinished" />
+        <translation>Mengunduh</translation>
     </message>
     <message>
         <source>Checking resume data</source>
@@ -2161,6 +2328,14 @@
     </message>
     <message>
         <source>Stalled</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>%1 (seeded for %2)</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>[F] Downloading metadata</source>
         <translation type="unfinished" />
     </message>
 </context>
@@ -2176,7 +2351,11 @@
     </message>
     <message>
         <source>Tags</source>
-        <translation type="unfinished" />
+        <translation>Tag</translation>
+    </message>
+    <message>
+        <source>Trackers</source>
+        <translation>Pelacak</translation>
     </message>
 </context>
 <context>
@@ -2255,7 +2434,7 @@
     </message>
     <message>
         <source>Automatic Torrent Management</source>
-        <translation type="unfinished" />
+        <translation>Manajemen Torrent Otomatis</translation>
     </message>
     <message>
         <source>Category</source>
@@ -2293,7 +2472,7 @@
     </message>
     <message>
         <source>New Category</source>
-        <translation type="unfinished" />
+        <translation>Kategori Baru</translation>
     </message>
     <message>
         <source>Location</source>
@@ -2309,7 +2488,7 @@
     </message>
     <message>
         <source>Force reannounce</source>
-        <translation type="unfinished" />
+        <translation>Paksa umumkan ulang</translation>
     </message>
     <message>
         <source>Edit Category</source>
@@ -2321,23 +2500,19 @@
     </message>
     <message>
         <source>Comma-separated tags:</source>
-        <translation type="unfinished" />
+        <translation>Koma-pemisah tag:</translation>
     </message>
     <message>
         <source>Add Tags</source>
-        <translation type="unfinished" />
+        <translation>Tambah Tag</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation type="unfinished" />
+        <translation>Tag</translation>
     </message>
     <message>
         <source>Magnet link</source>
-        <translation type="unfinished" />
-    </message>
-    <message>
-        <source>Hash</source>
-        <translation type="unfinished" />
+        <translation>Tautan magnet</translation>
     </message>
     <message>
         <source>Remove All</source>
@@ -2345,19 +2520,31 @@
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished" />
+        <translation>Nama</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished" />
+        <translation>Salin</translation>
     </message>
     <message>
         <source>Queue</source>
-        <translation type="unfinished" />
+        <translation>Antrian</translation>
     </message>
     <message>
         <source>Add...</source>
         <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Info hash v1</source>
+        <translation>Informasi hash v1</translation>
+    </message>
+    <message>
+        <source>Info hash v2</source>
+        <translation>Informasi hash v2</translation>
+    </message>
+    <message>
+        <source>Torrent ID</source>
+        <translation>ID Torrent</translation>
     </message>
 </context>
 <context>
@@ -2372,11 +2559,11 @@
     </message>
     <message>
         <source>Set no share limit</source>
-        <translation type="unfinished" />
+        <translation>Atur tiada limit bagi</translation>
     </message>
     <message>
         <source>Set share limit to</source>
-        <translation type="unfinished" />
+        <translation>Atur limit bagi ke</translation>
     </message>
     <message>
         <source>ratio</source>
@@ -2394,7 +2581,7 @@
     <name>confirmDeletionDlg</name>
     <message>
         <source>Deletion confirmation</source>
-        <translation type="unfinished" />
+        <translation>Hapus konfirmasi</translation>
     </message>
     <message>
         <source>Also delete the files on the hard disk</source>
@@ -2402,14 +2589,14 @@
     </message>
     <message>
         <source>Deletion confirmation - qBittorrent</source>
-        <translation type="unfinished" />
+        <translation>Konfirmasi penghapusan - qBittorrent</translation>
     </message>
 </context>
 <context>
     <name>downloadFromURL</name>
     <message>
         <source>Download from URLs</source>
-        <translation type="unfinished" />
+        <translation>Unduh dari URL</translation>
     </message>
     <message>
         <source>Download</source>
@@ -2487,12 +2674,16 @@
         <comment>e.g: 10minutes</comment>
         <translation>%1m</translation>
     </message>
+    <message>
+        <source>%1y %2d</source>
+        <translation type="unfinished" />
+    </message>
 </context>
 <context>
     <name>TorrentsController</name>
     <message>
         <source>Save path is empty</source>
-        <translation type="unfinished" />
+        <translation>Jalur penyimpanan kosong</translation>
     </message>
 </context>
 <context>
@@ -2553,10 +2744,6 @@
         <translation type="unfinished" />
     </message>
     <message>
-        <source>Results (showing</source>
-        <translation type="unfinished" />
-    </message>
-    <message>
         <source>Filter</source>
         <translation type="unfinished" />
     </message>
@@ -2576,12 +2763,32 @@
         <source>Everywhere</source>
         <translation type="unfinished" />
     </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Increase window width to display additional filters</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>to</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Results</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>showing</source>
+        <translation type="unfinished" />
+    </message>
 </context>
 <context>
     <name>PluginSelectDlg</name>
     <message>
         <source>Uninstall</source>
-        <translation type="unfinished" />
+        <translation>Bongkar</translation>
     </message>
     <message>
         <source>Install new plugin</source>
@@ -2593,27 +2800,27 @@
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished" />
+        <translation>Tutup</translation>
     </message>
     <message>
         <source>Installed search plugins:</source>
-        <translation type="unfinished" />
+        <translation>Plugin pencarian terpasang:</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation type="unfinished" />
+        <translation>Diaktifkan</translation>
     </message>
     <message>
         <source>Warning: Be sure to comply with your country's copyright laws when downloading torrents from any of these search engines.</source>
-        <translation type="unfinished" />
+        <translation>Peringatan: Pastikan untuk menaati hukum yang berlaku di negara Anda saat mengunduh torrent dari semua mesin pencari ini.</translation>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation type="unfinished" />
+        <translation>Periksa pemutakhiran</translation>
     </message>
     <message>
         <source>Search plugins</source>
-        <translation type="unfinished" />
+        <translation>Plugin pencarian</translation>
     </message>
 </context>
 <context>
@@ -2674,11 +2881,11 @@
     </message>
     <message>
         <source>Add Peers</source>
-        <translation type="unfinished" />
+        <translation>Tambah sejawat</translation>
     </message>
     <message>
         <source>List of peers to add (one IP per line):</source>
-        <translation type="unfinished" />
+        <translation>Daftar sejawat ditambahkan (satu per baris):</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -2686,131 +2893,143 @@
     </message>
     <message>
         <source>Format: IPv4:port / [IPv6]:port</source>
-        <translation type="unfinished" />
+        <translation>Format: IPv4:port / [IPv6]:port</translation>
     </message>
 </context>
 <context>
     <name>TagFilterWidget</name>
     <message>
         <source>New Tag</source>
-        <translation type="unfinished" />
+        <translation>Tag Baru</translation>
     </message>
     <message>
         <source>Add tag...</source>
-        <translation type="unfinished" />
+        <translation>Tambah tag...</translation>
     </message>
     <message>
         <source>Delete torrents</source>
-        <translation type="unfinished" />
+        <translation>Hapus torrent</translation>
     </message>
     <message>
         <source>Tag:</source>
-        <translation type="unfinished" />
+        <translation>Tag:</translation>
     </message>
     <message>
         <source>Pause torrents</source>
-        <translation type="unfinished" />
+        <translation>Jeda torrent</translation>
     </message>
     <message>
         <source>Resume torrents</source>
-        <translation type="unfinished" />
+        <translation>Lanjutkan torrent</translation>
     </message>
     <message>
         <source>Remove unused tags</source>
-        <translation type="unfinished" />
+        <translation>Buang tag yang tidak digunakan</translation>
     </message>
     <message>
         <source>Invalid tag name</source>
-        <translation type="unfinished" />
+        <translation>Nama tag tidak valid</translation>
     </message>
     <message>
         <source>Remove tag</source>
-        <translation type="unfinished" />
+        <translation>Buang tag</translation>
     </message>
 </context>
 <context>
     <name>TagFilterModel</name>
     <message>
         <source>All</source>
-        <translation type="unfinished" />
+        <translation>Semua</translation>
     </message>
     <message>
         <source>Untagged</source>
-        <translation type="unfinished" />
+        <translation>Tak Bertag</translation>
     </message>
 </context>
 <context>
     <name>AboutDialog</name>
     <message>
         <source>Bug Tracker:</source>
-        <translation type="unfinished" />
+        <translation>Pelacak Bug:</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished" />
+        <translation>Tentang</translation>
     </message>
     <message>
         <source>Forum:</source>
-        <translation type="unfinished" />
+        <translation>Forum:</translation>
     </message>
     <message>
         <source>E-mail:</source>
-        <translation type="unfinished" />
+        <translation>E-mail:</translation>
     </message>
     <message>
         <source>Current maintainer</source>
-        <translation type="unfinished" />
+        <translation>Pengelola saat ini</translation>
     </message>
     <message>
         <source>Home Page:</source>
-        <translation type="unfinished" />
+        <translation>Laman Utama:</translation>
     </message>
     <message>
         <source>Greece</source>
-        <translation type="unfinished" />
+        <translation>Yunani</translation>
     </message>
     <message>
         <source>Special Thanks</source>
-        <translation type="unfinished" />
+        <translation>Apresiasi</translation>
     </message>
     <message>
         <source>An advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar.</source>
-        <translation type="unfinished" />
+        <translation>Aplikasi BitTorrent tingkat lanjut yang diprogram menggunakan C++, berbasis toolkit Qt dan libtorrent-rasterbar.</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished" />
+        <translation>Nama:</translation>
     </message>
     <message>
         <source>About qBittorrent</source>
-        <translation type="unfinished" />
+        <translation>Tentang qBittorrent</translation>
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished" />
+        <translation>Lisensi</translation>
     </message>
     <message>
         <source>Translators</source>
-        <translation type="unfinished" />
+        <translation>Penerjemah</translation>
     </message>
     <message>
         <source>qBittorrent was built with the following libraries:</source>
-        <translation type="unfinished" />
+        <translation>qBittorrent dibuat dengan pustaka berikut:</translation>
     </message>
     <message>
         <source>Nationality:</source>
-        <translation type="unfinished" />
-    </message>
-    <message>
-        <source>Author</source>
-        <translation type="unfinished" />
+        <translation>Kewarganegaraan:</translation>
     </message>
     <message>
         <source>Software Used</source>
-        <translation type="unfinished" />
+        <translation>Perangkat Lunak yang Digunakan</translation>
     </message>
     <message>
         <source>The free IP to Country Lite database by DB-IP is used for resolving the countries of peers. The database is licensed under the Creative Commons Attribution 4.0 International License</source>
+        <translation>Database IP ke Negara versi Lite gratis oleh DB-IP digunakan untuk menerjemahkan IP ke negara rekan. Database dilisensikan di bawah Creative Commons Attribution 4.0 License Internasional</translation>
+    </message>
+    <message>
+        <source>Authors</source>
+        <translation>Pengembang</translation>
+    </message>
+    <message>
+        <source>France</source>
+        <translation>Perancis</translation>
+    </message>
+    <message>
+        <source>qBittorrent Mascot</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>qBittorrent icon</source>
         <translation type="unfinished" />
     </message>
 </context>
@@ -2833,15 +3052,15 @@
     <name>SearchJobWidget</name>
     <message>
         <source>Copy</source>
-        <translation type="unfinished" />
+        <translation>Salin</translation>
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished" />
+        <translation>Unduh</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished" />
+        <translation>Nama</translation>
     </message>
     <message>
         <source>Description page URL</source>
@@ -2849,22 +3068,399 @@
     </message>
     <message>
         <source>Open description page</source>
-        <translation type="unfinished" />
+        <translation>Buka halaman deskripsi</translation>
     </message>
     <message>
         <source>Download link</source>
-        <translation type="unfinished" />
+        <translation>Tautan unduhan</translation>
     </message>
 </context>
 <context>
     <name>TorrentContentTreeView</name>
     <message>
         <source>Renaming</source>
-        <translation type="unfinished" />
+        <translation>Mengganti nama</translation>
     </message>
     <message>
         <source>New name:</source>
+        <translation>Nama baru:</translation>
+    </message>
+</context>
+<context>
+    <name>RSSWidget</name>
+    <message>
+        <source>Date: </source>
+        <translation>Tanggal: </translation>
+    </message>
+    <message>
+        <source>Please choose a new name for this RSS feed</source>
+        <translation>Mohon tentukan nama baru untuk memasukkan RSS</translation>
+    </message>
+    <message>
+        <source>Please choose a folder name</source>
+        <translation>Silakan pilih nama folder</translation>
+    </message>
+    <message>
+        <source>New feed name:</source>
+        <translation>Nama masukkan baru:</translation>
+    </message>
+    <message>
+        <source>Update all</source>
+        <translation>Perbarui semua</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Hapus</translation>
+    </message>
+    <message>
+        <source>RSS Downloader...</source>
+        <translation>Pengunduh RSS...</translation>
+    </message>
+    <message>
+        <source>Mark items read</source>
+        <translation>Tandai item sudah dibaca</translation>
+    </message>
+    <message>
+        <source>Update all feeds</source>
+        <translation>Perbarui semua umpan</translation>
+    </message>
+    <message>
+        <source>Copy feed URL</source>
+        <translation>Salin URL umpan</translation>
+    </message>
+    <message>
+        <source>Torrents: (double-click to download)</source>
+        <translation>Torrent: (klik dua kali untuk mengunduh)</translation>
+    </message>
+    <message>
+        <source>Open news URL</source>
+        <translation>Buka URL berita</translation>
+    </message>
+    <message>
+        <source>Rename...</source>
+        <translation>Ubah nama...</translation>
+    </message>
+    <message>
+        <source>Feed URL:</source>
+        <translation>URL Umpan:</translation>
+    </message>
+    <message>
+        <source>New folder...</source>
+        <translation>Folder baru...</translation>
+    </message>
+    <message>
+        <source>New subscription</source>
+        <translation>Langganan baru</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>Perbarui</translation>
+    </message>
+    <message>
+        <source>Folder name:</source>
+        <translation>Nama folder:</translation>
+    </message>
+    <message>
+        <source>Please type a RSS feed URL</source>
+        <translation>Silakan ketik URL umpan RSS</translation>
+    </message>
+    <message>
+        <source>Fetching of RSS feeds is disabled now! You can enable it in application settings.</source>
+        <translation>Mengambil masukkan RSS dinonaktifkan sekarang! Anda dapat mengaktifkan di pengaturan aplikasi.</translation>
+    </message>
+    <message>
+        <source>Deletion confirmation</source>
+        <translation>Konfirmasi penghapusan</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete the selected RSS feeds?</source>
+        <translation>Anda yakin ingin menghapus masukkan terpilih RSS?</translation>
+    </message>
+    <message>
+        <source>New subscription...</source>
+        <translation>Langganan baru...</translation>
+    </message>
+    <message>
+        <source>Download torrent</source>
+        <translation>Unduh torrent</translation>
+    </message>
+</context>
+<context>
+    <name>AutomatedRssDownloader</name>
+    <message>
+        <source>Download Rules</source>
+        <translation>Aturan Unduhan</translation>
+    </message>
+    <message>
+        <source>Matching RSS Articles</source>
+        <translation>Artikel RSS yang Cocok</translation>
+    </message>
+    <message>
+        <source>* to match zero or more of any characters</source>
+        <translation>* untuk sesuai nol atau lebih dari karakter apapun</translation>
+    </message>
+    <message>
+        <source> will match all articles.</source>
+        <translation>akan sesuai semua pasal.</translation>
+    </message>
+    <message>
+        <source>Episode filter rules: </source>
+        <translation>Aturan filter episode:</translation>
+    </message>
+    <message>
+        <source>Auto downloading of RSS torrents is disabled now! You can enable it in application settings.</source>
+        <translation>Pengunduhan otomatis RSS torrent dinonaktifkan! Anda bisa mengaktifkannya dalam pengaturan aplikasi.</translation>
+    </message>
+    <message>
+        <source>Rule Definition</source>
+        <translation>Definisi Aturan</translation>
+    </message>
+    <message>
+        <source>Save to:</source>
+        <translation>Simpan ke:</translation>
+    </message>
+    <message>
+        <source>Use Regular Expressions</source>
+        <translation>Gunakan Ekpresi Reguler</translation>
+    </message>
+    <message>
+        <source>New rule name</source>
+        <translation>Nama aturan baru</translation>
+    </message>
+    <message>
+        <source>Filter must end with semicolon</source>
+        <translation>Filter harus diakhiri dengan titik-koma</translation>
+    </message>
+    <message>
+        <source>? to match any single character</source>
+        <translation>? untuk mencocokkan semua jenis karakter tunggal</translation>
+    </message>
+    <message>
+        <source>Matches articles based on episode filter.</source>
+        <translation>Artikel yang cocok berdasarkan filter episode.</translation>
+    </message>
+    <message>
+        <source>Assign Category:</source>
+        <translation>Tetapkan kategori:</translation>
+    </message>
+    <message>
+        <source>Regex mode: use Perl-compatible regular expressions</source>
+        <translation>Mode regex: gunakan ekspresi reguler yang kompatibel dengan Perl</translation>
+    </message>
+    <message>
+        <source>| is used as OR operator</source>
+        <translation>| digunakan sebagai operator OR</translation>
+    </message>
+    <message>
+        <source>Clear downloaded episodes</source>
+        <translation>Kosongkan daftar episode yang diunduh</translation>
+    </message>
+    <message>
+        <source>Whitespaces count as AND operators (all words, any order)</source>
+        <translation>Ruang putih terhitung sebagai operator DAN (semua kata, urutan apapun)</translation>
+    </message>
+    <message>
+        <source>An expression with an empty %1 clause (e.g. %2)</source>
         <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Example: </source>
+        <translation>Contoh:</translation>
+    </message>
+    <message>
+        <source>Add new rule...</source>
+        <translation>Tambah aturan baru...</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to clear the list of downloaded episodes for the selected rule?</source>
+        <translation>Apakah Anda yakin ingin mengosongkan daftar episode yang diunduh untuk aturan yang dipilih?</translation>
+    </message>
+    <message>
+        <source>Must Contain:</source>
+        <translation>Harus Memuat:</translation>
+    </message>
+    <message>
+        <source>Infinite range: &lt;b&gt;1x25-;&lt;/b&gt; matches episodes 25 and upward of season one, and all episodes of later seasons</source>
+        <translation>Barisan tak terbatas:&lt;b&gt;1x25-;&lt;/b&gt;sesuai episode 25 dan ke atas dari sesi satu, dan semua dari episode nanti</translation>
+    </message>
+    <message>
+        <source>Save to a Different Directory</source>
+        <translation>Simpan ke Direktori Berbeda</translation>
+    </message>
+    <message>
+        <source>Must Not Contain:</source>
+        <translation>Tidak Boleh Memuat:</translation>
+    </message>
+    <message>
+        <source>Single number: &lt;b&gt;1x25;&lt;/b&gt; matches episode 25 of season one</source>
+        <translation>Nomor tunggal: &lt;b&gt;1x25;&lt;/ b&gt; cocok dengan episode 25 dari musim pertama</translation>
+    </message>
+    <message>
+        <source>Three range types for episodes are supported: </source>
+        <translation>Tiga jenis rentang untuk episode yang didukung:</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the selected download rules?</source>
+        <translation>Apakah Anda yakin ingin menghapus aturan unduh yang dipilih?</translation>
+    </message>
+    <message>
+        <source>Use global settings</source>
+        <translation>Gunakan pengaturan global</translation>
+    </message>
+    <message>
+        <source>Normal range: &lt;b&gt;1x25-40;&lt;/b&gt; matches episodes 25 through 40 of season one</source>
+        <translation>Rentang normal: &lt;b&gt;1x25-40;&lt;/b&gt; cocok dengan episode 25 sampai 40 dari musim pertama</translation>
+    </message>
+    <message>
+        <source>Please type the new rule name</source>
+        <translation>Mohon ketik nama aturan baru</translation>
+    </message>
+    <message>
+        <source>Rule renaming</source>
+        <translation>Menamai ulang aturan</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>Selalu</translation>
+    </message>
+    <message>
+        <source>Episode number is a mandatory positive value</source>
+        <translation>Nomor episode ialah wajib nilai positif</translation>
+    </message>
+    <message>
+        <source> will match 2, 5, 8 through 15, 30 and onward episodes of season one</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Rule deletion confirmation</source>
+        <translation>Konfirmasi penghapusan aturan</translation>
+    </message>
+    <message>
+        <source>Last Match: %1 days ago</source>
+        <translation>Cocok Terakhir: %1 hari yang lalu</translation>
+    </message>
+    <message>
+        <source>Episode Filter:</source>
+        <translation>Filter Episode:</translation>
+    </message>
+    <message>
+        <source>Rss Downloader</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Season number is a mandatory non-zero value</source>
+        <translation>Nomor musim wajib bernilai bukan nol</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>Jangan Pernah</translation>
+    </message>
+    <message>
+        <source>Apply Rule to Feeds:</source>
+        <translation>Terapkan Aturan ke Umpan:</translation>
+    </message>
+    <message>
+        <source> days</source>
+        <translation>hari</translation>
+    </message>
+    <message>
+        <source>Use Smart Episode Filter</source>
+        <translation>Gunakan Smart Episode Filter</translation>
+    </message>
+    <message>
+        <source>If word order is important use * instead of whitespace.</source>
+        <translation>Jika urutan kata sangat penting gunakan * daripada ruang putih.</translation>
+    </message>
+    <message>
+        <source>Add Paused:</source>
+        <translation>Tambah Jeda:</translation>
+    </message>
+    <message>
+        <source>Please type the name of the new download rule.</source>
+        <translation>Mohon ketik nama dari aturan unduh baru.</translation>
+    </message>
+    <message>
+        <source>Wildcard mode: you can use</source>
+        <translation>Mode wildcard: Anda bisa menggunakan</translation>
+    </message>
+    <message>
+        <source> will exclude all articles.</source>
+        <translation>akan tiadakan semua pasal.</translation>
+    </message>
+    <message>
+        <source>Delete rule</source>
+        <translation>Hapus aturan</translation>
+    </message>
+    <message>
+        <source>Ignore Subsequent Matches for (0 to Disable)</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Rename rule...</source>
+        <translation>Ubah nama aturan...</translation>
+    </message>
+    <message>
+        <source>Last Match: Unknown</source>
+        <translation>Cocok Terakhir: Tidak Diketahui</translation>
+    </message>
+    <message>
+        <source>Clear downloaded episodes...</source>
+        <translation>Kosongkan daftar episode yang diunduh...</translation>
+    </message>
+    <message>
+        <source>Smart Episode Filter will check the episode number to prevent downloading of duplicates.
+Supports the formats: S01E01, 1x1, 2017.12.31 and 31.12.2017 (Date formats also support - as a separator)</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Torrent content layout:</source>
+        <translation>Tata letak konten torrent:</translation>
+    </message>
+    <message>
+        <source>Create subfolder</source>
+        <translation>Buat subfolder</translation>
+    </message>
+    <message>
+        <source>Original</source>
+        <translation>Asli</translation>
+    </message>
+    <message>
+        <source>Don't create subfolder</source>
+        <translation>Jangan buat subfolder</translation>
+    </message>
+</context>
+<context>
+    <name>TrackerFiltersList</name>
+    <message>
+        <source>Delete torrents</source>
+        <translation>Hapus torrent</translation>
+    </message>
+    <message>
+        <source>Resume torrents</source>
+        <translation>Lanjutkan torrent</translation>
+    </message>
+    <message>
+        <source>All (%1)</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Trackerless (%1)</source>
+        <translation>Nirpelacak (%1)</translation>
+    </message>
+    <message>
+        <source>Pause torrents</source>
+        <translation>Tangguhkan torrent</translation>
+    </message>
+</context>
+<context>
+    <name>FeedListWidget</name>
+    <message>
+        <source>RSS feeds</source>
+        <translation>Umpan RSS</translation>
+    </message>
+    <message>
+        <source>Unread</source>
+        <translation>Belum dibaca</translation>
     </message>
 </context>
 </TS>

@@ -26,11 +26,12 @@
  * exception statement from your version.
  */
 
-#ifndef SEARCHSORTMODEL_H
-#define SEARCHSORTMODEL_H
+#pragma once
 
 #include <QSortFilterProxyModel>
 #include <QStringList>
+
+#include "base/utils/compare.h"
 
 class SearchSortModel final : public QSortFilterProxyModel
 {
@@ -47,6 +48,11 @@ public:
         DL_LINK,
         DESC_LINK,
         NB_SEARCH_COLUMNS
+    };
+
+    enum SearchDataRole
+    {
+        UnderlyingDataRole = Qt::UserRole
     };
 
     explicit SearchSortModel(QObject *parent = nullptr);
@@ -90,6 +96,6 @@ private:
     int m_minSeeds, m_maxSeeds;
     int m_minLeeches, m_maxLeeches;
     qint64 m_minSize, m_maxSize;
-};
 
-#endif // SEARCHSORTMODEL_H
+    Utils::Compare::NaturalLessThan<Qt::CaseInsensitive> m_naturalLessThan;
+};

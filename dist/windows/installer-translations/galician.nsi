@@ -1,4 +1,4 @@
-﻿;Installer strings
+;Installer strings
 
 ;LangString inst_qbt_req ${LANG_ENGLISH} "qBittorrent (required)"
 LangString inst_qbt_req ${LANG_GALICIAN} "qBittorrent (necesario)"
@@ -20,8 +20,8 @@ LangString inst_pathlimit ${LANG_GALICIAN} "Disable Windows path length limit (2
 LangString inst_firewallinfo ${LANG_GALICIAN} "Engadindo unha regra á devasa de Windows"
 ;LangString inst_warning ${LANG_ENGLISH} "qBittorrent is running. Please close the application before installing."
 LangString inst_warning ${LANG_GALICIAN} "qBittorrent está en execución. Peche o aplicativo antes da instalación."
-;LangString inst_uninstall_question ${LANG_ENGLISH} "A previous installation was detected. It will be uninstalled without deleting user settings."
-LangString inst_uninstall_question ${LANG_GALICIAN} "A previous installation was detected. It will be uninstalled without deleting user settings."
+;LangString inst_uninstall_question ${LANG_ENGLISH} "Current version will be uninstalled. User settings and torrents will remain intact."
+LangString inst_uninstall_question ${LANG_GALICIAN} "Current version will be uninstalled. User settings and torrents will remain intact."
 ;LangString inst_unist ${LANG_ENGLISH} "Uninstalling previous version."
 LangString inst_unist ${LANG_GALICIAN} "Desinstalando a versión anterior."
 ;LangString launch_qbt ${LANG_ENGLISH} "Launch qBittorrent."
@@ -30,7 +30,8 @@ LangString launch_qbt ${LANG_GALICIAN} "Iniciar qBittorrent."
 LangString inst_requires_64bit ${LANG_GALICIAN} "This installer works only in 64-bit Windows versions."
 ;LangString inst_requires_win7 ${LANG_ENGLISH} "This qBittorrent version requires at least Windows 7."
 LangString inst_requires_win7 ${LANG_GALICIAN} "This qBittorrent version requires at least Windows 7."
-
+;LangString inst_uninstall_link_description ${LANG_ENGLISH} "Uninstall qBittorrent"
+LangString inst_uninstall_link_description ${LANG_GALICIAN} "Uninstall qBittorrent"
 
 ;------------------------------------
 ;Uninstaller strings

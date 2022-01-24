@@ -26,10 +26,11 @@
  * exception statement from your version.
  */
 
-#ifndef COOKIESDIALOG_H
-#define COOKIESDIALOG_H
+#pragma once
 
 #include <QDialog>
+
+#include "base/settingvalue.h"
 
 class CookiesModel;
 
@@ -56,6 +57,7 @@ private slots:
 private:
     Ui::CookiesDialog *m_ui;
     CookiesModel *m_cookiesModel;
-};
 
-#endif // COOKIESDIALOG_H
+    SettingValue<QSize> m_storeDialogSize;
+    SettingValue<QByteArray> m_storeViewState;
+};

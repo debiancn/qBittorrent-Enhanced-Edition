@@ -1,4 +1,4 @@
-﻿;Installer strings
+;Installer strings
 
 ;LangString inst_qbt_req ${LANG_ENGLISH} "qBittorrent (required)"
 LangString inst_qbt_req ${LANG_GERMAN} "qBittorrent (erforderlich)"
@@ -7,7 +7,7 @@ LangString inst_dekstop ${LANG_GERMAN} "Verknüpfung auf dem Desktop erstellen"
 ;LangString inst_startmenu ${LANG_ENGLISH} "Create Start Menu Shortcut"
 LangString inst_startmenu ${LANG_GERMAN} "Eintrag im Startmenü erstellen"
 ;LangString inst_startup ${LANG_ENGLISH} "Start qBittorrent on Windows start up"
-LangString inst_startup ${LANG_GERMAN} "qBittorrent mit Windows mitstarten"
+LangString inst_startup ${LANG_GERMAN} "qBittorrent mit Windows starten"
 ;LangString inst_torrent ${LANG_ENGLISH} "Open .torrent files with qBittorrent"
 LangString inst_torrent ${LANG_GERMAN} "Öffne .torrent-Dateien mit qBittorrent"
 ;LangString inst_magnet ${LANG_ENGLISH} "Open magnet links with qBittorrent"
@@ -20,7 +20,7 @@ LangString inst_pathlimit ${LANG_GERMAN} "Deaktiviere die Windows-Pfadlängenbes
 LangString inst_firewallinfo ${LANG_GERMAN} "Füge Regel in der Windows Firewall hinzu"
 ;LangString inst_warning ${LANG_ENGLISH} "qBittorrent is running. Please close the application before installing."
 LangString inst_warning ${LANG_GERMAN} "qBittorrent läuft gerade. Bitte das Programm vor der Installation beenden."
-;LangString inst_uninstall_question ${LANG_ENGLISH} "A previous installation was detected. It will be uninstalled without deleting user settings."
+;LangString inst_uninstall_question ${LANG_ENGLISH} "Current version will be uninstalled. User settings and torrents will remain intact."
 LangString inst_uninstall_question ${LANG_GERMAN} "Eine ältere Installation wurde festgestellt. Diese wird deinstalliert ohne die Benutzereinstellungen zu löschen."
 ;LangString inst_unist ${LANG_ENGLISH} "Uninstalling previous version."
 LangString inst_unist ${LANG_GERMAN} "Vorherige Version wird deinstalliert."
@@ -29,8 +29,9 @@ LangString launch_qbt ${LANG_GERMAN} "Starte qBittorrent."
 ;LangString inst_requires_64bit ${LANG_ENGLISH} "This installer works only in 64-bit Windows versions."
 LangString inst_requires_64bit ${LANG_GERMAN} "Diese Installation funktioniert nur mit einer 64-bit Version von Windows."
 ;LangString inst_requires_win7 ${LANG_ENGLISH} "This qBittorrent version requires at least Windows 7."
-LangString inst_requires_win7 ${LANG_GERMAN} "Diese Version von qBittorrent erfordert zumindest Windows 7."
-
+LangString inst_requires_win7 ${LANG_GERMAN} "Diese Version von qBittorrent erfordert mindestens Windows 7."
+;LangString inst_uninstall_link_description ${LANG_ENGLISH} "Uninstall qBittorrent"
+LangString inst_uninstall_link_description ${LANG_GERMAN} "qBittorrent deinstallieren"
 
 ;------------------------------------
 ;Uninstaller strings

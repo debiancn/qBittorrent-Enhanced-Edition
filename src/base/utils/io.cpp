@@ -28,8 +28,13 @@
 
 #include "io.h"
 
+#include <libtorrent/bencode.hpp>
+#include <libtorrent/entry.hpp>
+
 #include <QByteArray>
 #include <QFileDevice>
+#include <QSaveFile>
+#include <QString>
 
 Utils::IO::FileDeviceOutputIterator::FileDeviceOutputIterator(QFileDevice &device, const int bufferSize)
     : m_device {&device}
@@ -41,7 +46,8 @@ Utils::IO::FileDeviceOutputIterator::FileDeviceOutputIterator(QFileDevice &devic
 
 Utils::IO::FileDeviceOutputIterator::~FileDeviceOutputIterator()
 {
-    if (m_buffer.use_count() == 1) {
+    if (m_buffer.use_count() == 1)
+    {
         if (m_device->error() == QFileDevice::NoError)
             m_device->write(*m_buffer);
         m_buffer->clear();
@@ -51,7 +57,8 @@ Utils::IO::FileDeviceOutputIterator::~FileDeviceOutputIterator()
 Utils::IO::FileDeviceOutputIterator &Utils::IO::FileDeviceOutputIterator::operator=(const char c)
 {
     m_buffer->append(c);
-    if (m_buffer->size() >= m_bufferSize) {
+    if (m_buffer->size() >= m_bufferSize)
+    {
         if (m_device->error() == QFileDevice::NoError)
             m_device->write(*m_buffer);
         m_buffer->clear();
@@ -59,17 +66,23 @@ Utils::IO::FileDeviceOutputIterator &Utils::IO::FileDeviceOutputIterator::operat
     return *this;
 }
 
-Utils::IO::FileDeviceOutputIterator &Utils::IO::FileDeviceOutputIterator::operator*()
+nonstd::expected<void, QString> Utils::IO::saveToFile(const QString &path, const QByteArray &data)
 {
-    return *this;
+    QSaveFile file {path};
+    if (!file.open(QIODevice::WriteOnly) || (file.write(data) != data.size()) || !file.flush() || !file.commit())
+        return nonstd::make_unexpected(file.errorString());
+    return {};
 }
 
-Utils::IO::FileDeviceOutputIterator &Utils::IO::FileDeviceOutputIterator::operator++()
+nonstd::expected<void, QString> Utils::IO::saveToFile(const QString &path, const lt::entry &data)
 {
-    return *this;
-}
+    QSaveFile file {path};
+    if (!file.open(QIODevice::WriteOnly))
+        return nonstd::make_unexpected(file.errorString());
 
-Utils::IO::FileDeviceOutputIterator &Utils::IO::FileDeviceOutputIterator::operator++(int)
-{
-    return *this;
+    const int bencodedDataSize = lt::bencode(Utils::IO::FileDeviceOutputIterator {file}, data);
+    if ((file.size() != bencodedDataSize) || !file.flush() || !file.commit())
+        return nonstd::make_unexpected(file.errorString());
+
+    return {};
 }

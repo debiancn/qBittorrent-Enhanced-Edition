@@ -310,6 +310,16 @@
                     </item>
                     <item>
                      <property name="text">
+                      <string>Preview file, otherwise open destination folder</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Show torrent options</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
                       <string>No action</string>
                      </property>
                     </item>
@@ -337,6 +347,11 @@
                     <item>
                      <property name="text">
                       <string>Preview file, otherwise open destination folder</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Show torrent options</string>
                      </property>
                     </item>
                     <item>
@@ -769,14 +784,50 @@
                 </widget>
                </item>
                <item>
-                <widget class="QCheckBox" name="checkCreateSubfolder">
-                 <property name="text">
-                  <string>Create subfolder for torrents with multiple files</string>
-                 </property>
-                 <property name="checked">
-                  <bool>true</bool>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout_19">
+                 <item>
+                  <widget class="QLabel" name="contentLayoutLabel">
+                   <property name="text">
+                    <string>Torrent content layout:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="contentLayoutComboBox">
+                   <property name="currentIndex">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>Original</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Create subfolder</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Don't create subfolder</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_20">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
                </item>
                <item>
                 <widget class="QCheckBox" name="checkStartPaused">
@@ -791,7 +842,7 @@
                <item>
                 <widget class="QGroupBox" name="deleteTorrentBox">
                  <property name="toolTip">
-                  <string>Should the .torrent file be deleted after adding it</string>
+                  <string>Whether the .torrent file should be deleted after adding it</string>
                  </property>
                  <property name="title">
                   <string>De&amp;lete .torrent files afterwards </string>
@@ -1054,22 +1105,25 @@ Manual: Various torrent properties (e.g. save path) must be assigned manually</s
                </item>
                <item>
                 <layout class="QGridLayout" name="gridLayout_4">
-                 <item row="1" column="1">
-                  <widget class="FileSystemPathLineEdit" name="textTempPath" native="true"/>
-                 </item>
-                 <item row="3" column="0">
-                  <widget class="QCheckBox" name="checkExportDirFin">
-                   <property name="text">
-                    <string>Copy .torrent files for finished downloads to:</string>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="0" column="0">
                   <widget class="QLabel" name="labelSavePath">
                    <property name="text">
                     <string>Default Save Path:</string>
                    </property>
                   </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="FileSystemPathLineEdit" name="textSavePath" native="true"/>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QCheckBox" name="checkUseDownloadPath">
+                   <property name="text">
+                    <string>Use another path for incomplete torrents:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="FileSystemPathLineEdit" name="textDownloadPath" native="true"/>
                  </item>
                  <item row="2" column="0">
                   <widget class="QCheckBox" name="checkExportDir">
@@ -1078,21 +1132,18 @@ Manual: Various torrent properties (e.g. save path) must be assigned manually</s
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="0">
-                  <widget class="QCheckBox" name="checkTempFolder">
-                   <property name="text">
-                    <string>Keep incomplete torrents in:</string>
-                   </property>
-                  </widget>
+                 <item row="2" column="1">
+                  <widget class="FileSystemPathLineEdit" name="textExportDir" native="true"/>
                  </item>
                  <item row="3" column="1">
                   <widget class="FileSystemPathLineEdit" name="textExportDirFin" native="true"/>
                  </item>
-                 <item row="0" column="1">
-                  <widget class="FileSystemPathLineEdit" name="textSavePath" native="true"/>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="FileSystemPathLineEdit" name="textExportDir" native="true"/>
+                 <item row="3" column="0">
+                  <widget class="QCheckBox" name="checkExportDirFin">
+                   <property name="text">
+                    <string>Copy .torrent files for finished downloads to:</string>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </item>
@@ -1147,19 +1198,29 @@ Manual: Various torrent properties (e.g. save path) must be assigned manually</s
                  <item>
                   <layout class="QVBoxLayout" name="verticalLayout_37">
                    <item>
-                    <widget class="QPushButton" name="addScanFolderButton">
+                    <widget class="QPushButton" name="addWatchedFolderButton">
                      <property name="text">
-                      <string>Add entry</string>
+                      <string>Add...</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QPushButton" name="removeScanFolderButton">
+                    <widget class="QPushButton" name="editWatchedFolderButton">
                      <property name="enabled">
                       <bool>false</bool>
                      </property>
                      <property name="text">
-                      <string>Remove entry</string>
+                      <string>Options..</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="removeWatchedFolderButton">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="text">
+                      <string>Remove</string>
                      </property>
                     </widget>
                    </item>
@@ -1356,7 +1417,7 @@ Manual: Various torrent properties (e.g. save path) must be assigned manually</s
               <item>
                <widget class="QLabel" name="label_24">
                 <property name="text">
-                 <string>Enabled protocol:</string>
+                 <string>Peer connection protocol:</string>
                 </property>
                </widget>
               </item>
@@ -1411,14 +1472,14 @@ Manual: Various torrent properties (e.g. save path) must be assigned manually</s
                  </item>
                  <item>
                   <widget class="QSpinBox" name="spinPort">
-                   <property name="minimum">
-                    <number>1</number>
+                   <property name="toolTip">
+                    <string>Set to 0 to let your system pick an unused port</string>
+                   </property>
+                   <property name="specialValueText">
+                    <string>Any</string>
                    </property>
                    <property name="maximum">
                     <number>65535</number>
-                   </property>
-                   <property name="value">
-                    <number>8999</number>
                    </property>
                   </widget>
                  </item>
@@ -1454,13 +1515,6 @@ Manual: Various torrent properties (e.g. save path) must be assigned manually</s
                  </property>
                 </widget>
                </item>
-               <item>
-                <widget class="QCheckBox" name="checkRandomPort">
-                 <property name="text">
-                  <string>Use different port on each startup</string>
-                 </property>
-                </widget>
-               </item>
               </layout>
              </widget>
             </item>
@@ -1481,7 +1535,7 @@ Manual: Various torrent properties (e.g. save path) must be assigned manually</s
                 </widget>
                </item>
                <item row="1" column="0">
-                <widget class="QCheckBox" name="checkMaxConnecsPerTorrent">
+                <widget class="QCheckBox" name="checkMaxConnectionsPerTorrent">
                  <property name="text">
                   <string>Maximum number of connections per torrent:</string>
                  </property>
@@ -1491,7 +1545,7 @@ Manual: Various torrent properties (e.g. save path) must be assigned manually</s
                 </widget>
                </item>
                <item row="0" column="0">
-                <widget class="QCheckBox" name="checkMaxConnecs">
+                <widget class="QCheckBox" name="checkMaxConnections">
                  <property name="text">
                   <string>Global maximum number of connections:</string>
                  </property>
@@ -1534,18 +1588,12 @@ Manual: Various torrent properties (e.g. save path) must be assigned manually</s
                  <property name="text">
                   <string>Maximum number of upload slots per torrent:</string>
                  </property>
-                 <property name="checked">
-                  <bool>false</bool>
-                 </property>
                 </widget>
                </item>
                <item row="2" column="0">
                 <widget class="QCheckBox" name="checkMaxUploads">
                  <property name="text">
                   <string>Global maximum number of upload slots:</string>
-                 </property>
-                 <property name="checked">
-                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
@@ -1632,9 +1680,6 @@ Manual: Various torrent properties (e.g. save path) must be assigned manually</s
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
-                   <property name="text">
-                    <string/>
-                   </property>
                   </widget>
                  </item>
                  <item>
@@ -1666,7 +1711,7 @@ Manual: Various torrent properties (e.g. save path) must be assigned manually</s
                 </layout>
                </item>
                <item>
-                <widget class="QCheckBox" name="checkProxyPeerConnecs">
+                <widget class="QCheckBox" name="checkProxyPeerConnections">
                  <property name="enabled">
                   <bool>false</bool>
                  </property>
@@ -1866,7 +1911,7 @@ Manual: Various torrent properties (e.g. save path) must be assigned manually</s
                   <string> KiB/s</string>
                  </property>
                  <property name="maximum">
-                  <number>1000000</number>
+                  <number>2000000</number>
                  </property>
                  <property name="value">
                   <number>100</number>
@@ -1882,7 +1927,7 @@ Manual: Various torrent properties (e.g. save path) must be assigned manually</s
                   <string> KiB/s</string>
                  </property>
                  <property name="maximum">
-                  <number>1000000</number>
+                  <number>2000000</number>
                  </property>
                  <property name="value">
                   <number>100</number>
@@ -1937,7 +1982,7 @@ Manual: Various torrent properties (e.g. save path) must be assigned manually</s
                   <string> KiB/s</string>
                  </property>
                  <property name="maximum">
-                  <number>1000000</number>
+                  <number>2000000</number>
                  </property>
                  <property name="value">
                   <number>10</number>
@@ -2073,7 +2118,7 @@ Manual: Various torrent properties (e.g. save path) must be assigned manually</s
                   <string> KiB/s</string>
                  </property>
                  <property name="maximum">
-                  <number>1000000</number>
+                  <number>2000000</number>
                  </property>
                  <property name="value">
                   <number>10</number>
@@ -2627,14 +2672,7 @@ Disable encryption: Only connect to peers without protocol encryption</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_16">
                <item row="0" column="0">
-                <widget class="QPlainTextEdit" name="textTrackers">
-                 <property name="enabled">
-                  <bool>true</bool>
-                 </property>
-                 <property name="focusPolicy">
-                  <enum>Qt::StrongFocus</enum>
-                 </property>
-                </widget>
+                <widget class="QPlainTextEdit" name="textTrackers"/>
                </item>
               </layout>
              </widget>
@@ -3309,6 +3347,36 @@ Use ';' to split multiple entries. Can use wildcard '*'.</string>
                 </widget>
                </item>
                <item>
+                <widget class="QGroupBox" name="groupEnableReverseProxySupport">
+                 <property name="title">
+                  <string>Enable reverse proxy support</string>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_331">
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_131">
+                    <item>
+                     <widget class="QLabel" name="lblReverseProxiesList">
+                      <property name="text">
+                       <string>Trusted proxies list:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="textTrustedReverseProxiesList">
+                      <property name="toolTip">
+                       <string>Specify reverse proxy IPs in order to use forwarded client address (X-Forwarded-For attribute), use ';' to split multiple entries.</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item>
                 <widget class="QGroupBox" name="checkDynDNS">
                  <property name="title">
                   <string>Upda&amp;te my dynamic domain name</string>
@@ -3374,11 +3442,7 @@ Use ';' to split multiple entries. Can use wildcard '*'.</string>
                    </widget>
                   </item>
                   <item row="2" column="1">
-                   <widget class="QLineEdit" name="DNSUsernameTxt">
-                    <property name="maxLength">
-                     <number>50</number>
-                    </property>
-                   </widget>
+                   <widget class="QLineEdit" name="DNSUsernameTxt"/>
                   </item>
                   <item row="3" column="0">
                    <widget class="QLabel" name="label_22">
@@ -3389,9 +3453,6 @@ Use ';' to split multiple entries. Can use wildcard '*'.</string>
                   </item>
                   <item row="3" column="1">
                    <widget class="QLineEdit" name="DNSPasswordTxt">
-                    <property name="maxLength">
-                     <number>50</number>
-                    </property>
                     <property name="echoMode">
                      <enum>QLineEdit::Password</enum>
                     </property>
@@ -3454,7 +3515,7 @@ Use ';' to split multiple entries. Can use wildcard '*'.</string>
   <customwidget>
    <class>FileSystemPathLineEdit</class>
    <extends>QWidget</extends>
-   <header>fspathedit.h</header>
+   <header>gui/fspathedit.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
@@ -3495,12 +3556,13 @@ Use ';' to split multiple entries. Can use wildcard '*'.</string>
   <tabstop>checkAdditionDialog</tabstop>
   <tabstop>checkAdditionDialogFront</tabstop>
   <tabstop>checkPreallocateAll</tabstop>
-  <tabstop>checkTempFolder</tabstop>
-  <tabstop>textTempPath</tabstop>
+  <tabstop>checkUseDownloadPath</tabstop>
+  <tabstop>textDownloadPath</tabstop>
   <tabstop>checkAppendqB</tabstop>
   <tabstop>scanFoldersView</tabstop>
-  <tabstop>addScanFolderButton</tabstop>
-  <tabstop>removeScanFolderButton</tabstop>
+  <tabstop>addWatchedFolderButton</tabstop>
+  <tabstop>editWatchedFolderButton</tabstop>
+  <tabstop>removeWatchedFolderButton</tabstop>
   <tabstop>checkExportDir</tabstop>
   <tabstop>textExportDir</tabstop>
   <tabstop>checkExportDirFin</tabstop>
@@ -3516,10 +3578,9 @@ Use ';' to split multiple entries. Can use wildcard '*'.</string>
   <tabstop>lineEditAutoRun</tabstop>
   <tabstop>scrollArea_3</tabstop>
   <tabstop>randomButton</tabstop>
-  <tabstop>checkRandomPort</tabstop>
-  <tabstop>checkMaxConnecs</tabstop>
+  <tabstop>checkMaxConnections</tabstop>
   <tabstop>spinMaxConnec</tabstop>
-  <tabstop>checkMaxConnecsPerTorrent</tabstop>
+  <tabstop>checkMaxConnectionsPerTorrent</tabstop>
   <tabstop>spinMaxConnecPerTorrent</tabstop>
   <tabstop>checkMaxUploadsPerTorrent</tabstop>
   <tabstop>spinMaxUploadsPerTorrent</tabstop>
@@ -3528,7 +3589,7 @@ Use ';' to split multiple entries. Can use wildcard '*'.</string>
   <tabstop>comboProxyType</tabstop>
   <tabstop>textProxyIP</tabstop>
   <tabstop>spinProxyPort</tabstop>
-  <tabstop>checkProxyPeerConnecs</tabstop>
+  <tabstop>checkProxyPeerConnections</tabstop>
   <tabstop>isProxyOnlyForTorrents</tabstop>
   <tabstop>checkProxyAuth</tabstop>
   <tabstop>textProxyUsername</tabstop>
@@ -3573,7 +3634,7 @@ Use ';' to split multiple entries. Can use wildcard '*'.</string>
  <resources/>
  <connections>
   <connection>
-   <sender>checkMaxConnecs</sender>
+   <sender>checkMaxConnections</sender>
    <signal>toggled(bool)</signal>
    <receiver>spinMaxConnec</receiver>
    <slot>setEnabled(bool)</slot>
@@ -3589,7 +3650,7 @@ Use ';' to split multiple entries. Can use wildcard '*'.</string>
    </hints>
   </connection>
   <connection>
-   <sender>checkMaxConnecsPerTorrent</sender>
+   <sender>checkMaxConnectionsPerTorrent</sender>
    <signal>toggled(bool)</signal>
    <receiver>spinMaxConnecPerTorrent</receiver>
    <slot>setEnabled(bool)</slot>

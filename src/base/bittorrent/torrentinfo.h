@@ -26,52 +26,45 @@
  * exception statement from your version.
  */
 
-#ifndef BITTORRENT_TORRENTINFO_H
-#define BITTORRENT_TORRENTINFO_H
+#pragma once
 
 #include <libtorrent/torrent_info.hpp>
-#include <libtorrent/version.hpp>
 
 #include <QCoreApplication>
-#include <QVector>
+#include <QtContainerFwd>
 
+#include "base/3rdparty/expected.hpp"
 #include "base/indexrange.h"
+#include "torrentcontentlayout.h"
 
 class QByteArray;
 class QDateTime;
 class QString;
-class QStringList;
 class QUrl;
 
 namespace BitTorrent
 {
     class InfoHash;
-    class TrackerEntry;
+    struct TrackerEntry;
 
     class TorrentInfo
     {
         Q_DECLARE_TR_FUNCTIONS(TorrentInfo)
 
     public:
-#if (LIBTORRENT_VERSION_NUM < 10200)
-        using NativeConstPtr = boost::shared_ptr<const lt::torrent_info>;
-        using NativePtr = boost::shared_ptr<lt::torrent_info>;
-#else
-        using NativeConstPtr = std::shared_ptr<const lt::torrent_info>;
-        using NativePtr = std::shared_ptr<lt::torrent_info>;
-#endif
-
-        explicit TorrentInfo(NativeConstPtr nativeInfo = {});
+        TorrentInfo() = default;
         TorrentInfo(const TorrentInfo &other);
 
-        static TorrentInfo load(const QByteArray &data, QString *error = nullptr) noexcept;
-        static TorrentInfo loadFromFile(const QString &path, QString *error = nullptr) noexcept;
-        void saveToFile(const QString &path) const;
+        explicit TorrentInfo(const lt::torrent_info &nativeInfo);
+
+        static nonstd::expected<TorrentInfo, QString> load(const QByteArray &data) noexcept;
+        static nonstd::expected<TorrentInfo, QString> loadFromFile(const QString &path) noexcept;
+        nonstd::expected<void, QString> saveToFile(const QString &path) const;
 
         TorrentInfo &operator=(const TorrentInfo &other);
 
         bool isValid() const;
-        InfoHash hash() const;
+        InfoHash infoHash() const;
         QString name() const;
         QDateTime creationDate() const;
         QString creator() const;
@@ -84,8 +77,6 @@ namespace BitTorrent
         int piecesCount() const;
         QString filePath(int index) const;
         QStringList filePaths() const;
-        QString fileName(int index) const;
-        QString origFilePath(int index) const;
         qlonglong fileSize(int index) const;
         qlonglong fileOffset(int index) const;
         QVector<TrackerEntry> trackers() const;
@@ -101,19 +92,23 @@ namespace BitTorrent
         PieceRange filePieces(const QString &file) const;
         PieceRange filePieces(int fileIndex) const;
 
-        void renameFile(int index, const QString &newPath);
-
         QString rootFolder() const;
         bool hasRootFolder() const;
-        void stripRootFolder();
 
-        NativePtr nativeInfo() const;
+        std::shared_ptr<lt::torrent_info> nativeInfo() const;
+        QVector<lt::file_index_t> nativeIndexes() const;
 
     private:
         // returns file index or -1 if fileName is not found
         int fileIndex(const QString &fileName) const;
-        NativePtr m_nativeInfo;
+        TorrentContentLayout contentLayout() const;
+
+        std::shared_ptr<const lt::torrent_info> m_nativeInfo;
+
+        // internal indexes of files (payload only, excluding any .pad files)
+        // by which they are addressed in libtorrent
+        QVector<lt::file_index_t> m_nativeIndexes;
     };
 }
 
-#endif // BITTORRENT_TORRENTINFO_H
+Q_DECLARE_METATYPE(BitTorrent::TorrentInfo)

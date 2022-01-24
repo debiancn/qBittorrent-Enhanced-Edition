@@ -27,8 +27,7 @@
  * exception statement from your version.
  */
 
-#ifndef NET_DOWNLOADMANAGER_H
-#define NET_DOWNLOADMANAGER_H
+#pragma once
 
 #include <QHash>
 #include <QNetworkAccessManager>
@@ -79,11 +78,18 @@ namespace Net
         bool saveToFile() const;
         DownloadRequest &saveToFile(bool value);
 
+        // if saveToFile is set, the file is saved in destFileName
+        // (deprecated) if destFileName is not provided, the file will be saved
+        // in a temporary file, the name of file is set in DownloadResult::filePath
+        QString destFileName() const;
+        DownloadRequest &destFileName(const QString &value);
+
     private:
         QString m_url;
         QString m_userAgent;
         qint64 m_limit = 0;
         bool m_saveToFile = false;
+        QString m_destFileName;
     };
 
     struct DownloadResult
@@ -99,7 +105,7 @@ namespace Net
     class DownloadHandler : public QObject
     {
         Q_OBJECT
-        Q_DISABLE_COPY(DownloadHandler)
+        Q_DISABLE_COPY_MOVE(DownloadHandler)
 
     public:
         using QObject::QObject;
@@ -113,7 +119,7 @@ namespace Net
     class DownloadManager : public QObject
     {
         Q_OBJECT
-        Q_DISABLE_COPY(DownloadManager)
+        Q_DISABLE_COPY_MOVE(DownloadManager)
 
     public:
         static void initInstance();
@@ -159,5 +165,3 @@ namespace Net
         connect(handler, &DownloadHandler::finished, context, slot);
     }
 }
-
-#endif // NET_DOWNLOADMANAGER_H

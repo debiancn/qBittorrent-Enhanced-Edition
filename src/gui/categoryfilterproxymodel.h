@@ -26,10 +26,11 @@
  * exception statement from your version.
  */
 
-#ifndef CATEGORYFILTERPROXYMODEL_H
-#define CATEGORYFILTERPROXYMODEL_H
+#pragma once
 
 #include <QSortFilterProxyModel>
+
+#include "base/utils/compare.h"
 
 class QString;
 
@@ -48,6 +49,6 @@ protected:
 private:
     // we added another overload of index(), hence this using directive:
     using QSortFilterProxyModel::index;
-};
 
-#endif // CATEGORYFILTERPROXYMODEL_H
+    Utils::Compare::NaturalLessThan<Qt::CaseInsensitive> m_naturalLessThan;
+};

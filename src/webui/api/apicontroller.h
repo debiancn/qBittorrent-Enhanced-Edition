@@ -28,10 +28,9 @@
 
 #pragma once
 
-#include <QHash>
 #include <QObject>
 #include <QVariant>
-#include <QVector>
+#include <QtContainerFwd>
 
 class QString;
 
@@ -43,7 +42,7 @@ using StringMap = QHash<QString, QString>;
 class APIController : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(APIController)
+    Q_DISABLE_COPY_MOVE(APIController)
 
 #ifndef Q_MOC_RUN
 #define WEBAPI_PUBLIC

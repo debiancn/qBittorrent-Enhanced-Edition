@@ -26,18 +26,16 @@
  * exception statement from your version.
  */
 
-#ifndef BITTORRENT_MAGNETURI_H
-#define BITTORRENT_MAGNETURI_H
+#pragma once
 
 #include <libtorrent/add_torrent_params.hpp>
 
 #include <QString>
+#include <QUrl>
 #include <QVector>
 
 #include "infohash.h"
 #include "trackerentry.h"
-
-class QUrl;
 
 namespace BitTorrent
 {
@@ -47,7 +45,7 @@ namespace BitTorrent
         explicit MagnetUri(const QString &source = {});
 
         bool isValid() const;
-        InfoHash hash() const;
+        InfoHash infoHash() const;
         QString name() const;
         QVector<TrackerEntry> trackers() const;
         QVector<QUrl> urlSeeds() const;
@@ -58,7 +56,7 @@ namespace BitTorrent
     private:
         bool m_valid;
         QString m_url;
-        InfoHash m_hash;
+        InfoHash m_infoHash;
         QString m_name;
         QVector<TrackerEntry> m_trackers;
         QVector<QUrl> m_urlSeeds;
@@ -66,4 +64,4 @@ namespace BitTorrent
     };
 }
 
-#endif // BITTORRENT_MAGNETURI_H
+Q_DECLARE_METATYPE(BitTorrent::MagnetUri)

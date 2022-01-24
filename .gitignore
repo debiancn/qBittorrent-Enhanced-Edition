@@ -4,6 +4,7 @@ src/qbittorrent
 src/qbittorrent-nox
 src/release
 src/debug
+src/base/version.h
 CMakeLists.txt.user*
 qbittorrent.pro.user*
 conf.pri
@@ -43,5 +44,4 @@ build/
 # Web UI tools
 node_modules
 package-lock.json
-
-/dist/*
+conf.pri.*

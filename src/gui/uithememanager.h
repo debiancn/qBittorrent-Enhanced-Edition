@@ -29,32 +29,57 @@
 
 #pragma once
 
+#include <QtGlobal>
+#include <QColor>
+#include <QHash>
+#include <QIcon>
 #include <QObject>
+#include <QString>
 
-class QString;
+class UIThemeSource
+{
+public:
+    virtual ~UIThemeSource() = default;
+
+    virtual QByteArray readStyleSheet() = 0;
+    virtual QByteArray readConfig() = 0;
+    virtual QString iconPath(const QString &iconId) const = 0;
+};
 
 class UIThemeManager : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(UIThemeManager)
+    Q_DISABLE_COPY_MOVE(UIThemeManager)
 
 public:
     static void initInstance();
     static void freeInstance();
     static UIThemeManager *instance();
 
-    void applyStyleSheet() const;
-
-    QIcon getIcon(const QString &iconId) const;
-    QIcon getIcon(const QString &iconId, const QString &fallback) const;
+    QString getIconPath(const QString &iconId) const;
+    QIcon getIcon(const QString &iconId, const QString &fallback = {}) const;
     QIcon getFlagIcon(const QString &countryIsoCode) const;
+
+    QColor getColor(const QString &id, const QColor &defaultColor) const;
+
+#ifndef Q_OS_MACOS
+    QIcon getSystrayIcon() const;
+#endif
 
 private:
     UIThemeManager(); // singleton class
-    QString getIconPath(const QString &iconId) const;
+    QString getIconPathFromResources(const QString &iconId, const QString &fallback = {}) const;
+    void loadColorsFromJSONConfig();
+    void applyPalette() const;
+    void applyStyleSheet() const;
 
     static UIThemeManager *m_instance;
+    const bool m_useCustomTheme;
+    std::unique_ptr<UIThemeSource> m_themeSource;
+    QHash<QString, QColor> m_colors;
+    mutable QHash<QString, QIcon> m_iconCache;
+    mutable QHash<QString, QIcon> m_flagCache;
 #if (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS))
-    bool m_useSystemTheme;
+    const bool m_useSystemTheme;
 #endif
 };

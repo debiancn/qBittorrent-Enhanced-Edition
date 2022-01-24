@@ -26,13 +26,13 @@
  * exception statement from your version.
  */
 
-#ifndef OPTIONSDIALOG_H
-#define OPTIONSDIALOG_H
+#pragma once
 
 #include <QDialog>
+
+#include "base/settingvalue.h"
 #include "base/net/downloadmanager.h"
 
-class QAbstractButton;
 class QCloseEvent;
 class QListWidgetItem;
 
@@ -41,10 +41,11 @@ class AdvancedSettings;
 // actions on double-click on torrents
 enum DoubleClickAction
 {
-    TOGGLE_PAUSE,
-    OPEN_DEST,
-    PREVIEW_FILE,
-    NO_ACTION
+    TOGGLE_PAUSE = 0,
+    OPEN_DEST = 1,
+    PREVIEW_FILE = 2,
+    NO_ACTION = 3,
+    SHOW_OPTIONS = 4
 };
 
 namespace Net
@@ -60,6 +61,8 @@ namespace Ui
 class OptionsDialog final : public QDialog
 {
     Q_OBJECT
+    Q_DISABLE_COPY_MOVE(OptionsDialog)
+
     using ThisType = OptionsDialog;
 
     enum Tabs
@@ -93,21 +96,21 @@ private slots:
     void on_buttonBox_accepted();
     void closeEvent(QCloseEvent *e) override;
     void on_buttonBox_rejected();
-    void applySettings(QAbstractButton *button);
+    void applySettings();
     void enableApplyButton();
     void toggleComboRatioLimitAct();
     void changePage(QListWidgetItem *, QListWidgetItem *);
-    void loadWindowState();
     void loadSplitterState();
-    void saveWindowState() const;
-    void handleScanFolderViewSelectionChanged();
+    void handleWatchedFolderViewSelectionChanged();
+    void editWatchedFolderOptions(const QModelIndex &index);
     void on_IpFilterRefreshBtn_clicked();
     void handleIPFilterParsed(bool error, int ruleCount);
     void on_banListButton_clicked();
     void on_IPSubnetWhitelistButton_clicked();
     void on_randomButton_clicked();
-    void on_addScanFolderButton_clicked();
-    void on_removeScanFolderButton_clicked();
+    void on_addWatchedFolderButton_clicked();
+    void on_editWatchedFolderButton_clicked();
+    void on_removeWatchedFolderButton_clicked();
     void on_registerDNSBtn_clicked();
     void setLocale(const QString &localeStr);
     void webUIHttpsCertChanged(const QString &path, ShowError showError);
@@ -123,7 +126,7 @@ private:
     // General options
     QString getLocale() const;
 #ifndef Q_OS_MACOS
-    bool systrayIntegration() const;
+    bool systemTrayEnabled() const;
     bool minimizeToTray() const;
     bool closeToTray() const;
 #endif
@@ -139,14 +142,12 @@ private:
     QString getTorrentExportDir() const;
     QString getFinishedTorrentExportDir() const;
     QString askForExportDir(const QString &currentExportPath);
-    int getActionOnDblClOnTorrentDl() const;
-    int getActionOnDblClOnTorrentFn() const;
     // Connection options
     int getPort() const;
     bool isUPnPEnabled() const;
     // Bittorrent options
-    int getMaxConnecs() const;
-    int getMaxConnecsPerTorrent() const;
+    int getMaxConnections() const;
+    int getMaxConnectionsPerTorrent() const;
     int getMaxUploads() const;
     int getMaxUploadsPerTorrent() const;
     bool isDHTEnabled() const;
@@ -165,7 +166,6 @@ private:
     // IP Filter
     bool isIPFilteringEnabled() const;
     QString getFilter() const;
-    bool m_refreshingIpFilter;
     // Queueing system
     bool isQueueingSystemEnabled() const;
     int getMaxActiveDownloads() const;
@@ -181,10 +181,13 @@ private:
     bool schedTimesOk();
 
     Ui::OptionsDialog *m_ui;
-    QAbstractButton *m_applyButton;
-    AdvancedSettings *m_advancedSettings;
-    QList<QString> m_addedScanDirs;
-    QList<QString> m_removedScanDirs;
-};
+    SettingValue<QSize> m_storeDialogSize;
+    SettingValue<QStringList> m_storeHSplitterSize;
+    SettingValue<int> m_storeLastViewedPage;
 
-#endif // OPTIONSDIALOG_H
+    QPushButton *m_applyButton;
+
+    AdvancedSettings *m_advancedSettings;
+
+    bool m_refreshingIpFilter = false;
+};

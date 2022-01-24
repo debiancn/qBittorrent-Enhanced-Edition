@@ -51,7 +51,7 @@ window.qBittorrent.PropPeers = (function() {
             torrentPeersTable.clear();
             return;
         }
-        const current_hash = torrentsTable.getCurrentTorrentHash();
+        const current_hash = torrentsTable.getCurrentTorrentID();
         if (current_hash === "") {
             syncTorrentPeersLastResponseId = 0;
             torrentPeersTable.clear();
@@ -118,7 +118,7 @@ window.qBittorrent.PropPeers = (function() {
         menu: 'torrentPeersMenu',
         actions: {
             addPeer: function(element, ref) {
-                const hash = torrentsTable.getCurrentTorrentHash();
+                const hash = torrentsTable.getCurrentTorrentID();
                 if (!hash)
                     return;
 
@@ -143,11 +143,11 @@ window.qBittorrent.PropPeers = (function() {
 
                 if (confirm('QBT_TR(Are you sure you want to permanently ban the selected peers?)QBT_TR[CONTEXT=PeerListWidget]')) {
                     new Request({
-                        url: 'api/v2/torrents/banPeers',
+                        url: 'api/v2/transfer/banPeers',
                         noCache: true,
                         method: 'post',
                         data: {
-                            hash: torrentsTable.getCurrentTorrentHash(),
+                            hash: torrentsTable.getCurrentTorrentID(),
                             peers: selectedPeers.join('|')
                         }
                     }).send();
@@ -182,3 +182,5 @@ window.qBittorrent.PropPeers = (function() {
 
     return exports();
 })();
+
+Object.freeze(window.qBittorrent.PropPeers);

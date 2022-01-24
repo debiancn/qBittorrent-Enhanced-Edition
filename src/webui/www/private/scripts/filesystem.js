@@ -70,9 +70,11 @@ window.qBittorrent.Filesystem = (function() {
     const folderName = function(filepath) {
         const slashIndex = filepath.lastIndexOf(PathSeparator);
         if (slashIndex === -1)
-            return filepath;
+            return '';
         return filepath.substring(0, slashIndex);
     };
 
     return exports();
 })();
+
+Object.freeze(window.qBittorrent.Filesystem);

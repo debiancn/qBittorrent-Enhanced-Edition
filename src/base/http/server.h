@@ -28,8 +28,7 @@
  */
 
 
-#ifndef HTTP_SERVER_H
-#define HTTP_SERVER_H
+#pragma once
 
 #include <QSet>
 #include <QSslCertificate>
@@ -44,7 +43,7 @@ namespace Http
     class Server final : public QTcpServer
     {
         Q_OBJECT
-        Q_DISABLE_COPY(Server)
+        Q_DISABLE_COPY_MOVE(Server)
 
     public:
         explicit Server(IRequestHandler *requestHandler, QObject *parent = nullptr);
@@ -67,5 +66,3 @@ namespace Http
         QSslKey m_key;
     };
 }
-
-#endif // HTTP_SERVER_H

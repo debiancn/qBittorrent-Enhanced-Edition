@@ -83,12 +83,47 @@
           <item>
            <widget class="FileSystemPathComboEdit" name="savePath" native="true"/>
           </item>
-          <item alignment="Qt::AlignRight">
-           <widget class="QCheckBox" name="checkBoxRememberLastSavePath">
-            <property name="text">
-             <string>Remember last used save path</string>
+          <item>
+           <widget class="QGroupBox" name="groupBoxDownloadPath">
+            <property name="title">
+             <string>Use another path for incomplete torrent</string>
             </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <widget class="FileSystemPathComboEdit" name="downloadPath" native="true"/>
+             </item>
+            </layout>
            </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="layoutRememberLastSavePath">
+            <item>
+             <spacer name="horizontalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBoxRememberLastSavePath">
+              <property name="text">
+               <string>Remember last used save path</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -135,10 +170,10 @@
           </item>
           <item>
            <layout class="QGridLayout" name="gridLayout">
-            <item row="3" column="0">
+            <item row="2" column="0">
              <widget class="QCheckBox" name="doNotDeleteTorrentCheckBox">
               <property name="toolTip">
-               <string>When checked, the .torrent file will not be deleted despite the settings at the &quot;Download&quot; page of the options dialog</string>
+               <string>When checked, the .torrent file will not be deleted regardless of the settings at the &quot;Download&quot; page of the Options dialog</string>
               </property>
               <property name="text">
                <string>Do not delete .torrent file</string>
@@ -152,7 +187,7 @@
               </property>
              </widget>
             </item>
-            <item row="2" column="0">
+            <item row="1" column="0">
              <widget class="QCheckBox" name="skipCheckingCheckBox">
               <property name="text">
                <string>Skip hash check</string>
@@ -166,13 +201,6 @@
               </property>
              </widget>
             </item>
-            <item row="1" column="0">
-             <widget class="QCheckBox" name="createSubfolderCheckBox">
-              <property name="text">
-               <string>Create subfolder</string>
-              </property>
-             </widget>
-            </item>
             <item row="0" column="0">
              <widget class="QCheckBox" name="startTorrentCheckBox">
               <property name="text">
@@ -182,6 +210,52 @@
             </item>
             <item row="0" column="2">
              <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QLabel" name="contentLayoutLabel">
+              <property name="text">
+               <string>Content layout:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="contentLayoutComboBox">
+              <property name="currentIndex">
+               <number>0</number>
+              </property>
+              <item>
+               <property name="text">
+                <string>Original</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Create subfolder</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Don't create subfolder</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_4">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -210,10 +284,10 @@
           <string>Torrent information</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="1" column="0">
-           <widget class="QLabel" name="labelDate">
+          <item row="2" column="0">
+           <widget class="QLabel" name="labelInfohash1">
             <property name="text">
-             <string>Date:</string>
+             <string>Info hash v1:</string>
             </property>
            </widget>
           </item>
@@ -223,28 +297,8 @@
           <item row="1" column="1">
            <widget class="QLabel" name="labelDateData"/>
           </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="labelSize">
-            <property name="text">
-             <string>Size:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLabel" name="labelHashData">
-            <property name="textFormat">
-             <enum>Qt::PlainText</enum>
-            </property>
-            <property name="textInteractionFlags">
-             <set>Qt::TextSelectableByMouse</set>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
+          <item row="4" column="1">
            <widget class="QScrollArea" name="scrollArea">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
-            </property>
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
@@ -252,14 +306,6 @@
              <bool>true</bool>
             </property>
             <widget class="QWidget" name="scrollAreaWidgetContents">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>333</width>
-               <height>69</height>
-              </rect>
-             </property>
              <layout class="QVBoxLayout" name="verticalLayout_2">
               <property name="leftMargin">
                <number>0</number>
@@ -296,20 +342,48 @@
             </widget>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="labelHash">
-            <property name="text">
-             <string>Hash:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
+          <item row="4" column="0">
            <widget class="QLabel" name="labelComment">
             <property name="text">
              <string>Comment:</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="labelSize">
+            <property name="text">
+             <string>Size:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="labelInfohash1Data">
+            <property name="textInteractionFlags">
+             <set>Qt::TextSelectableByMouse</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="labelDate">
+            <property name="text">
+             <string>Date:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="labelInfohash2">
+            <property name="text">
+             <string>Info hash v2:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="labelInfohash2Data">
+            <property name="textInteractionFlags">
+             <set>Qt::TextSelectableByMouse</set>
             </property>
            </widget>
           </item>
@@ -410,37 +484,17 @@
     </layout>
    </item>
   </layout>
-  <action name="actionNormal">
-   <property name="text">
-    <string>Normal</string>
-   </property>
-  </action>
-  <action name="actionHigh">
-   <property name="text">
-    <string>High</string>
-   </property>
-  </action>
-  <action name="actionMaximum">
-   <property name="text">
-    <string>Maximum</string>
-   </property>
-  </action>
-  <action name="actionNotDownloaded">
-   <property name="text">
-    <string>Do not download</string>
-   </property>
-  </action>
  </widget>
  <customwidgets>
   <customwidget>
    <class>TorrentContentTreeView</class>
    <extends>QTreeView</extends>
-   <header>torrentcontenttreeview.h</header>
+   <header>gui/torrentcontenttreeview.h</header>
   </customwidget>
   <customwidget>
    <class>FileSystemPathComboEdit</class>
    <extends>QWidget</extends>
-   <header>fspathedit.h</header>
+   <header>gui/fspathedit.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

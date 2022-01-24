@@ -27,13 +27,22 @@
  * exception statement from your version.
  */
 
-#ifndef SETTINGSSTORAGE_H
-#define SETTINGSSTORAGE_H
+#pragma once
+
+#include <type_traits>
 
 #include <QObject>
 #include <QReadWriteLock>
 #include <QTimer>
 #include <QVariantHash>
+
+#include "utils/string.h"
+
+template <typename T>
+struct IsQFlags : std::false_type {};
+
+template <typename T>
+struct IsQFlags<QFlags<T>> : std::true_type {};
 
 class SettingsStorage : public QObject
 {
@@ -46,20 +55,57 @@ public:
     static void freeInstance();
     static SettingsStorage *instance();
 
-    QVariant loadValue(const QString &key, const QVariant &defaultValue = {}) const;
-    void storeValue(const QString &key, const QVariant &value);
+    template <typename T>
+    T loadValue(const QString &key, const T &defaultValue = {}) const
+    {
+        if constexpr (std::is_enum_v<T>)
+        {
+            const auto value = loadValue<QString>(key);
+            return Utils::String::toEnum(value, defaultValue);
+        }
+        else if constexpr (IsQFlags<T>::value)
+        {
+            const typename T::Int value = loadValue(key, static_cast<typename T::Int>(defaultValue));
+            return T {value};
+        }
+        else if constexpr (std::is_same_v<T, QVariant>)
+        {
+            // fast path for loading QVariant
+            return loadValueImpl(key, defaultValue);
+        }
+        else
+        {
+            const QVariant value = loadValueImpl(key);
+            // check if retrieved value is convertible to T
+            return value.template canConvert<T>() ? value.template value<T>() : defaultValue;
+        }
+    }
+
+    template <typename T>
+    void storeValue(const QString &key, const T &value)
+    {
+        if constexpr (std::is_enum_v<T>)
+            storeValueImpl(key, Utils::String::fromEnum(value));
+        else if constexpr (IsQFlags<T>::value)
+            storeValueImpl(key, static_cast<typename T::Int>(value));
+        else
+            storeValueImpl(key, value);
+    }
+
     void removeValue(const QString &key);
+    bool hasKey(const QString &key) const;
 
 public slots:
     bool save();
 
 private:
+    QVariant loadValueImpl(const QString &key, const QVariant &defaultValue = {}) const;
+    void storeValueImpl(const QString &key, const QVariant &value);
+
     static SettingsStorage *m_instance;
 
+    bool m_dirty = false;
     QVariantHash m_data;
-    bool m_dirty;
     QTimer m_timer;
     mutable QReadWriteLock m_lock;
 };
-
-#endif // SETTINGSSTORAGE_H

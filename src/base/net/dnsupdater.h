@@ -26,8 +26,7 @@
  * exception statement from your version.
  */
 
-#ifndef DNSUPDATER_H
-#define DNSUPDATER_H
+#pragma once
 
 #include <QDateTime>
 #include <QHostAddress>
@@ -49,7 +48,7 @@ namespace Net
         explicit DNSUpdater(QObject *parent = nullptr);
         ~DNSUpdater();
 
-        static QUrl getRegistrationUrl(int service);
+        static QUrl getRegistrationUrl(DNS::Service service);
 
     public slots:
         void updateCredentials();
@@ -84,5 +83,3 @@ namespace Net
         QString m_password;
     };
 }
-
-#endif // DNSUPDATER_H

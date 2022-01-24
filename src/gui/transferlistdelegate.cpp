@@ -28,50 +28,13 @@
 
 #include "transferlistdelegate.h"
 
-#include <QApplication>
 #include <QModelIndex>
-#include <QPainter>
-#include <QStyleOptionViewItem>
 
-#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
-#include <QProxyStyle>
-#endif
-
-#include "base/utils/string.h"
 #include "transferlistmodel.h"
 
 TransferListDelegate::TransferListDelegate(QObject *parent)
     : QStyledItemDelegate {parent}
 {
-}
-
-void TransferListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
-    if (index.column() != TransferListModel::TR_PROGRESS) {
-        QStyledItemDelegate::paint(painter, option, index);
-        return;
-    }
-
-    QStyleOptionProgressBar newopt;
-    newopt.rect = option.rect;
-    newopt.text = index.data().toString();
-    newopt.progress = static_cast<int>(index.data(TransferListModel::UnderlyingDataRole).toReal());
-    newopt.maximum = 100;
-    newopt.minimum = 0;
-    newopt.state = option.state;
-    newopt.textVisible = true;
-
-#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
-    // XXX: To avoid having the progress text on the right of the bar
-    QProxyStyle fusionStyle {"fusion"};
-    QStyle *style = &fusionStyle;
-#else
-    QStyle *style = option.widget ? option.widget->style() : QApplication::style();
-#endif
-
-    painter->save();
-    style->drawControl(QStyle::CE_ProgressBar, &newopt, painter, option.widget);
-    painter->restore();
 }
 
 QWidget *TransferListDelegate::createEditor(QWidget *, const QStyleOptionViewItem &, const QModelIndex &) const
@@ -88,7 +51,8 @@ QSize TransferListDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
     // This happens because icon from the 'name' column is no longer drawn.
 
     static int nameColHeight = -1;
-    if (nameColHeight == -1) {
+    if (nameColHeight == -1)
+    {
         const QModelIndex nameColumn = index.sibling(index.row(), TransferListModel::TR_NAME);
         nameColHeight = QStyledItemDelegate::sizeHint(option, nameColumn).height();
     }
@@ -96,4 +60,42 @@ QSize TransferListDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
     QSize size = QStyledItemDelegate::sizeHint(option, index);
     size.setHeight(std::max(nameColHeight, size.height()));
     return size;
+}
+
+void TransferListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    switch (index.column())
+    {
+    case TransferListModel::TR_PROGRESS:
+        {
+            using namespace BitTorrent;
+
+            const auto isEnableState = [](const TorrentState state) -> bool
+            {
+                switch (state)
+                {
+                case TorrentState::Error:
+                case TorrentState::PausedDownloading:
+                case TorrentState::Unknown:
+                    return false;
+                default:
+                    return true;
+                }
+            };
+
+            const int progress = static_cast<int>(index.data(TransferListModel::UnderlyingDataRole).toReal());
+
+            const QModelIndex statusIndex = index.siblingAtColumn(TransferListModel::TR_STATUS);
+            const auto torrentState = statusIndex.data(TransferListModel::UnderlyingDataRole).value<TorrentState>();
+
+            QStyleOptionViewItem customOption {option};
+            customOption.state.setFlag(QStyle::State_Enabled, isEnableState(torrentState));
+
+            m_progressBarPainter.paint(painter, customOption, index.data().toString(), progress);
+        }
+        break;
+    default:
+        QStyledItemDelegate::paint(painter, option, index);
+        break;
+    }
 }

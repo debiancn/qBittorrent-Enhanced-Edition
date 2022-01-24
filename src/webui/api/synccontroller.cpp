@@ -38,7 +38,8 @@
 #include "base/bittorrent/peeraddress.h"
 #include "base/bittorrent/peerinfo.h"
 #include "base/bittorrent/session.h"
-#include "base/bittorrent/torrenthandle.h"
+#include "base/bittorrent/torrent.h"
+#include "base/bittorrent/trackerentry.h"
 #include "base/global.h"
 #include "base/net/geoipmanager.h"
 #include "base/preferences.h"
@@ -62,6 +63,7 @@ namespace
 
     // Peer keys
     const char KEY_PEER_CLIENT[] = "client";
+    const char KEY_PEER_ID[] = "peer_id";
     const char KEY_PEER_CONNECTION_TYPE[] = "connection";
     const char KEY_PEER_COUNTRY[] = "country";
     const char KEY_PEER_COUNTRY_CODE[] = "country_code";
@@ -69,7 +71,6 @@ namespace
     const char KEY_PEER_FILES[] = "files";
     const char KEY_PEER_FLAGS[] = "flags";
     const char KEY_PEER_FLAGS_DESCRIPTION[] = "flags_desc";
-    const char KEY_PEER_ID[] = "peer_id";
     const char KEY_PEER_IP[] = "ip";
     const char KEY_PEER_PORT[] = "port";
     const char KEY_PEER_PROGRESS[] = "progress";
@@ -134,7 +135,7 @@ namespace
         map[KEY_TRANSFER_GLOBAL_RATIO] = ((atd > 0) && (atu > 0)) ? Utils::String::fromDouble(static_cast<qreal>(atu) / atd, 2) : "-";
         map[KEY_TRANSFER_TOTAL_PEER_CONNECTIONS] = sessionStatus.peersCount;
 
-        const qreal readRatio = cacheStatus.readRatio;
+        const qreal readRatio = cacheStatus.readRatio;  // TODO: remove when LIBTORRENT_VERSION_NUM >= 20000
         map[KEY_TRANSFER_READ_CACHE_HITS] = (readRatio > 0) ? Utils::String::fromDouble(100 * readRatio, 2) : "0";
         map[KEY_TRANSFER_TOTAL_BUFFERS_SIZE] = cacheStatus.totalUsedBuffers * 16 * 1024;
 
@@ -164,20 +165,24 @@ namespace
         // initialize output variable
         syncData.clear();
 
-        for (auto i = data.cbegin(); i != data.cend(); ++i) {
+        for (auto i = data.cbegin(); i != data.cend(); ++i)
+        {
             const QString &key = i.key();
             const QVariant &value = i.value();
             QVariantList removedItems;
 
-            switch (static_cast<QMetaType::Type>(value.type())) {
-            case QMetaType::QVariantMap: {
+            switch (static_cast<QMetaType::Type>(value.type()))
+            {
+            case QMetaType::QVariantMap:
+            {
                     QVariantMap map;
                     processMap(prevData[key].toMap(), value.toMap(), map);
                     if (!map.isEmpty())
                         syncData[key] = map;
                 }
                 break;
-            case QMetaType::QVariantHash: {
+            case QMetaType::QVariantHash:
+            {
                     QVariantMap map;
                     processHash(prevData[key].toHash(), value.toHash(), map, removedItems);
                     if (!map.isEmpty())
@@ -186,7 +191,8 @@ namespace
                         syncData[key + KEY_SUFFIX_REMOVED] = removedItems;
                 }
                 break;
-            case QMetaType::QVariantList: {
+            case QMetaType::QVariantList:
+            {
                     QVariantList list;
                     processList(prevData[key].toList(), value.toList(), list, removedItems);
                     if (!list.isEmpty())
@@ -204,6 +210,7 @@ namespace
             case QMetaType::ULongLong:
             case QMetaType::UInt:
             case QMetaType::QDateTime:
+            case QMetaType::Nullptr:
                 if (prevData[key] != value)
                     syncData[key] = value;
                 break;
@@ -225,35 +232,65 @@ namespace
         syncData.clear();
         removedItems.clear();
 
-        if (prevData.isEmpty()) {
+        if (prevData.isEmpty())
+        {
             // If list was empty before, then difference is a whole new list.
             for (auto i = data.cbegin(); i != data.cend(); ++i)
                 syncData[i.key()] = i.value();
         }
-        else {
-            for (auto i = data.cbegin(); i != data.cend(); ++i) {
-                switch (i.value().type()) {
+        else
+        {
+            for (auto i = data.cbegin(); i != data.cend(); ++i)
+            {
+                switch (i.value().type())
+                {
                 case QVariant::Map:
-                    if (!prevData.contains(i.key())) {
+                    if (!prevData.contains(i.key()))
+                    {
                         // new list item found - append it to syncData
                         syncData[i.key()] = i.value();
                     }
-                    else {
+                    else
+                    {
                         QVariantMap map;
                         processMap(prevData[i.key()].toMap(), i.value().toMap(), map);
                         // existing list item found - remove it from prevData
                         prevData.remove(i.key());
                         if (!map.isEmpty())
+                        {
                             // changed list item found - append its changes to syncData
                             syncData[i.key()] = map;
+                        }
+                    }
+                    break;
+                case QVariant::StringList:
+                    if (!prevData.contains(i.key()))
+                    {
+                        // new list item found - append it to syncData
+                        syncData[i.key()] = i.value();
+                    }
+                    else
+                    {
+                        QVariantList list;
+                        QVariantList removedList;
+                        processList(prevData[i.key()].toList(), i.value().toList(), list, removedList);
+                        // existing list item found - remove it from prevData
+                        prevData.remove(i.key());
+                        if (!list.isEmpty() || !removedList.isEmpty())
+                        {
+                            // changed list item found - append entire list to syncData
+                            syncData[i.key()] = i.value();
+                        }
                     }
                     break;
                 default:
-                    Q_ASSERT(0);
+                    Q_ASSERT(false);
+                    break;
                 }
             }
 
-            if (!prevData.isEmpty()) {
+            if (!prevData.isEmpty())
+            {
                 // prevData contains only items that are missing now -
                 // put them in removedItems
                 for (auto i = prevData.cbegin(); i != prevData.cend(); ++i)
@@ -269,12 +306,15 @@ namespace
         syncData.clear();
         removedItems.clear();
 
-        if (prevData.isEmpty()) {
+        if (prevData.isEmpty())
+        {
             // If list was empty before, then difference is a whole new list.
             syncData = data;
         }
-        else {
-            for (const QVariant &item : data) {
+        else
+        {
+            for (const QVariant &item : data)
+            {
                 if (!prevData.contains(item))
                     // new list item found - append it to syncData
                     syncData.append(item);
@@ -295,7 +335,8 @@ namespace
         QVariantMap syncData;
         bool fullUpdate = true;
         int lastResponseId = 0;
-        if (acceptedResponseId > 0) {
+        if (acceptedResponseId > 0)
+        {
             lastResponseId = lastData[KEY_RESPONSE_ID].toInt();
 
             if (lastResponseId == acceptedResponseId)
@@ -303,13 +344,15 @@ namespace
 
             int lastAcceptedResponseId = lastAcceptedData[KEY_RESPONSE_ID].toInt();
 
-            if (lastAcceptedResponseId == acceptedResponseId) {
+            if (lastAcceptedResponseId == acceptedResponseId)
+            {
                 processMap(lastAcceptedData, data, syncData);
                 fullUpdate = false;
             }
         }
 
-        if (fullUpdate) {
+        if (fullUpdate)
+        {
             lastAcceptedData.clear();
             syncData = data;
             syncData[KEY_FULL_UPDATE] = true;
@@ -355,6 +398,8 @@ SyncController::~SyncController()
 //  - "torrents_removed": a list of hashes of removed torrents
 //  - "categories": map of categories info
 //  - "categories_removed": list of removed categories
+//  - "trackers": dictionary contains information about trackers
+//  - "trackers_removed": a list of removed trackers
 //  - "server_state": map contains information about the state of the server
 // The keys of the 'torrents' dictionary are hashes of torrents.
 // Each value of the 'torrents' dictionary contains map. The map can contain following keys:
@@ -383,6 +428,7 @@ SyncController::~SyncController()
 //  - "uploaded_session": Amount of data uploaded since program open
 //  - "amount_left": Amount of data left to download
 //  - "save_path": Torrent save path
+//  - "download_path": Torrent download path
 //  - "completed": Amount of data completed
 //  - "max_ratio": Upload max share ratio
 //  - "max_seeding_time": Upload max seeding time
@@ -415,24 +461,29 @@ void SyncController::maindataAction()
     QVariantMap lastAcceptedResponse = sessionManager()->session()->getData(QLatin1String("syncMainDataLastAcceptedResponse")).toMap();
 
     QVariantHash torrents;
-    for (const BitTorrent::TorrentHandle *torrent : asConst(session->torrents())) {
-        const BitTorrent::InfoHash torrentHash = torrent->hash();
+    QHash<QString, QStringList> trackers;
+    for (const BitTorrent::Torrent *torrent : asConst(session->torrents()))
+    {
+        const BitTorrent::TorrentID torrentID = torrent->id();
 
         QVariantMap map = serialize(*torrent);
-        map.remove(KEY_TORRENT_HASH);
+        map.remove(KEY_TORRENT_ID);
 
         // Calculated last activity time can differ from actual value by up to 10 seconds (this is a libtorrent issue).
         // So we don't need unnecessary updates of last activity time in response.
         const auto iterTorrents = lastResponse.find("torrents");
-        if (iterTorrents != lastResponse.end()) {
+        if (iterTorrents != lastResponse.end())
+        {
             const QVariantHash lastResponseTorrents = iterTorrents->toHash();
-            const auto iterHash = lastResponseTorrents.find(torrentHash);
+            const auto iterID = lastResponseTorrents.find(torrentID.toString());
 
-            if (iterHash != lastResponseTorrents.end()) {
-                const QVariantMap torrentData = iterHash->toMap();
+            if (iterID != lastResponseTorrents.end())
+            {
+                const QVariantMap torrentData = iterID->toMap();
                 const auto iterLastActivity = torrentData.find(KEY_TORRENT_LAST_ACTIVITY_TIME);
 
-                if (iterLastActivity != torrentData.end()) {
+                if (iterLastActivity != torrentData.end())
+                {
                     const int lastValue = iterLastActivity->toInt();
                     if (qAbs(lastValue - map[KEY_TORRENT_LAST_ACTIVITY_TIME].toInt()) < 15)
                         map[KEY_TORRENT_LAST_ACTIVITY_TIME] = lastValue;
@@ -440,18 +491,21 @@ void SyncController::maindataAction()
             }
         }
 
-        torrents[torrentHash] = map;
+        for (const BitTorrent::TrackerEntry &tracker : asConst(torrent->trackers()))
+            trackers[tracker.url] << torrentID.toString();
+
+        torrents[torrentID.toString()] = map;
     }
     data["torrents"] = torrents;
 
     QVariantHash categories;
-    const QStringMap categoriesList = session->categories();
-    for (auto it = categoriesList.cbegin(); it != categoriesList.cend(); ++it) {
-        const QString &key = it.key();
-        categories[key] = QVariantMap {
-            {"name", key},
-            {"savePath", it.value()}
-        };
+    const QStringList categoriesList = session->categories();
+    for (const auto &categoryName : categoriesList)
+    {
+        const BitTorrent::CategoryOptions categoryOptions = session->categoryOptions(categoryName);
+        QJsonObject category = categoryOptions.toJSON();
+        category.insert(QLatin1String("name"), categoryName);
+        categories[categoryName] = category.toVariantMap();
     }
     data["categories"] = categories;
 
@@ -459,6 +513,13 @@ void SyncController::maindataAction()
     for (const QString &tag : asConst(session->tags()))
         tags << tag;
     data["tags"] = tags;
+
+    QVariantHash trackersHash;
+    for (auto i = trackers.constBegin(); i != trackers.constEnd(); ++i)
+    {
+        trackersHash[i.key()] = i.value();
+    }
+    data["trackers"] = trackersHash;
 
     QVariantMap serverState = getTransferInfo();
     serverState[KEY_TRANSFER_FREESPACEONDISK] = getFreeDiskSpace();
@@ -475,15 +536,15 @@ void SyncController::maindataAction()
 }
 
 // GET param:
-//   - hash (string): torrent hash
+//   - hash (string): torrent hash (ID)
 //   - rid (int): last response id
 void SyncController::torrentPeersAction()
 {
     auto lastResponse = sessionManager()->session()->getData(QLatin1String("syncTorrentPeersLastResponse")).toMap();
     auto lastAcceptedResponse = sessionManager()->session()->getData(QLatin1String("syncTorrentPeersLastAcceptedResponse")).toMap();
 
-    const QString hash {params()["hash"]};
-    const BitTorrent::TorrentHandle *torrent = BitTorrent::Session::instance()->findTorrent(hash);
+    const auto id = BitTorrent::TorrentID::fromString(params()["hash"]);
+    const BitTorrent::Torrent *torrent = BitTorrent::Session::instance()->findTorrent(id);
     if (!torrent)
         throw APIError(APIErrorType::NotFound);
 
@@ -492,22 +553,20 @@ void SyncController::torrentPeersAction()
 
     const QVector<BitTorrent::PeerInfo> peersList = torrent->peers();
 
-#ifndef DISABLE_COUNTRIES_RESOLUTION
     bool resolvePeerCountries = Preferences::instance()->resolvePeerCountries();
-#else
-    bool resolvePeerCountries = false;
-#endif
 
     data[KEY_SYNC_TORRENT_PEERS_SHOW_FLAGS] = resolvePeerCountries;
 
-    for (const BitTorrent::PeerInfo &pi : peersList) {
+    for (const BitTorrent::PeerInfo &pi : peersList)
+    {
         if (pi.address().ip.isNull()) continue;
 
-        QVariantMap peer = {
+        QVariantMap peer =
+        {
             {KEY_PEER_IP, pi.address().ip.toString()},
             {KEY_PEER_PORT, pi.address().port},
             {KEY_PEER_CLIENT, pi.client()},
-            {KEY_PEER_ID, pi.pid().left(8)},
+            {KEY_PEER_ID, pi.peerId()},
             {KEY_PEER_PROGRESS, pi.progress()},
             {KEY_PEER_DOWN_SPEED, pi.payloadDownSpeed()},
             {KEY_PEER_UP_SPEED, pi.payloadUpSpeed()},
@@ -516,18 +575,19 @@ void SyncController::torrentPeersAction()
             {KEY_PEER_CONNECTION_TYPE, pi.connectionType()},
             {KEY_PEER_FLAGS, pi.flags()},
             {KEY_PEER_FLAGS_DESCRIPTION, pi.flagsDescription()},
-            {KEY_PEER_RELEVANCE, pi.relevance()},
-            {KEY_PEER_FILES, torrent->info().filesForPiece(pi.downloadingPieceIndex()).join('\n')}
+            {KEY_PEER_RELEVANCE, pi.relevance()}
         };
 
-#ifndef DISABLE_COUNTRIES_RESOLUTION
-        if (resolvePeerCountries) {
+        if (torrent->hasMetadata())
+            peer.insert(KEY_PEER_FILES, torrent->info().filesForPiece(pi.downloadingPieceIndex()).join('\n'));
+
+        if (resolvePeerCountries)
+        {
             peer[KEY_PEER_COUNTRY_CODE] = pi.country().toLower();
             peer[KEY_PEER_COUNTRY] = Net::GeoIPManager::CountryName(pi.country());
         }
-#endif
 
-        peers[pi.address().ip.toString() + ':' + QString::number(pi.address().port)] = peer;
+        peers[pi.address().toString()] = peer;
     }
     data["peers"] = peers;
 
@@ -540,7 +600,8 @@ void SyncController::torrentPeersAction()
 
 qint64 SyncController::getFreeDiskSpace()
 {
-    if (m_freeDiskSpaceElapsedTimer.hasExpired(FREEDISKSPACE_CHECK_TIMEOUT)) {
+    if (m_freeDiskSpaceElapsedTimer.hasExpired(FREEDISKSPACE_CHECK_TIMEOUT))
+    {
         invokeChecker();
         m_freeDiskSpaceElapsedTimer.restart();
     }
@@ -555,9 +616,5 @@ void SyncController::freeDiskSpaceSizeUpdated(qint64 freeSpaceSize)
 
 void SyncController::invokeChecker() const
 {
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
     QMetaObject::invokeMethod(m_freeDiskSpaceChecker, &FreeDiskSpaceChecker::check, Qt::QueuedConnection);
-#else
-    QMetaObject::invokeMethod(m_freeDiskSpaceChecker, "check", Qt::QueuedConnection);
-#endif
 }

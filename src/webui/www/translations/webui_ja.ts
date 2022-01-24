@@ -23,12 +23,24 @@
         <translation>ハッシュチェックを省略</translation>
     </message>
     <message>
-        <source>Create subfolder</source>
-        <translation>サブフォルダーを作成</translation>
-    </message>
-    <message>
         <source>Torrent Management Mode:</source>
         <translation>トレント管理モード:</translation>
+    </message>
+    <message>
+        <source>Content layout:</source>
+        <translation>コンテンツのレイアウト</translation>
+    </message>
+    <message>
+        <source>Original</source>
+        <translation>オリジナル</translation>
+    </message>
+    <message>
+        <source>Create subfolder</source>
+        <translation>サブフォルダーを作成する</translation>
+    </message>
+    <message>
+        <source>Don't create subfolder</source>
+        <translation>サブフォルダーを作成しない</translation>
     </message>
 </context>
 <context>
@@ -132,10 +144,6 @@
         <translation>プログラム設定の保存ができません。qBittorrent はおそらく通信可能状態にありません。</translation>
     </message>
     <message>
-        <source>IRC: #qbittorrent on Freenode</source>
-        <translation>IRC: Freenode 上で #qbittorrent</translation>
-    </message>
-    <message>
         <source>Unknown</source>
         <translation>不明</translation>
     </message>
@@ -146,10 +154,6 @@
     <message>
         <source>Seeding time limit must be between 0 and 525600 minutes.</source>
         <translation>シード時間制限は 0 から 525600 分の間でなければなりません。</translation>
-    </message>
-    <message>
-        <source>The port used for incoming connections must be between 1 and 65535.</source>
-        <translation>着信接続に使用するポートは 1 から 65535 の間でなくてはなりません。</translation>
     </message>
     <message>
         <source>The port used for the Web UI must be between 1 and 65535.</source>
@@ -176,10 +180,6 @@
         <translation>ログイン</translation>
     </message>
     <message>
-        <source>Original authors</source>
-        <translation>オリジナルの作者</translation>
-    </message>
-    <message>
         <source>Apply</source>
         <translation>適用</translation>
     </message>
@@ -199,10 +199,6 @@
     <message>
         <source>Cookie:</source>
         <translation>Cookie:</translation>
-    </message>
-    <message>
-        <source>Type folder here</source>
-        <translation>フォルダーをここに入力してください</translation>
     </message>
     <message>
         <source>More information</source>
@@ -227,11 +223,6 @@
     <message>
         <source>Rename torrent</source>
         <translation>トレント名の変更</translation>
-    </message>
-    <message>
-        <source>Other...</source>
-        <comment>Save Files to: Watch Folder / Default Folder / Other...</comment>
-        <translation>その他...</translation>
     </message>
     <message>
         <source>Monday</source>
@@ -359,6 +350,18 @@
     <message>
         <source>Failed to update name</source>
         <translation>名前の更新に失敗</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>The port used for incoming connections must be between 0 and 65535.</source>
+        <translation>着信接続に使用するポートは 0 から 65535 の間でなくてはなりません。</translation>
+    </message>
+    <message>
+        <source>Original author</source>
+        <translation>オリジナルの作者</translation>
     </message>
 </context>
 <context>
@@ -530,35 +533,43 @@
     </message>
     <message>
         <source>Connection status: Firewalled</source>
-        <translation type="unfinished" />
+        <translation>接続状態：ファイアウォール</translation>
     </message>
     <message>
         <source>Connection status: Connected</source>
-        <translation type="unfinished" />
+        <translation>接続状態：接続済み</translation>
     </message>
     <message>
         <source>Alternative speed limits: Off</source>
-        <translation type="unfinished" />
+        <translation>代替速度制限：オフ</translation>
     </message>
     <message>
         <source>Download speed icon</source>
-        <translation type="unfinished" />
+        <translation>ダウンロード速度アイコン</translation>
     </message>
     <message>
         <source>Connection status</source>
-        <translation type="unfinished" />
+        <translation>接続状態</translation>
     </message>
     <message>
         <source>Alternative speed limits: On</source>
-        <translation type="unfinished" />
+        <translation>代替速度制限：オン</translation>
     </message>
     <message>
         <source>Upload speed icon</source>
-        <translation type="unfinished" />
+        <translation>アップロード速度アイコン</translation>
     </message>
     <message>
         <source>Connection status: Disconnected</source>
-        <translation type="unfinished" />
+        <translation>接続状態：切断</translation>
+    </message>
+    <message>
+        <source>RSS Reader</source>
+        <translation>RSSリーダー</translation>
+    </message>
+    <message>
+        <source>RSS</source>
+        <translation>RSS</translation>
     </message>
 </context>
 <context>
@@ -692,10 +703,6 @@
         <translation>パスワード:</translation>
     </message>
     <message>
-        <source>Enabled protocol:</source>
-        <translation>有効なプロトコル:</translation>
-    </message>
-    <message>
         <source>TCP and μTP</source>
         <translation>TCP と μTP</translation>
     </message>
@@ -710,10 +717,6 @@
     <message>
         <source>Use UPnP / NAT-PMP port forwarding from my router</source>
         <translation>ルーターからのポート転送に UPnP / NAT-PMP を使用する</translation>
-    </message>
-    <message>
-        <source>Use different port on each startup</source>
-        <translation>起動時に毎回異なるポートを使用する</translation>
     </message>
     <message>
         <source>Connections Limits</source>
@@ -950,10 +953,6 @@
         <translation>%T: 現在のトラッカー</translation>
     </message>
     <message>
-        <source>%I: Info hash</source>
-        <translation>%I: 情報ハッシュ</translation>
-    </message>
-    <message>
         <source>Tip: Encapsulate parameter with quotation marks to avoid text being cut off at whitespace (e.g., "%N")</source>
         <translation>ヒント: パラメーターに空白が含まれるときはダブルクオーテーションで括ってください (例: "%N")</translation>
     </message>
@@ -1058,10 +1057,6 @@
         <translation>カテゴリの保存パスが変更されたとき:</translation>
     </message>
     <message>
-        <source>Create subfolder for torrents with multiple files</source>
-        <translation>複数ファイルのトレントにはサブフォルダーを作成する</translation>
-    </message>
-    <message>
         <source>seconds</source>
         <translation>秒</translation>
     </message>
@@ -1158,10 +1153,6 @@
         <translation>埋め込みトラッカーポート</translation>
     </message>
     <message>
-        <source>Optional IP Address to bind to (requires restart):</source>
-        <translation>バインドする IP アドレスの選択 (再起動が必要)</translation>
-    </message>
-    <message>
         <source>Fastest upload</source>
         <translation>最速アップロード</translation>
     </message>
@@ -1186,16 +1177,8 @@
         <translation>libtorrent 部分</translation>
     </message>
     <message>
-        <source>Coalesce reads &amp; writes:</source>
-        <translation>読み込みや書き込みに別バッファを割り当て</translation>
-    </message>
-    <message>
         <source>Outgoing ports (Min) [0: Disabled]:</source>
         <translation>送信ポート (最小) [0: 無効]</translation>
-    </message>
-    <message>
-        <source>IP Address to report to trackers (requires restart):</source>
-        <translation>トラッカーに報告する IP アドレス (再起動が必要)</translation>
     </message>
     <message>
         <source>Recheck torrents on completion:</source>
@@ -1208,10 +1191,6 @@
     <message>
         <source>Send upload piece suggestions:</source>
         <translation>アップロードピースの提案を送信</translation>
-    </message>
-    <message>
-        <source>Disk cache:</source>
-        <translation>ディスクキャッシュ</translation>
     </message>
     <message>
         <source>Enable embedded tracker:</source>
@@ -1236,10 +1215,6 @@
     <message>
         <source>Send buffer watermark:</source>
         <translation>送信バッファーの透かし</translation>
-    </message>
-    <message>
-        <source>Disk cache expiry interval:</source>
-        <translation>ディスクキャッシュの有効期限:</translation>
     </message>
     <message>
         <source>Peer proportional (throttles TCP)</source>
@@ -1278,10 +1253,6 @@
         <translation>アップロードスロットの動作</translation>
     </message>
     <message>
-        <source>Network Interface (requires restart):</source>
-        <translation>ネットワークインターフェース (再起動が必要)</translation>
-    </message>
-    <message>
         <source>MiB</source>
         <translation>MiB</translation>
     </message>
@@ -1303,39 +1274,207 @@
     </message>
     <message>
         <source>Resolve peer countries:</source>
-        <translation type="unfinished" />
+        <translation>ピアの国籍を解決する</translation>
     </message>
     <message>
         <source>ban for:</source>
-        <translation type="unfinished" />
+        <translation>アクセス禁止時間:</translation>
     </message>
     <message>
         <source>Use piece extent affinity (requires libtorrent &gt;= 1.2.2):</source>
-        <translation type="unfinished" />
+        <translation>ピースエクステントアフィニティを使用（libtorrent&gt; = 1.2.2が必要）：</translation>
     </message>
     <message>
         <source>Stop tracker timeout:</source>
-        <translation type="unfinished" />
+        <translation>トラッカーがタイムアウトで停止しました。</translation>
     </message>
     <message>
         <source>Ban client after consecutive failures:</source>
-        <translation type="unfinished" />
+        <translation>続けて失敗した場合、クライアントをアクセス禁止:</translation>
     </message>
     <message>
         <source>Enable cookie Secure flag (requires HTTPS)</source>
-        <translation type="unfinished" />
+        <translation>Cookieセキュアフラグを有効にする（HTTPSが必要）</translation>
     </message>
     <message>
         <source>UPnP lease duration [0: Permanent lease]:</source>
-        <translation type="unfinished" />
+        <translation>UPnPのリース時間 [0: 無期限]</translation>
     </message>
     <message>
         <source>Header: value pairs, one per line</source>
-        <translation type="unfinished" />
+        <translation>ヘッダー：値のペア、1行に1つ</translation>
     </message>
     <message>
         <source>Add custom HTTP headers</source>
+        <translation>カスタムHTTPヘッダーを追加する</translation>
+    </message>
+    <message>
+        <source>Filters:</source>
+        <translation>フィルター:</translation>
+    </message>
+    <message>
+        <source>Enable fetching RSS feeds</source>
+        <translation>RSSフィードの取得を有効にする</translation>
+    </message>
+    <message>
+        <source>Hashing threads (requires libtorrent &gt;= 2.0):</source>
+        <translation>ハッシュ化スレッド数 (libtorrent 2.0以上が必要)</translation>
+    </message>
+    <message>
+        <source>Coalesce reads &amp; writes (requires libtorrent &lt; 2.0):</source>
+        <translation>コアレス読み込み／書き込み (libtorrent 2.0以上が必要)</translation>
+    </message>
+    <message>
+        <source>Peer turnover threshold percentage:</source>
+        <translation>ピアターンオーバーのしきい値の割合:</translation>
+    </message>
+    <message>
+        <source>RSS Torrent Auto Downloader</source>
+        <translation>RSS Torrent 自動ダウンローダー</translation>
+    </message>
+    <message>
+        <source>RSS</source>
+        <translation>RSS</translation>
+    </message>
+    <message>
+        <source>Network interface:</source>
+        <translation>ネットワークインターフェース:</translation>
+    </message>
+    <message>
+        <source>RSS Reader</source>
+        <translation>RSSリーダー</translation>
+    </message>
+    <message>
+        <source>Edit auto downloading rules...</source>
+        <translation>自動ダウンロードのルールを編集</translation>
+    </message>
+    <message>
+        <source>Download REPACK/PROPER episodes</source>
+        <translation> REPACK/PROPERエピソードをダウンロードする</translation>
+    </message>
+    <message>
+        <source>Feeds refresh interval:</source>
+        <translation>フィードの更新間隔:</translation>
+    </message>
+    <message>
+        <source>Peer turnover disconnect percentage:</source>
+        <translation>ピアターンオーバーの切断の割合:</translation>
+    </message>
+    <message>
+        <source>Maximum number of articles per feed:</source>
+        <translation>フィードごとの記事数の上限: </translation>
+    </message>
+    <message>
+        <source>Max concurrent HTTP announces (requires libtorrent &gt;= 1.2.7):</source>
+        <translation>HTTPでの同時アナウンスの最大数 (libtorrent 1.2.7以上が必要):</translation>
+    </message>
+    <message>
+        <source> min</source>
+        <translation>分</translation>
+    </message>
+    <message>
+        <source>Peer turnover disconnect interval:</source>
+        <translation>ピアターンオーバーの切断の間隔:</translation>
+    </message>
+    <message>
+        <source>Optional IP address to bind to:</source>
+        <translation>バインドする任意のIPアドレス:</translation>
+    </message>
+    <message>
+        <source>Disallow connection to peers on privileged ports:</source>
+        <translation>特権ポートでのピアへの接続を許可しない:</translation>
+    </message>
+    <message>
+        <source>Enable auto downloading of RSS torrents</source>
+        <translation>RSS Torrentの自動ダウンロードを有効にする</translation>
+    </message>
+    <message>
+        <source>RSS Smart Episode Filter</source>
+        <translation>RSSスマートエピソードフィルター</translation>
+    </message>
+    <message>
+        <source>Disk cache (requires libtorrent &lt; 2.0):</source>
+        <translation>ディスクキャッシュ (libtorrent 2.0以上が必要)</translation>
+    </message>
+    <message>
+        <source>Disk cache expiry interval (requires libtorrent &lt; 2.0):</source>
+        <translation>ディスクキャッシュの有効期限の間隔 (libtorrent 2.0以上が必要)</translation>
+    </message>
+    <message>
+        <source>Validate HTTPS tracker certificate:</source>
+        <translation>HTTPSトラッカーの証明書を検証する</translation>
+    </message>
+    <message>
+        <source>Peer connection protocol:</source>
+        <translation>ピア接続プロトコル:</translation>
+    </message>
+    <message>
+        <source>Support internationalized domain name (IDN) (requires libtorrent &gt;= 1.2.12):</source>
+        <translation>国際化ドメイン名 (IDN) サポート (libtorrent1.2.12以上が必要)</translation>
+    </message>
+    <message>
+        <source>Torrent content layout:</source>
+        <translation>Torrentコンテンツのレイアウト:</translation>
+    </message>
+    <message>
+        <source>Create subfolder</source>
+        <translation>サブフォルダーを作成する</translation>
+    </message>
+    <message>
+        <source>Original</source>
+        <translation>オリジナル</translation>
+    </message>
+    <message>
+        <source>Don't create subfolder</source>
+        <translation>サブフォルダーを作成しない</translation>
+    </message>
+    <message>
+        <source>Type of service (ToS) for connections to peers</source>
+        <translation>ピアに接続するサービスの種類 (ToS)</translation>
+    </message>
+    <message>
+        <source>Outgoing connections per second:</source>
+        <translation>1秒あたりの外部接続数</translation>
+    </message>
+    <message>
+        <source>Random</source>
+        <translation>ランダム</translation>
+    </message>
+    <message>
+        <source>%K: Torrent ID</source>
         <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Reannounce to all trackers when IP or port changed:</source>
+        <translation>IPまたはポートに変更があったとき、すべてのトラッカーに再アナウンスする</translation>
+    </message>
+    <message>
+        <source>Trusted proxies list:</source>
+        <translation>信頼されたプロキシリスト:</translation>
+    </message>
+    <message>
+        <source>Enable reverse proxy support</source>
+        <translation>リバースプロキシ対応を有効にする</translation>
+    </message>
+    <message>
+        <source>%J: Info hash v2</source>
+        <translation>%J: Info ハッシュ v2</translation>
+    </message>
+    <message>
+        <source>%I: Info hash v1</source>
+        <translation>%I: Info ハッシュ v1</translation>
+    </message>
+    <message>
+        <source>IP address reported to trackers (requires restart):</source>
+        <translation>トラッカーに報告されたIPアドレス (再起動が必要):</translation>
+    </message>
+    <message>
+        <source>Set to 0 to let your system pick an unused port</source>
+        <translation>0に設定するとシステムが未使用のポートを選択します</translation>
+    </message>
+    <message>
+        <source>Server-side request forgery (SSRF) mitigation:</source>
+        <translation>サーバーサイドリクエストフォージェリ(SSRF) の軽減:</translation>
     </message>
 </context>
 <context>
@@ -1409,12 +1548,12 @@
         <translation>IP:ポートをコピー</translation>
     </message>
     <message>
-        <source>Add a new peer...</source>
-        <translation>新しいピアの追加</translation>
-    </message>
-    <message>
         <source>Country/Region</source>
         <translation>国・地域</translation>
+    </message>
+    <message>
+        <source>Add peers...</source>
+        <translation>ピアを追加...</translation>
     </message>
 </context>
 <context>
@@ -1566,10 +1705,6 @@
         <translation>作成日時:</translation>
     </message>
     <message>
-        <source>Torrent Hash:</source>
-        <translation>トレントのハッシュ:</translation>
-    </message>
-    <message>
         <source>Save Path:</source>
         <translation>保存パス:</translation>
     </message>
@@ -1621,6 +1756,26 @@
         <source>Rename...</source>
         <translation>名前の変更...</translation>
     </message>
+    <message>
+        <source>%1 (seeded for %2)</source>
+        <translation>%1 (シード時間 %2)</translation>
+    </message>
+    <message>
+        <source>Info Hash v2:</source>
+        <translation>Info ハッシュ v2:</translation>
+    </message>
+    <message>
+        <source>Info Hash v1:</source>
+        <translation>Info ハッシュ v1:</translation>
+    </message>
+    <message>
+        <source>N/A</source>
+        <translation>N/A</translation>
+    </message>
+    <message>
+        <source>Progress:</source>
+        <translation>進捗状況:</translation>
+    </message>
 </context>
 <context>
     <name>ScanFoldersModel</name>
@@ -1639,6 +1794,14 @@
     <message>
         <source>Default save location</source>
         <translation>デフォルトの保存先</translation>
+    </message>
+    <message>
+        <source>Other...</source>
+        <translation>その他...</translation>
+    </message>
+    <message>
+        <source>Type folder here</source>
+        <translation>フォルダーをここに入力してください</translation>
     </message>
 </context>
 <context>
@@ -1799,27 +1962,35 @@
     </message>
     <message>
         <source>Stalled Uploading (%1)</source>
-        <translation type="unfinished" />
+        <translation>アップロード停止中 (%1)</translation>
     </message>
     <message>
         <source>Stalled Downloading (%1)</source>
-        <translation type="unfinished" />
+        <translation>ダウンロード停止中 (%1)</translation>
     </message>
     <message>
         <source>Stalled Downloading (0)</source>
-        <translation type="unfinished" />
+        <translation>ダウンロード停止 (0)</translation>
     </message>
     <message>
         <source>Stalled (0)</source>
-        <translation type="unfinished" />
+        <translation>停止 (0)</translation>
     </message>
     <message>
         <source>Stalled Uploading (0)</source>
-        <translation type="unfinished" />
+        <translation>アップロード停止中 (0)</translation>
     </message>
     <message>
         <source>Stalled (%1)</source>
-        <translation type="unfinished" />
+        <translation>停止中 (%1)</translation>
+    </message>
+    <message>
+        <source>Checking (%1)</source>
+        <translation>チェック中 (%1)</translation>
+    </message>
+    <message>
+        <source>Checking (0)</source>
+        <translation>チェック中 (0)</translation>
     </message>
 </context>
 <context>
@@ -2100,10 +2271,6 @@
         <translation>%1 前</translation>
     </message>
     <message>
-        <source>Allocating</source>
-        <translation>割り当て中</translation>
-    </message>
-    <message>
         <source>Paused</source>
         <translation>停止</translation>
     </message>
@@ -2163,6 +2330,14 @@
         <source>Stalled</source>
         <translation>ダウンロード待ち</translation>
     </message>
+    <message>
+        <source>%1 (seeded for %2)</source>
+        <translation>%1 (シード時間 %2)</translation>
+    </message>
+    <message>
+        <source>[F] Downloading metadata</source>
+        <translation>[F] メタデータのダウンロード中</translation>
+    </message>
 </context>
 <context>
     <name>TransferListFiltersWidget</name>
@@ -2177,6 +2352,10 @@
     <message>
         <source>Tags</source>
         <translation>タグ</translation>
+    </message>
+    <message>
+        <source>Trackers</source>
+        <translation>トラッカー</translation>
     </message>
 </context>
 <context>
@@ -2336,10 +2515,6 @@
         <translation>マグネットリンク</translation>
     </message>
     <message>
-        <source>Hash</source>
-        <translation>ハッシュ</translation>
-    </message>
-    <message>
         <source>Remove All</source>
         <translation>すべて削除</translation>
     </message>
@@ -2358,6 +2533,18 @@
     <message>
         <source>Add...</source>
         <translation>追加...</translation>
+    </message>
+    <message>
+        <source>Info hash v1</source>
+        <translation>Info ハッシュ v1</translation>
+    </message>
+    <message>
+        <source>Info hash v2</source>
+        <translation>Info ハッシュ v2</translation>
+    </message>
+    <message>
+        <source>Torrent ID</source>
+        <translation>TorrentのID</translation>
     </message>
 </context>
 <context>
@@ -2487,6 +2674,10 @@
         <comment>e.g: 10minutes</comment>
         <translation>%1 分</translation>
     </message>
+    <message>
+        <source>%1y %2d</source>
+        <translation>%1年 %2日</translation>
+    </message>
 </context>
 <context>
     <name>TorrentsController</name>
@@ -2553,10 +2744,6 @@
         <translation>検索対象:</translation>
     </message>
     <message>
-        <source>Results (showing</source>
-        <translation>検索結果 (表示中</translation>
-    </message>
-    <message>
         <source>Filter</source>
         <translation>フィルター</translation>
     </message>
@@ -2575,6 +2762,26 @@
     <message>
         <source>Everywhere</source>
         <translation>すべて</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>警告</translation>
+    </message>
+    <message>
+        <source>Increase window width to display additional filters</source>
+        <translation>追加のフィルターを表示するためにウィンドウの幅を広げます</translation>
+    </message>
+    <message>
+        <source>to</source>
+        <translation>から</translation>
+    </message>
+    <message>
+        <source>Results</source>
+        <translation>結果</translation>
+    </message>
+    <message>
+        <source>showing</source>
+        <translation>表示中</translation>
     </message>
 </context>
 <context>
@@ -2802,15 +3009,27 @@
         <translation>国籍:</translation>
     </message>
     <message>
-        <source>Author</source>
-        <translation>開発者</translation>
-    </message>
-    <message>
         <source>Software Used</source>
-        <translation type="unfinished" />
+        <translation>使用するソフトウェア</translation>
     </message>
     <message>
         <source>The free IP to Country Lite database by DB-IP is used for resolving the countries of peers. The database is licensed under the Creative Commons Attribution 4.0 International License</source>
+        <translation>DB-IPが提供するフリーの「IP to Country Lite」データベースは、ピアの国名を解決するために使用されています。このデータベースは、クリエイティブ・コモンズの「表示 4.0 国際」に基づきライセンスされています。</translation>
+    </message>
+    <message>
+        <source>Authors</source>
+        <translation>作者</translation>
+    </message>
+    <message>
+        <source>France</source>
+        <translation>フランス</translation>
+    </message>
+    <message>
+        <source>qBittorrent Mascot</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>qBittorrent icon</source>
         <translation type="unfinished" />
     </message>
 </context>
@@ -2865,6 +3084,384 @@
     <message>
         <source>New name:</source>
         <translation>新しい名前:</translation>
+    </message>
+</context>
+<context>
+    <name>RSSWidget</name>
+    <message>
+        <source>Date: </source>
+        <translation>日付:</translation>
+    </message>
+    <message>
+        <source>Please choose a new name for this RSS feed</source>
+        <translation>このRSSフィードの新しい名前を入力してください</translation>
+    </message>
+    <message>
+        <source>Please choose a folder name</source>
+        <translation>フォルダー名を入力してください</translation>
+    </message>
+    <message>
+        <source>New feed name:</source>
+        <translation>新しいフィード名:</translation>
+    </message>
+    <message>
+        <source>Update all</source>
+        <translation>すべて更新</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>削除</translation>
+    </message>
+    <message>
+        <source>RSS Downloader...</source>
+        <translation>RSSダウンローダー...</translation>
+    </message>
+    <message>
+        <source>Mark items read</source>
+        <translation>既読にする</translation>
+    </message>
+    <message>
+        <source>Update all feeds</source>
+        <translation>全てのフィードを更新</translation>
+    </message>
+    <message>
+        <source>Copy feed URL</source>
+        <translation>フィードの URL をコピー</translation>
+    </message>
+    <message>
+        <source>Torrents: (double-click to download)</source>
+        <translation>Torrents: (ダブルクリックしてダウンロード)</translation>
+    </message>
+    <message>
+        <source>Open news URL</source>
+        <translation>ニュースの URL を開く</translation>
+    </message>
+    <message>
+        <source>Rename...</source>
+        <translation>名前を変更...</translation>
+    </message>
+    <message>
+        <source>Feed URL:</source>
+        <translation>フィード URL:</translation>
+    </message>
+    <message>
+        <source>New folder...</source>
+        <translation>新規フォルダー...</translation>
+    </message>
+    <message>
+        <source>New subscription</source>
+        <translation>新規購読</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>更新</translation>
+    </message>
+    <message>
+        <source>Folder name:</source>
+        <translation>フォルダー名:</translation>
+    </message>
+    <message>
+        <source>Please type a RSS feed URL</source>
+        <translation>RSS フィードの URL を入力してください</translation>
+    </message>
+    <message>
+        <source>Fetching of RSS feeds is disabled now! You can enable it in application settings.</source>
+        <translation>RSS フィードの取得は現在無効になっています。設定から有効にできます。</translation>
+    </message>
+    <message>
+        <source>Deletion confirmation</source>
+        <translation>削除の確認</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete the selected RSS feeds?</source>
+        <translation>選択された RSS フィードを削除しますか？</translation>
+    </message>
+    <message>
+        <source>New subscription...</source>
+        <translation>新規購読...</translation>
+    </message>
+    <message>
+        <source>Download torrent</source>
+        <translation>Torrentのダウンロード</translation>
+    </message>
+</context>
+<context>
+    <name>AutomatedRssDownloader</name>
+    <message>
+        <source>Download Rules</source>
+        <translation>ダウンロードのルール</translation>
+    </message>
+    <message>
+        <source>Matching RSS Articles</source>
+        <translation>マッチする RSS 記事</translation>
+    </message>
+    <message>
+        <source>* to match zero or more of any characters</source>
+        <translation>* は任意の0文字以上の文字列とマッチします</translation>
+    </message>
+    <message>
+        <source> will match all articles.</source>
+        <translation>全ての記事にマッチします。</translation>
+    </message>
+    <message>
+        <source>Episode filter rules: </source>
+        <translation>エピソードフィルターのルール:</translation>
+    </message>
+    <message>
+        <source>Auto downloading of RSS torrents is disabled now! You can enable it in application settings.</source>
+        <translation>RSS Torrent の自動ダウンロードは無効になっています。設定から有効にできます。</translation>
+    </message>
+    <message>
+        <source>Rule Definition</source>
+        <translation>ルール定義</translation>
+    </message>
+    <message>
+        <source>Save to:</source>
+        <translation>保存先:</translation>
+    </message>
+    <message>
+        <source>Use Regular Expressions</source>
+        <translation>正規表現を使用する</translation>
+    </message>
+    <message>
+        <source>New rule name</source>
+        <translation>新しいルール名</translation>
+    </message>
+    <message>
+        <source>Filter must end with semicolon</source>
+        <translation>フィルターはセミコロンで終わる必要があります</translation>
+    </message>
+    <message>
+        <source>? to match any single character</source>
+        <translation>"?"は任意の1文字にマッチします</translation>
+    </message>
+    <message>
+        <source>Matches articles based on episode filter.</source>
+        <translation>エピソードフィルターを使用して記事をマッチします。</translation>
+    </message>
+    <message>
+        <source>Assign Category:</source>
+        <translation>カテゴリーの割り当て:</translation>
+    </message>
+    <message>
+        <source>Regex mode: use Perl-compatible regular expressions</source>
+        <translation>正規表現モード: Perl互換の正規表現を使用します</translation>
+    </message>
+    <message>
+        <source>| is used as OR operator</source>
+        <translation>"|"は"OR"演算子として使用します</translation>
+    </message>
+    <message>
+        <source>Clear downloaded episodes</source>
+        <translation>ダウンロードしたエピソードのクリア</translation>
+    </message>
+    <message>
+        <source>Whitespaces count as AND operators (all words, any order)</source>
+        <translation>空白は"AND"演算子とみなされます(すべての単語、語順は任意)</translation>
+    </message>
+    <message>
+        <source>An expression with an empty %1 clause (e.g. %2)</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Example: </source>
+        <translation>例: </translation>
+    </message>
+    <message>
+        <source>Add new rule...</source>
+        <translation>新しいルールを追加...</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to clear the list of downloaded episodes for the selected rule?</source>
+        <translation>選択されたルールのダウンロード済みエピソードのリストをクリアしますか？</translation>
+    </message>
+    <message>
+        <source>Must Contain:</source>
+        <translation>次を含む:</translation>
+    </message>
+    <message>
+        <source>Infinite range: &lt;b&gt;1x25-;&lt;/b&gt; matches episodes 25 and upward of season one, and all episodes of later seasons</source>
+        <translation>無限範囲: &lt;b&gt;1x25-;&lt;/b&gt; は、シーズン1のエピソード25以降と、それ以降のすべてのシーズンのすべてのエピソードにマッチします</translation>
+    </message>
+    <message>
+        <source>Save to a Different Directory</source>
+        <translation>別のディレクトリーに保存する</translation>
+    </message>
+    <message>
+        <source>Must Not Contain:</source>
+        <translation>次を含まない:</translation>
+    </message>
+    <message>
+        <source>Single number: &lt;b&gt;1x25;&lt;/b&gt; matches episode 25 of season one</source>
+        <translation>単数: &lt;b&gt;1x25;&lt;/b&gt; は、シーズン1のエピソード25にマッチします</translation>
+    </message>
+    <message>
+        <source>Three range types for episodes are supported: </source>
+        <translation>エピソードの範囲指定は3種類あります: </translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the selected download rules?</source>
+        <translation>選択したダウンロードルールを削除しますか？</translation>
+    </message>
+    <message>
+        <source>Use global settings</source>
+        <translation>グローバル設定を使用</translation>
+    </message>
+    <message>
+        <source>Normal range: &lt;b&gt;1x25-40;&lt;/b&gt; matches episodes 25 through 40 of season one</source>
+        <translation>通常範囲: &lt;b&gt;1x25-40;&lt;/b&gt; は、シーズン1のエピソード25から40にマッチします</translation>
+    </message>
+    <message>
+        <source>Please type the new rule name</source>
+        <translation>新しいルール名を入力してください</translation>
+    </message>
+    <message>
+        <source>Rule renaming</source>
+        <translation>ルール名の変更</translation>
+    </message>
+    <message>
+        <source>Always</source>
+        <translation>常に</translation>
+    </message>
+    <message>
+        <source>Episode number is a mandatory positive value</source>
+        <translation>エピソード番号は、整数値(必須)です</translation>
+    </message>
+    <message>
+        <source> will match 2, 5, 8 through 15, 30 and onward episodes of season one</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Rule deletion confirmation</source>
+        <translation>ルール削除の確認</translation>
+    </message>
+    <message>
+        <source>Last Match: %1 days ago</source>
+        <translation>前回のマッチ: %1 日前</translation>
+    </message>
+    <message>
+        <source>Episode Filter:</source>
+        <translation>エピソードフィルター:</translation>
+    </message>
+    <message>
+        <source>Rss Downloader</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Season number is a mandatory non-zero value</source>
+        <translation>シーズン番号は、0以外の値(必須)です</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>しない</translation>
+    </message>
+    <message>
+        <source>Apply Rule to Feeds:</source>
+        <translation>フィードにルールを適用する:</translation>
+    </message>
+    <message>
+        <source> days</source>
+        <translation> 日</translation>
+    </message>
+    <message>
+        <source>Use Smart Episode Filter</source>
+        <translation>スマートエピソードフィルターを使用する</translation>
+    </message>
+    <message>
+        <source>If word order is important use * instead of whitespace.</source>
+        <translation>語順が重要な場合は、空白ではなく'"*"を使用します。</translation>
+    </message>
+    <message>
+        <source>Add Paused:</source>
+        <translation>一時停止で追加:</translation>
+    </message>
+    <message>
+        <source>Please type the name of the new download rule.</source>
+        <translation>新しいダウンロードルールの名前を入力してください。</translation>
+    </message>
+    <message>
+        <source>Wildcard mode: you can use</source>
+        <translation>ワイルドカードモード: 以下の文字が使用できます</translation>
+    </message>
+    <message>
+        <source> will exclude all articles.</source>
+        <translation>すべての記事にマッチしません。</translation>
+    </message>
+    <message>
+        <source>Delete rule</source>
+        <translation>ルールを削除</translation>
+    </message>
+    <message>
+        <source>Ignore Subsequent Matches for (0 to Disable)</source>
+        <translation>次の日数以前のマッチは無視する(0:無効)</translation>
+    </message>
+    <message>
+        <source>Rename rule...</source>
+        <translation>ルール名を変更...</translation>
+    </message>
+    <message>
+        <source>Last Match: Unknown</source>
+        <translation>前回のマッチ: 不明</translation>
+    </message>
+    <message>
+        <source>Clear downloaded episodes...</source>
+        <translation>ダウンロードしたエピソードをクリア...</translation>
+    </message>
+    <message>
+        <source>Smart Episode Filter will check the episode number to prevent downloading of duplicates.
+Supports the formats: S01E01, 1x1, 2017.12.31 and 31.12.2017 (Date formats also support - as a separator)</source>
+        <translation>スマートエピソードフィルターは、重複ダウンロードを回避するためにエピソード番号をチェックします。
+対応形式: S01E01, 1x1, 2017.12.31, 31.12.2017 (- を区切り文字とした日付形式にも対応)</translation>
+    </message>
+    <message>
+        <source>Torrent content layout:</source>
+        <translation>Torrentのコンテンツのレイアウト:</translation>
+    </message>
+    <message>
+        <source>Create subfolder</source>
+        <translation>サブフォルダーを作成する</translation>
+    </message>
+    <message>
+        <source>Original</source>
+        <translation>オリジナル</translation>
+    </message>
+    <message>
+        <source>Don't create subfolder</source>
+        <translation>サブフォルダーを作成しない</translation>
+    </message>
+</context>
+<context>
+    <name>TrackerFiltersList</name>
+    <message>
+        <source>Delete torrents</source>
+        <translation>Torrentの削除</translation>
+    </message>
+    <message>
+        <source>Resume torrents</source>
+        <translation>Torrentの再開</translation>
+    </message>
+    <message>
+        <source>All (%1)</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Trackerless (%1)</source>
+        <translation>トラッカーなし (%1)</translation>
+    </message>
+    <message>
+        <source>Pause torrents</source>
+        <translation>Torrentの一時停止</translation>
+    </message>
+</context>
+<context>
+    <name>FeedListWidget</name>
+    <message>
+        <source>RSS feeds</source>
+        <translation>RSSフィード</translation>
+    </message>
+    <message>
+        <source>Unread</source>
+        <translation>未読</translation>
     </message>
 </context>
 </TS>

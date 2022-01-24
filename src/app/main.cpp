@@ -78,6 +78,7 @@ Q_IMPORT_PLUGIN(QICOPlugin)
 
 #include "base/preferences.h"
 #include "base/profile.h"
+#include "base/version.h"
 #include "application.h"
 #include "cmdoptions.h"
 #include "upgrade.h"
@@ -92,7 +93,8 @@ void sigNormalHandler(int signum);
 void sigAbnormalHandler(int signum);
 #endif
 // sys_signame[] is only defined in BSD
-const char *const sysSigName[] = {
+const char *const sysSigName[] =
+{
 #if defined(Q_OS_WIN)
     "", "", "SIGINT", "", "SIGILL", "", "SIGABRT_COMPAT", "", "SIGFPE", "",
     "", "SIGSEGV", "", "", "", "SIGTERM", "", "", "", "",
@@ -132,7 +134,7 @@ int main(int argc, char *argv[])
     // We must save it here because QApplication constructor may change it
     bool isOneArg = (argc == 2);
 
-#if !defined(DISABLE_GUI) && (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0)) && !defined(DISABLE_GUI)
     // Attribute Qt::AA_EnableHighDpiScaling must be set before QCoreApplication is created
     if (qgetenv("QT_ENABLE_HIGHDPI_SCALING").isEmpty() && qgetenv("QT_AUTO_SCREEN_SCALE_FACTOR").isEmpty())
         Application::setAttribute(Qt::AA_EnableHighDpiScaling, true);
@@ -141,19 +143,23 @@ int main(int argc, char *argv[])
         Application::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
 #endif
 
-    try {
+    try
+    {
         // Create Application
         auto app = std::make_unique<Application>(argc, argv);
 
         const QBtCommandLineParameters params = app->commandLineArgs();
-        if (!params.unknownParameter.isEmpty()) {
+        if (!params.unknownParameter.isEmpty())
+        {
             throw CommandLineParameterError(QObject::tr("%1 is an unknown command line parameter.",
                                                         "--random-parameter is an unknown command line parameter.")
                                                         .arg(params.unknownParameter));
         }
 #if !defined(Q_OS_WIN) || defined(DISABLE_GUI)
-        if (params.showVersion) {
-            if (isOneArg) {
+        if (params.showVersion)
+        {
+            if (isOneArg)
+            {
                 displayVersion();
                 return EXIT_SUCCESS;
             }
@@ -161,8 +167,10 @@ int main(int argc, char *argv[])
                                      .arg(QLatin1String("-v (or --version)")));
         }
 #endif
-        if (params.showHelp) {
-            if (isOneArg) {
+        if (params.showHelp)
+        {
+            if (isOneArg)
+            {
                 displayUsage(argv[0]);
                 return EXIT_SUCCESS;
             }
@@ -175,11 +183,11 @@ int main(int argc, char *argv[])
             fprintf(stderr, "Couldn't set environment variable...\n");
 
         const bool firstTimeUser = !Preferences::instance()->getAcceptedLegal();
-        if (firstTimeUser) {
+        if (firstTimeUser)
+        {
 #ifndef DISABLE_GUI
             if (!userAgreesWithLegalNotice())
                 return EXIT_SUCCESS;
-
 #elif defined(Q_OS_WIN)
             if (_isatty(_fileno(stdin))
                 && _isatty(_fileno(stdout))
@@ -192,12 +200,16 @@ int main(int argc, char *argv[])
                 && !userAgreesWithLegalNotice())
                 return EXIT_SUCCESS;
 #endif
+
+            setCurrentMigrationVersion();
         }
 
         // Check if qBittorrent is already running for this user
-        if (app->isRunning()) {
+        if (app->isRunning())
+        {
 #if defined(DISABLE_GUI) && !defined(Q_OS_WIN)
-            if (params.shouldDaemonize) {
+            if (params.shouldDaemonize)
+            {
                 throw CommandLineParameterError(QObject::tr("You cannot use %1: qBittorrent is already running for this user.")
                                      .arg(QLatin1String("-d (or --daemon)")));
             }
@@ -224,7 +236,7 @@ int main(int argc, char *argv[])
         // 3. https://bugreports.qt.io/browse/QTBUG-46015
 
         qputenv("QT_BEARER_POLL_TIMEOUT", QByteArray::number(-1));
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)) && !defined(DISABLE_GUI)
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0)) && !defined(DISABLE_GUI)
         // this is the default in Qt6
         app->setAttribute(Qt::AA_DisableWindowContextHelpButton);
 #endif
@@ -240,9 +252,13 @@ int main(int argc, char *argv[])
 
         // On OS X the standard is to not show icons in the menus
         app->setAttribute(Qt::AA_DontShowIconsInMenus);
+#else
+        if (!Preferences::instance()->iconsInMenusEnabled())
+            app->setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
 
-        if (!firstTimeUser) {
+        if (!firstTimeUser)
+        {
             handleChangedDefaults(DefaultPreferencesMode::Legacy);
 
 #ifndef DISABLE_GUI
@@ -256,21 +272,26 @@ int main(int argc, char *argv[])
                          && isatty(fileno(stdout)))) return EXIT_FAILURE;
 #endif
         }
-        else {
+        else
+        {
             handleChangedDefaults(DefaultPreferencesMode::Current);
         }
 
 #if defined(DISABLE_GUI) && !defined(Q_OS_WIN)
-        if (params.shouldDaemonize) {
+        if (params.shouldDaemonize)
+        {
             app.reset(); // Destroy current application
-            if (daemon(1, 0) == 0) {
+            if (daemon(1, 0) == 0)
+            {
                 app = std::make_unique<Application>(argc, argv);
-                if (app->isRunning()) {
+                if (app->isRunning())
+                {
                     // Another instance had time to start.
                     return EXIT_FAILURE;
                 }
             }
-            else {
+            else
+            {
                 qCritical("Something went wrong while daemonizing, exiting...");
                 return EXIT_FAILURE;
             }
@@ -289,8 +310,9 @@ int main(int argc, char *argv[])
 
         return app->exec(params.paramList());
     }
-    catch (const CommandLineParameterError &er) {
-        displayBadArgMessage(er.messageForUser());
+    catch (const CommandLineParameterError &er)
+    {
+        displayBadArgMessage(er.message());
         return EXIT_FAILURE;
     }
 }
@@ -300,10 +322,12 @@ void reportToUser(const char *str)
 {
     const size_t strLen = strlen(str);
 #ifndef Q_OS_WIN
-    if (write(STDERR_FILENO, str, strLen) < static_cast<ssize_t>(strLen)) {
+    if (write(STDERR_FILENO, str, strLen) < static_cast<ssize_t>(strLen))
+    {
         const auto dummy = write(STDOUT_FILENO, str, strLen);
 #else
-    if (_write(STDERR_FILENO, str, strLen) < static_cast<ssize_t>(strLen)) {
+    if (_write(STDERR_FILENO, str, strLen) < static_cast<ssize_t>(strLen))
+    {
         const auto dummy = _write(STDOUT_FILENO, str, strLen);
 #endif
         Q_UNUSED(dummy);
@@ -353,16 +377,12 @@ void sigAbnormalHandler(int signum)
 #if !defined(DISABLE_GUI)
 void showSplashScreen()
 {
-    QPixmap splashImg(":/icons/skin/splash.png");
+    QPixmap splashImg(":/icons/splash.png");
     QPainter painter(&splashImg);
     const QString version = QBT_VERSION;
     painter.setPen(QPen(Qt::white));
     painter.setFont(QFont("Arial", 22, QFont::Black));
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 11, 0))
     painter.drawText(224 - painter.fontMetrics().horizontalAdvance(version), 270, version);
-#else
-    painter.drawText(224 - painter.fontMetrics().width(version), 270, version);
-#endif
     QSplashScreen *splash = new QSplashScreen(splashImg);
     splash->show();
     QTimer::singleShot(1500, splash, &QObject::deleteLater);
@@ -405,7 +425,8 @@ bool userAgreesWithLegalNotice()
     printf("%s", qUtf8Printable(eula));
 
     const char ret = getchar(); // Read pressed key
-    if ((ret == 'y') || (ret == 'Y')) {
+    if ((ret == 'y') || (ret == 'Y'))
+    {
         // Save the answer
         pref->setAcceptedLegal(true);
         return true;
@@ -419,7 +440,8 @@ bool userAgreesWithLegalNotice()
     msgBox.show(); // Need to be shown or to moveToCenter does not work
     msgBox.move(Utils::Gui::screenCenter(&msgBox));
     msgBox.exec();
-    if (msgBox.clickedButton() == agreeButton) {
+    if (msgBox.clickedButton() == agreeButton)
+    {
         // Save the answer
         pref->setAcceptedLegal(true);
         return true;

@@ -31,16 +31,17 @@
 
 #include <QDateTime>
 #include <QDir>
-#include <QFile>
 #include <QHostAddress>
+#include <QLocale>
 
 #include "base/logger.h"
 #include "base/preferences.h"
 #include "base/profile.h"
 #include "base/utils/fs.h"
 #include "base/utils/gzip.h"
+#include "base/utils/io.h"
 #include "downloadmanager.h"
-#include "private/geoipdatabase.h"
+#include "geoipdatabase.h"
 
 static const QString DATABASE_URL = QStringLiteral("https://download.db-ip.com/free/dbip-country-lite-%1.mmdb.gz");
 static const char GEODB_FOLDER[] = "GeoDB";
@@ -88,7 +89,7 @@ void GeoIPManager::loadDatabase()
     m_geoIPDatabase = nullptr;
 
     const QString filepath = Utils::Fs::expandPathAbs(
-        QString::fromLatin1("%1%2/%3").arg(specialFolderLocation(SpecialFolder::Data), GEODB_FOLDER, GEODB_FILENAME));
+        QString::fromLatin1("%1/%2/%3").arg(specialFolderLocation(SpecialFolder::Data), GEODB_FOLDER, GEODB_FILENAME));
 
     QString error;
     m_geoIPDatabase = GeoIPDatabase::load(filepath, error);
@@ -124,8 +125,8 @@ void GeoIPManager::manageDatabaseUpdate()
 
 void GeoIPManager::downloadDatabaseFile()
 {
-    const QDate curDate = QDateTime::currentDateTimeUtc().date();
-    const QString curUrl = DATABASE_URL.arg(curDate.toString("yyyy-MM"));
+    const QDateTime curDatetime = QDateTime::currentDateTimeUtc();
+    const QString curUrl = DATABASE_URL.arg(QLocale::c().toString(curDatetime, "yyyy-MM"));
     DownloadManager::instance()->download({curUrl}, this, &GeoIPManager::downloadFinished);
 }
 
@@ -139,7 +140,8 @@ QString GeoIPManager::lookup(const QHostAddress &hostAddr) const
 
 QString GeoIPManager::CountryName(const QString &countryISOCode)
 {
-    static const QHash<QString, QString> countries = {
+    static const QHash<QString, QString> countries =
+    {
         // ISO 3166-1 alpha-2 codes
         // http://www.iso.org/iso/home/standards/country_codes/country_names_and_code_elements_txt-temp.htm
 
@@ -403,12 +405,15 @@ QString GeoIPManager::CountryName(const QString &countryISOCode)
 void GeoIPManager::configure()
 {
     const bool enabled = Preferences::instance()->resolvePeerCountries();
-    if (m_enabled != enabled) {
+    if (m_enabled != enabled)
+    {
         m_enabled = enabled;
-        if (m_enabled && !m_geoIPDatabase) {
+        if (m_enabled && !m_geoIPDatabase)
+        {
             loadDatabase();
         }
-        else if (!m_enabled) {
+        else if (!m_enabled)
+        {
             delete m_geoIPDatabase;
             m_geoIPDatabase = nullptr;
         }
@@ -417,42 +422,55 @@ void GeoIPManager::configure()
 
 void GeoIPManager::downloadFinished(const DownloadResult &result)
 {
-    if (result.status != DownloadStatus::Success) {
+    if (result.status != DownloadStatus::Success)
+    {
         LogMsg(tr("Couldn't download IP geolocation database file. Reason: %1").arg(result.errorString), Log::WARNING);
         return;
     }
 
     bool ok = false;
     const QByteArray data = Utils::Gzip::decompress(result.data, &ok);
-    if (!ok) {
+    if (!ok)
+    {
         LogMsg(tr("Could not decompress IP geolocation database file."), Log::WARNING);
         return;
     }
 
     QString error;
     GeoIPDatabase *geoIPDatabase = GeoIPDatabase::load(data, error);
-    if (geoIPDatabase) {
-        if (!m_geoIPDatabase || (geoIPDatabase->buildEpoch() > m_geoIPDatabase->buildEpoch())) {
+    if (geoIPDatabase)
+    {
+        if (!m_geoIPDatabase || (geoIPDatabase->buildEpoch() > m_geoIPDatabase->buildEpoch()))
+        {
             delete m_geoIPDatabase;
             m_geoIPDatabase = geoIPDatabase;
             LogMsg(tr("IP geolocation database loaded. Type: %1. Build time: %2.")
                 .arg(m_geoIPDatabase->type(), m_geoIPDatabase->buildEpoch().toString()),
                 Log::INFO);
             const QString targetPath = Utils::Fs::expandPathAbs(
-                        specialFolderLocation(SpecialFolder::Data) + GEODB_FOLDER);
+                        QDir(specialFolderLocation(SpecialFolder::Data)).absoluteFilePath(GEODB_FOLDER));
             if (!QDir(targetPath).exists())
                 QDir().mkpath(targetPath);
-            QFile targetFile(QString::fromLatin1("%1/%2").arg(targetPath, GEODB_FILENAME));
-            if (!targetFile.open(QFile::WriteOnly) || (targetFile.write(data) == -1))
-                LogMsg(tr("Couldn't save downloaded IP geolocation database file."), Log::WARNING);
-            else
+
+            const auto path = QString::fromLatin1("%1/%2").arg(targetPath, GEODB_FILENAME);
+            const nonstd::expected<void, QString> result = Utils::IO::saveToFile(path, data);
+            if (result)
+            {
                 LogMsg(tr("Successfully updated IP geolocation database."), Log::INFO);
+            }
+            else
+            {
+                LogMsg(tr("Couldn't save downloaded IP geolocation database file. Reason: %1")
+                    .arg(result.error()), Log::WARNING);
+            }
         }
-        else {
+        else
+        {
             delete geoIPDatabase;
         }
     }
-    else {
+    else
+    {
         LogMsg(tr("Couldn't load IP geolocation database. Reason: %1").arg(error), Log::WARNING);
     }
 }

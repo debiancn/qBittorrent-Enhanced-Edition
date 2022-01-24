@@ -30,40 +30,46 @@
 
 #include <fstream>
 
-#include <libtorrent/bencode.hpp>
 #include <libtorrent/create_torrent.hpp>
-#include <libtorrent/storage.hpp>
+#include <libtorrent/file_storage.hpp>
 #include <libtorrent/torrent_info.hpp>
-#include <libtorrent/version.hpp>
 
 #include <QDirIterator>
-#include <QFile>
 #include <QFileInfo>
 #include <QHash>
 
 #include "base/exceptions.h"
 #include "base/global.h"
+#include "base/utils/compare.h"
 #include "base/utils/fs.h"
 #include "base/utils/io.h"
-#include "base/utils/string.h"
-#include "private/ltunderlyingtype.h"
+#include "base/version.h"
+#include "lttypecast.h"
 
 namespace
 {
-#if (LIBTORRENT_VERSION_NUM < 10200)
-    using LTCreateFlags = int;
-    using LTPieceIndex = int;
-#else
-    using LTCreateFlags = lt::create_flags_t;
-    using LTPieceIndex = lt::piece_index_t;
-#endif
-
     // do not include files and folders whose
     // name starts with a .
     bool fileFilter(const std::string &f)
     {
         return !Utils::Fs::fileName(QString::fromStdString(f)).startsWith('.');
     }
+
+#ifdef QBT_USES_LIBTORRENT2
+    lt::create_flags_t toNativeTorrentFormatFlag(const BitTorrent::TorrentFormat torrentFormat)
+    {
+        switch (torrentFormat)
+        {
+        case BitTorrent::TorrentFormat::V1:
+            return lt::create_torrent::v1_only;
+        case BitTorrent::TorrentFormat::Hybrid:
+            return {};
+        case BitTorrent::TorrentFormat::V2:
+            return lt::create_torrent::v2_only;
+        }
+        return {};
+    }
+#endif
 }
 
 using namespace BitTorrent;
@@ -90,39 +96,50 @@ void TorrentCreatorThread::sendProgressSignal(int currentPieceIdx, int totalPiec
     emit updateProgress(static_cast<int>((currentPieceIdx * 100.) / totalPieces));
 }
 
+void TorrentCreatorThread::checkInterruptionRequested() const
+{
+    if (isInterruptionRequested())
+        throw RuntimeError(tr("Operation aborted"));
+}
+
 void TorrentCreatorThread::run()
 {
-    const QString creatorStr("qBittorrent " QBT_VERSION);
-
     emit updateProgress(0);
 
-    try {
+    try
+    {
         const QString parentPath = Utils::Fs::branchPath(m_params.inputPath) + '/';
+        const Utils::Compare::NaturalLessThan<Qt::CaseInsensitive> naturalLessThan {};
 
         // Adding files to the torrent
         lt::file_storage fs;
-        if (QFileInfo(m_params.inputPath).isFile()) {
+        if (QFileInfo(m_params.inputPath).isFile())
+        {
             lt::add_files(fs, Utils::Fs::toNativePath(m_params.inputPath).toStdString(), fileFilter);
         }
-        else {
+        else
+        {
             // need to sort the file names by natural sort order
             QStringList dirs = {m_params.inputPath};
 
-            QDirIterator dirIter(m_params.inputPath, (QDir::AllDirs | QDir::NoDotAndDotDot), QDirIterator::Subdirectories);
-            while (dirIter.hasNext()) {
+            QDirIterator dirIter {m_params.inputPath, (QDir::AllDirs | QDir::NoDotAndDotDot), QDirIterator::Subdirectories};
+            while (dirIter.hasNext())
+            {
                 dirIter.next();
                 dirs += dirIter.filePath();
             }
-            std::sort(dirs.begin(), dirs.end(), Utils::String::naturalLessThan<Qt::CaseInsensitive>);
+            std::sort(dirs.begin(), dirs.end(), naturalLessThan);
 
             QStringList fileNames;
             QHash<QString, qint64> fileSizeMap;
 
-            for (const auto &dir : asConst(dirs)) {
+            for (const auto &dir : asConst(dirs))
+            {
                 QStringList tmpNames;  // natural sort files within each dir
 
                 QDirIterator fileIter(dir, QDir::Files);
-                while (fileIter.hasNext()) {
+                while (fileIter.hasNext())
+                {
                     fileIter.next();
 
                     const QString relFilePath = fileIter.filePath().mid(parentPath.length());
@@ -130,7 +147,7 @@ void TorrentCreatorThread::run()
                     fileSizeMap[relFilePath] = fileIter.fileInfo().size();
                 }
 
-                std::sort(tmpNames.begin(), tmpNames.end(), Utils::String::naturalLessThan<Qt::CaseInsensitive>);
+                std::sort(tmpNames.begin(), tmpNames.end(), naturalLessThan);
                 fileNames += tmpNames;
             }
 
@@ -138,42 +155,48 @@ void TorrentCreatorThread::run()
                 fs.add_file(fileName.toStdString(), fileSizeMap[fileName]);
         }
 
-        if (isInterruptionRequested()) return;
+        checkInterruptionRequested();
 
+#ifdef QBT_USES_LIBTORRENT2
+        lt::create_torrent newTorrent {fs, m_params.pieceSize, toNativeTorrentFormatFlag(m_params.torrentFormat)};
+#else
         lt::create_torrent newTorrent(fs, m_params.pieceSize, m_params.paddedFileSizeLimit
-            , (m_params.isAlignmentOptimized ? lt::create_torrent::optimize_alignment : LTCreateFlags {}));
+            , (m_params.isAlignmentOptimized ? lt::create_torrent::optimize_alignment : lt::create_flags_t {}));
+#endif
 
         // Add url seeds
-        for (QString seed : asConst(m_params.urlSeeds)) {
+        for (QString seed : asConst(m_params.urlSeeds))
+        {
             seed = seed.trimmed();
             if (!seed.isEmpty())
                 newTorrent.add_url_seed(seed.toStdString());
         }
 
         int tier = 0;
-        for (const QString &tracker : asConst(m_params.trackers)) {
+        for (const QString &tracker : asConst(m_params.trackers))
+        {
             if (tracker.isEmpty())
                 ++tier;
             else
                 newTorrent.add_tracker(tracker.trimmed().toStdString(), tier);
         }
 
-        if (isInterruptionRequested()) return;
-
         // calculate the hash for all pieces
         lt::set_piece_hashes(newTorrent, Utils::Fs::toNativePath(parentPath).toStdString()
-            , [this, &newTorrent](const LTPieceIndex n)
+            , [this, &newTorrent](const lt::piece_index_t n)
         {
-            sendProgressSignal(static_cast<LTUnderlyingType<LTPieceIndex>>(n), newTorrent.num_pieces());
+            checkInterruptionRequested();
+            sendProgressSignal(LT::toUnderlyingType(n), newTorrent.num_pieces());
         });
+
         // Set qBittorrent as creator and add user comment to
         // torrent_info structure
-        newTorrent.set_creator(creatorStr.toUtf8().constData());
+        newTorrent.set_creator("qBittorrent " QBT_VERSION);
         newTorrent.set_comment(m_params.comment.toUtf8().constData());
         // Is private ?
         newTorrent.set_priv(m_params.isPrivate);
 
-        if (isInterruptionRequested()) return;
+        checkInterruptionRequested();
 
         lt::entry entry = newTorrent.generate();
 
@@ -181,33 +204,31 @@ void TorrentCreatorThread::run()
         if (!m_params.source.isEmpty())
             entry["info"]["source"] = m_params.source.toStdString();
 
-        if (isInterruptionRequested()) return;
+        checkInterruptionRequested();
 
         // create the torrent
-        QFile outfile {m_params.savePath};
-        if (!outfile.open(QIODevice::WriteOnly)) {
-            throw RuntimeError {tr("Create new torrent file failed. Reason: %1")
-                .arg(outfile.errorString())};
-        }
-
-        if (isInterruptionRequested()) return;
-
-        lt::bencode(Utils::IO::FileDeviceOutputIterator {outfile}, entry);
-        if (outfile.error() != QFileDevice::NoError) {
-            throw RuntimeError {tr("Create new torrent file failed. Reason: %1")
-                .arg(outfile.errorString())};
-        }
-        outfile.close();
+        const nonstd::expected<void, QString> result = Utils::IO::saveToFile(m_params.savePath, entry);
+        if (!result)
+            throw RuntimeError(result.error());
 
         emit updateProgress(100);
         emit creationSuccess(m_params.savePath, parentPath);
     }
-    catch (const std::exception &e) {
-        emit creationFailure(e.what());
+    catch (const RuntimeError &err)
+    {
+        emit creationFailure(tr("Create new torrent file failed. Reason: %1.").arg(err.message()));
+    }
+    catch (const std::exception &err)
+    {
+        emit creationFailure(tr("Create new torrent file failed. Reason: %1.").arg(QString::fromLocal8Bit(err.what())));
     }
 }
 
+#ifdef QBT_USES_LIBTORRENT2
+int TorrentCreatorThread::calculateTotalPieces(const QString &inputPath, const int pieceSize, const TorrentFormat torrentFormat)
+#else
 int TorrentCreatorThread::calculateTotalPieces(const QString &inputPath, const int pieceSize, const bool isAlignmentOptimized, const int paddedFileSizeLimit)
+#endif
 {
     if (inputPath.isEmpty())
         return 0;
@@ -215,6 +236,10 @@ int TorrentCreatorThread::calculateTotalPieces(const QString &inputPath, const i
     lt::file_storage fs;
     lt::add_files(fs, Utils::Fs::toNativePath(inputPath).toStdString(), fileFilter);
 
+#ifdef QBT_USES_LIBTORRENT2
+    return lt::create_torrent {fs, pieceSize, toNativeTorrentFormatFlag(torrentFormat)}.num_pieces();
+#else
     return lt::create_torrent(fs, pieceSize, paddedFileSizeLimit
-        , (isAlignmentOptimized ? lt::create_torrent::optimize_alignment : LTCreateFlags {})).num_pieces();
+        , (isAlignmentOptimized ? lt::create_torrent::optimize_alignment : lt::create_flags_t {})).num_pieces();
+#endif
 }

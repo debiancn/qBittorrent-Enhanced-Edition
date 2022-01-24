@@ -47,6 +47,7 @@ class QSessionManager;
 using BaseApplication = QCoreApplication;
 #endif // DISABLE_GUI
 
+#include "base/settingvalue.h"
 #include "base/types.h"
 #include "cmdoptions.h"
 
@@ -59,7 +60,7 @@ class FileLogger;
 
 namespace BitTorrent
 {
-    class TorrentHandle;
+    class Torrent;
 }
 
 namespace RSS
@@ -71,7 +72,7 @@ namespace RSS
 class Application final : public BaseApplication
 {
     Q_OBJECT
-    Q_DISABLE_COPY(Application)
+    Q_DISABLE_COPY_MOVE(Application)
 
 public:
     Application(int &argc, char **argv);
@@ -112,7 +113,7 @@ protected:
 
 private slots:
     void processMessage(const QString &message);
-    void torrentFinished(BitTorrent::TorrentHandle *const torrent);
+    void torrentFinished(BitTorrent::Torrent *const torrent);
     void allTorrentsFinished();
     void cleanup();
 #if (!defined(DISABLE_GUI) && defined(Q_OS_WIN))
@@ -120,6 +121,11 @@ private slots:
 #endif
 
 private:
+    void initializeTranslation();
+    void processParams(const QStringList &params);
+    void runExternalProgram(const BitTorrent::Torrent *torrent) const;
+    void sendNotificationEmail(const BitTorrent::Torrent *torrent);
+
     ApplicationInstanceManager *m_instanceManager = nullptr;
     bool m_running;
     ShutdownDialogAction m_shutdownAct;
@@ -140,8 +146,11 @@ private:
     QTranslator m_translator;
     QStringList m_paramsQueue;
 
-    void initializeTranslation();
-    void processParams(const QStringList &params);
-    void runExternalProgram(const BitTorrent::TorrentHandle *torrent) const;
-    void sendNotificationEmail(const BitTorrent::TorrentHandle *torrent);
+    SettingValue<bool> m_storeFileLoggerEnabled;
+    SettingValue<bool> m_storeFileLoggerBackup;
+    SettingValue<bool> m_storeFileLoggerDeleteOld;
+    SettingValue<int> m_storeFileLoggerMaxSize;
+    SettingValue<int> m_storeFileLoggerAge;
+    SettingValue<int> m_storeFileLoggerAgeType;
+    SettingValue<QString> m_storeFileLoggerPath;
 };

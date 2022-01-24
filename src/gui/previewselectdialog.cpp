@@ -36,7 +36,8 @@
 #include <QStandardItemModel>
 #include <QTableView>
 
-#include "base/bittorrent/torrenthandle.h"
+#include "base/bittorrent/common.h"
+#include "base/bittorrent/torrent.h"
 #include "base/preferences.h"
 #include "base/utils/fs.h"
 #include "base/utils/misc.h"
@@ -46,12 +47,16 @@
 
 #define SETTINGS_KEY(name) "PreviewSelectDialog/" name
 
-PreviewSelectDialog::PreviewSelectDialog(QWidget *parent, const BitTorrent::TorrentHandle *torrent)
+PreviewSelectDialog::PreviewSelectDialog(QWidget *parent, const BitTorrent::Torrent *torrent)
     : QDialog(parent)
     , m_ui(new Ui::PreviewSelectDialog)
     , m_torrent(torrent)
-    , m_storeDialogSize(SETTINGS_KEY("Dimension"))
+    , m_storeDialogSize(SETTINGS_KEY("Size"))
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+    , m_storeTreeHeaderState("GUI/Qt6/" SETTINGS_KEY("HeaderState"))
+#else
     , m_storeTreeHeaderState(SETTINGS_KEY("HeaderState"))
+#endif
 {
     m_ui->setupUi(this);
 
@@ -84,13 +89,13 @@ PreviewSelectDialog::PreviewSelectDialog(QWidget *parent, const BitTorrent::Torr
     m_ui->previewList->setAlternatingRowColors(pref->useAlternatingRowColors());
     // Fill list in
     const QVector<qreal> fp = torrent->filesProgress();
-    int nbFiles = torrent->filesCount();
-    for (int i = 0; i < nbFiles; ++i) {
-        QString fileName = torrent->fileName(i);
+    for (int i = 0; i < torrent->filesCount(); ++i)
+    {
+        QString fileName = Utils::Fs::fileName(torrent->filePath(i));
         if (fileName.endsWith(QB_EXT))
-            fileName.chop(4);
-        QString extension = Utils::Fs::fileExtension(fileName).toUpper();
-        if (Utils::Misc::isPreviewable(extension)) {
+            fileName.chop(QB_EXT.length());
+        if (Utils::Misc::isPreviewable(fileName))
+        {
             int row = m_previewListModel->rowCount();
             m_previewListModel->insertRow(row);
             m_previewListModel->setData(m_previewListModel->index(row, NAME), fileName);
@@ -127,7 +132,8 @@ void PreviewSelectDialog::previewButtonClicked()
     // Only one file should be selected
     const QString path = absolutePaths.at(selectedIndexes.at(0).data().toInt());
     // File
-    if (!QFile::exists(path)) {
+    if (!QFile::exists(path))
+    {
         const bool isSingleFile = (m_previewListModel->rowCount() == 1);
         QWidget *parent = isSingleFile ? this->parentWidget() : this;
         QMessageBox::critical(parent, tr("Preview impossible")
@@ -155,7 +161,8 @@ void PreviewSelectDialog::loadWindowState()
     Utils::Gui::resize(this, m_storeDialogSize);
 
     // Restore TreeView Header state
-    if (!m_storeTreeHeaderState.value().isEmpty()) {
+    if (!m_storeTreeHeaderState.get().isEmpty())
+    {
         m_headerStateInitialized = m_ui->previewList->header()->restoreState(m_storeTreeHeaderState);
     }
 }
@@ -163,14 +170,16 @@ void PreviewSelectDialog::loadWindowState()
 void PreviewSelectDialog::showEvent(QShowEvent *event)
 {
     // event originated from system
-    if (event->spontaneous()) {
+    if (event->spontaneous())
+    {
         QDialog::showEvent(event);
         return;
     }
 
     // Default size, have to be called after show(), because width is needed
     // Set Name column width to 60% of TreeView
-    if (!m_headerStateInitialized) {
+    if (!m_headerStateInitialized)
+    {
         const int nameSize = (m_ui->previewList->size().width() * 0.6);
         m_ui->previewList->header()->resizeSection(0, nameSize);
         m_headerStateInitialized = true;

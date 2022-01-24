@@ -32,19 +32,22 @@
 #include <boost/circular_buffer.hpp>
 
 #include <QAbstractListModel>
+#include <QColor>
+#include <QHash>
 
 #include "base/logger.h"
 
 class BaseLogModel : public QAbstractListModel
 {
-    Q_DISABLE_COPY(BaseLogModel)
+    Q_DISABLE_COPY_MOVE(BaseLogModel)
 
 public:
     enum MessageTypeRole
     {
         TimeRole = Qt::UserRole,
         MessageRole,
-        ForegroundRole,
+        TimeForegroundRole,
+        MessageForegroundRole,
         TypeRole
     };
 
@@ -77,28 +80,35 @@ protected:
 
 private:
     boost::circular_buffer_space_optimized<Message> m_messages;
+    const QColor m_timeForeground;
 };
 
 class LogMessageModel : public BaseLogModel
 {
     Q_OBJECT
-    Q_DISABLE_COPY(LogMessageModel)
+    Q_DISABLE_COPY_MOVE(LogMessageModel)
 
 public:
     explicit LogMessageModel(QObject *parent = nullptr);
 
 private slots:
     void handleNewMessage(const Log::Msg &message);
+
+private:
+    const QHash<int, QColor> m_foregroundForMessageTypes;
 };
 
 class LogPeerModel : public BaseLogModel
 {
     Q_OBJECT
-    Q_DISABLE_COPY(LogPeerModel)
+    Q_DISABLE_COPY_MOVE(LogPeerModel)
 
 public:
     explicit LogPeerModel(QObject *parent = nullptr);
 
 private slots:
     void handleNewMessage(const Log::Peer &peer);
+
+private:
+    const QColor m_bannedPeerForeground;
 };

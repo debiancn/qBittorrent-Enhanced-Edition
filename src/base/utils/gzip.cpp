@@ -48,7 +48,7 @@ QByteArray Utils::Gzip::compress(const QByteArray &data, const int level, bool *
     const int BUFSIZE = 128 * 1024;
     std::vector<char> tmpBuf(BUFSIZE);
 
-    z_stream strm;
+    z_stream strm {};
     strm.zalloc = Z_NULL;
     strm.zfree = Z_NULL;
     strm.opaque = Z_NULL;
@@ -68,10 +68,12 @@ QByteArray Utils::Gzip::compress(const QByteArray &data, const int level, bool *
     output.reserve(deflateBound(&strm, data.size()));
 
     // feed to deflate
-    while (strm.avail_in > 0) {
+    while (strm.avail_in > 0)
+    {
         result = deflate(&strm, Z_NO_FLUSH);
 
-        if (result != Z_OK) {
+        if (result != Z_OK)
+        {
             deflateEnd(&strm);
             return {};
         }
@@ -82,7 +84,8 @@ QByteArray Utils::Gzip::compress(const QByteArray &data, const int level, bool *
     }
 
     // flush the rest from deflate
-    while (result != Z_STREAM_END) {
+    while (result != Z_STREAM_END)
+    {
         result = deflate(&strm, Z_FINISH);
 
         output.append(tmpBuf.data(), (BUFSIZE - strm.avail_out));
@@ -106,7 +109,7 @@ QByteArray Utils::Gzip::decompress(const QByteArray &data, bool *ok)
     const int BUFSIZE = 1024 * 1024;
     std::vector<char> tmpBuf(BUFSIZE);
 
-    z_stream strm;
+    z_stream strm {};
     strm.zalloc = Z_NULL;
     strm.zfree = Z_NULL;
     strm.opaque = Z_NULL;
@@ -126,15 +129,18 @@ QByteArray Utils::Gzip::decompress(const QByteArray &data, bool *ok)
     output.reserve(data.size() * 3);
 
     // run inflate
-    while (true) {
+    while (true)
+    {
         result = inflate(&strm, Z_NO_FLUSH);
 
-        if (result == Z_STREAM_END) {
+        if (result == Z_STREAM_END)
+        {
             output.append(tmpBuf.data(), (BUFSIZE - strm.avail_out));
             break;
         }
 
-        if (result != Z_OK) {
+        if (result != Z_OK)
+        {
             inflateEnd(&strm);
             return {};
         }

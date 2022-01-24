@@ -50,7 +50,7 @@ window.qBittorrent.PropTrackers = (function() {
             // Tab changed, don't do anything
             return;
         }
-        const new_hash = torrentsTable.getCurrentTorrentHash();
+        const new_hash = torrentsTable.getCurrentTorrentID();
         if (new_hash === "") {
             torrentTrackersTable.clear();
             clearTimeout(loadTrackersDataTimer);
@@ -97,7 +97,7 @@ window.qBittorrent.PropTrackers = (function() {
 
                         const row = {
                             rowId: tracker.url,
-                            tier: tracker.tier,
+                            tier: (tracker.tier >= 0) ? tracker.tier : "",
                             url: tracker.url,
                             status: status,
                             peers: tracker.num_peers,
@@ -235,3 +235,5 @@ window.qBittorrent.PropTrackers = (function() {
 
     return exports();
 })();
+
+Object.freeze(window.qBittorrent.PropTrackers);

@@ -29,7 +29,7 @@
 
 #include "profile.h"
 
-#include "private/profile_p.h"
+#include "profile_p.h"
 
 Profile *Profile::m_instance = nullptr;
 
@@ -45,7 +45,7 @@ Profile::Profile(const QString &rootProfilePath, const QString &configurationNam
     ensureDirectoryExists(SpecialFolder::Data);
 
     if (convertPathsToProfileRelative)
-        m_pathConverterImpl = std::make_unique<Private::Converter>(m_profileImpl->baseDirectory());
+        m_pathConverterImpl = std::make_unique<Private::Converter>(m_profileImpl->basePath());
     else
         m_pathConverterImpl = std::make_unique<Private::NoConvertConverter>();
 }
@@ -72,7 +72,8 @@ const Profile *Profile::instance()
 QString Profile::location(const SpecialFolder folder) const
 {
     QString result;
-    switch (folder) {
+    switch (folder)
+    {
     case SpecialFolder::Cache:
         result = m_profileImpl->cacheLocation();
         break;
@@ -87,9 +88,17 @@ QString Profile::location(const SpecialFolder folder) const
         break;
     }
 
-    if (!result.endsWith(QLatin1Char('/')))
-        result += QLatin1Char('/');
     return result;
+}
+
+QString Profile::rootPath() const
+{
+    return m_profileImpl->rootPath();
+}
+
+QString Profile::configurationName() const
+{
+    return m_profileImpl->configurationName();
 }
 
 QString Profile::profileName() const

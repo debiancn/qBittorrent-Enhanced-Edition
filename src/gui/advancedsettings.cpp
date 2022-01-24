@@ -49,81 +49,103 @@ namespace
     {
          return QStringLiteral("<a href=\"%1\">%2</a>").arg(url, linkLabel);
     }
-}
 
-enum AdvSettingsCols
-{
-    PROPERTY,
-    VALUE,
-    COL_COUNT
-};
-enum AdvSettingsRows
-{
-    // qBittorrent section
-    QBITTORRENT_HEADER,
+    enum AdvSettingsCols
+    {
+        PROPERTY,
+        VALUE,
+        COL_COUNT
+    };
+
+    enum AdvSettingsRows
+    {
+        // qBittorrent section
+        QBITTORRENT_HEADER,
+        RESUME_DATA_STORAGE,
 #if defined(Q_OS_WIN)
-    OS_MEMORY_PRIORITY,
+        OS_MEMORY_PRIORITY,
 #endif
-    // network interface
-    NETWORK_IFACE,
-    //Optional network address
-    NETWORK_IFACE_ADDRESS,
-    // behavior
-    SAVE_RESUME_DATA_INTERVAL,
-    CONFIRM_RECHECK_TORRENT,
-    RECHECK_COMPLETED,
-    CONFIRM_AUTO_BAN,
-    CONFIRM_AUTO_BAN_BT_Player,
-    // UI related
-    LIST_REFRESH,
-    RESOLVE_HOSTS,
-    RESOLVE_COUNTRIES,
-    PROGRAM_NOTIFICATIONS,
-    TORRENT_ADDED_NOTIFICATIONS,
-    CONFIRM_REMOVE_ALL_TAGS,
-    DOWNLOAD_TRACKER_FAVICON,
-    SAVE_PATH_HISTORY_LENGTH,
-    ENABLE_SPEED_WIDGET,
-    // libtorrent section
-    LIBTORRENT_HEADER,
-    ASYNC_IO_THREADS,
-    FILE_POOL_SIZE,
-    CHECKING_MEM_USAGE,
-    // cache
-    DISK_CACHE,
-    DISK_CACHE_TTL,
-    OS_CACHE,
-    COALESCE_RW,
-#if (LIBTORRENT_VERSION_NUM >= 10202)
-    PIECE_EXTENT_AFFINITY,
+        // network interface
+        NETWORK_IFACE,
+        //Optional network address
+        NETWORK_IFACE_ADDRESS,
+        // behavior
+        SAVE_RESUME_DATA_INTERVAL,
+        CONFIRM_RECHECK_TORRENT,
+        RECHECK_COMPLETED,
+        CONFIRM_AUTO_BAN_UNKNOWN_PEER,
+        CONFIRM_AUTO_BAN_BT_Player,
+        // UI related
+        LIST_REFRESH,
+        RESOLVE_HOSTS,
+        RESOLVE_COUNTRIES,
+        PROGRAM_NOTIFICATIONS,
+        TORRENT_ADDED_NOTIFICATIONS,
+#if (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)) && defined(QT_DBUS_LIB)
+        NOTIFICATION_TIMEOUT,
 #endif
-    SUGGEST_MODE,
-    SEND_BUF_WATERMARK,
-    SEND_BUF_LOW_WATERMARK,
-    SEND_BUF_WATERMARK_FACTOR,
-    // networking & ports
-    SOCKET_BACKLOG_SIZE,
-    OUTGOING_PORT_MIN,
-    OUTGOING_PORT_MAX,
-#if (LIBTORRENT_VERSION_NUM >= 10206)
-    UPNP_LEASE_DURATION,
+        CONFIRM_REMOVE_ALL_TAGS,
+        REANNOUNCE_WHEN_ADDRESS_CHANGED,
+        DOWNLOAD_TRACKER_FAVICON,
+        SAVE_PATH_HISTORY_LENGTH,
+        ENABLE_SPEED_WIDGET,
+#ifndef Q_OS_MACOS
+        ENABLE_ICONS_IN_MENUS,
 #endif
-    UTP_MIX_MODE,
-    MULTI_CONNECTIONS_PER_IP,
-    // embedded tracker
-    TRACKER_STATUS,
-    TRACKER_PORT,
-    // seeding
-    CHOKING_ALGORITHM,
-    SEED_CHOKING_ALGORITHM,
-    // tracker
-    ANNOUNCE_ALL_TRACKERS,
-    ANNOUNCE_ALL_TIERS,
-    ANNOUNCE_IP,
-    STOP_TRACKER_TIMEOUT,
+        // embedded tracker
+        TRACKER_STATUS,
+        TRACKER_PORT,
+        // libtorrent section
+        LIBTORRENT_HEADER,
+        ASYNC_IO_THREADS,
+#ifdef QBT_USES_LIBTORRENT2
+        HASHING_THREADS,
+#endif
+        FILE_POOL_SIZE,
+        CHECKING_MEM_USAGE,
+#ifndef QBT_USES_LIBTORRENT2
+        // cache
+        DISK_CACHE,
+        DISK_CACHE_TTL,
+#endif
+        OS_CACHE,
+#ifndef QBT_USES_LIBTORRENT2
+        COALESCE_RW,
+#endif
+        PIECE_EXTENT_AFFINITY,
+        SUGGEST_MODE,
+        SEND_BUF_WATERMARK,
+        SEND_BUF_LOW_WATERMARK,
+        SEND_BUF_WATERMARK_FACTOR,
+        // networking & ports
+        CONNECTION_SPEED,
+        SOCKET_BACKLOG_SIZE,
+        OUTGOING_PORT_MIN,
+        OUTGOING_PORT_MAX,
+        UPNP_LEASE_DURATION,
+        PEER_TOS,
+        UTP_MIX_MODE,
+        IDN_SUPPORT,
+        MULTI_CONNECTIONS_PER_IP,
+        VALIDATE_HTTPS_TRACKER_CERTIFICATE,
+        SSRF_MITIGATION,
+        BLOCK_PEERS_ON_PRIVILEGED_PORTS,
+        // seeding
+        CHOKING_ALGORITHM,
+        SEED_CHOKING_ALGORITHM,
+        // tracker
+        ANNOUNCE_ALL_TRACKERS,
+        ANNOUNCE_ALL_TIERS,
+        ANNOUNCE_IP,
+        MAX_CONCURRENT_HTTP_ANNOUNCES,
+        STOP_TRACKER_TIMEOUT,
+        PEER_TURNOVER,
+        PEER_TURNOVER_CUTOFF,
+        PEER_TURNOVER_INTERVAL,
 
-    ROW_COUNT
-};
+        ROW_COUNT
+    };
+}
 
 AdvancedSettings::AdvancedSettings(QWidget *parent)
     : QTableWidget(parent)
@@ -139,13 +161,6 @@ AdvancedSettings::AdvancedSettings(QWidget *parent)
     setAlternatingRowColors(true);
     setSelectionMode(QAbstractItemView::NoSelection);
     setEditTriggers(QAbstractItemView::NoEditTriggers);
-    // Signals
-    connect(&m_spinBoxCache, qOverload<int>(&QSpinBox::valueChanged)
-            , this, &AdvancedSettings::updateCacheSpinSuffix);
-    connect(&m_comboBoxInterface, qOverload<int>(&QComboBox::currentIndexChanged)
-            , this, &AdvancedSettings::updateInterfaceAddressCombo);
-    connect(&m_spinBoxSaveResumeDataInterval, qOverload<int>(&QSpinBox::valueChanged)
-            , this, &AdvancedSettings::updateSaveResumeDataIntervalSuffix);
     // Load settings
     loadAdvancedSettings();
     resizeColumnToContents(0);
@@ -157,9 +172,14 @@ void AdvancedSettings::saveAdvancedSettings()
     Preferences *const pref = Preferences::instance();
     BitTorrent::Session *const session = BitTorrent::Session::instance();
 
+    session->setResumeDataStorageType((m_comboBoxResumeDataStorage.currentIndex() == 0)
+                                      ? BitTorrent::ResumeDataStorageType::Legacy
+                                      : BitTorrent::ResumeDataStorageType::SQLite);
+
 #if defined(Q_OS_WIN)
     BitTorrent::OSMemoryPriority prio = BitTorrent::OSMemoryPriority::Normal;
-    switch (m_comboBoxOSMemoryPriority.currentIndex()) {
+    switch (m_comboBoxOSMemoryPriority.currentIndex())
+    {
     case 0:
     default:
         prio = BitTorrent::OSMemoryPriority::Normal;
@@ -181,27 +201,35 @@ void AdvancedSettings::saveAdvancedSettings()
 #endif
     // Async IO threads
     session->setAsyncIOThreads(m_spinBoxAsyncIOThreads.value());
+#ifdef QBT_USES_LIBTORRENT2
+    // Hashing threads
+    session->setHashingThreads(m_spinBoxHashingThreads.value());
+#endif
     // File pool size
     session->setFilePoolSize(m_spinBoxFilePoolSize.value());
     // Checking Memory Usage
     session->setCheckingMemUsage(m_spinBoxCheckingMemUsage.value());
+#ifndef QBT_USES_LIBTORRENT2
     // Disk write cache
     session->setDiskCacheSize(m_spinBoxCache.value());
     session->setDiskCacheTTL(m_spinBoxCacheTTL.value());
+#endif
     // Enable OS cache
     session->setUseOSCache(m_checkBoxOsCache.isChecked());
+#ifndef QBT_USES_LIBTORRENT2
     // Coalesce reads & writes
     session->setCoalesceReadWriteEnabled(m_checkBoxCoalesceRW.isChecked());
-#if (LIBTORRENT_VERSION_NUM >= 10202)
+#endif
     // Piece extent affinity
     session->setPieceExtentAffinity(m_checkBoxPieceExtentAffinity.isChecked());
-#endif
     // Suggest mode
     session->setSuggestMode(m_checkBoxSuggestMode.isChecked());
     // Send buffer watermark
     session->setSendBufferWatermark(m_spinBoxSendBufferWatermark.value());
     session->setSendBufferLowWatermark(m_spinBoxSendBufferLowWatermark.value());
     session->setSendBufferWatermarkFactor(m_spinBoxSendBufferWatermarkFactor.value());
+    // Outgoing connections per second
+    session->setConnectionSpeed(m_spinBoxConnectionSpeed.value());
     // Socket listen backlog size
     session->setSocketBacklogSize(m_spinBoxSocketBacklogSize.value());
     // Save resume data interval
@@ -209,14 +237,22 @@ void AdvancedSettings::saveAdvancedSettings()
     // Outgoing ports
     session->setOutgoingPortsMin(m_spinBoxOutgoingPortsMin.value());
     session->setOutgoingPortsMax(m_spinBoxOutgoingPortsMax.value());
-#if (LIBTORRENT_VERSION_NUM >= 10206)
     // UPnP lease duration
     session->setUPnPLeaseDuration(m_spinBoxUPnPLeaseDuration.value());
-#endif
+    // Type of service
+    session->setPeerToS(m_spinBoxPeerToS.value());
     // uTP-TCP mixed mode
     session->setUtpMixedMode(static_cast<BitTorrent::MixedModeAlgorithm>(m_comboBoxUtpMixedMode.currentIndex()));
+    // Support internationalized domain name (IDN)
+    session->setIDNSupportEnabled(m_checkBoxIDNSupport.isChecked());
     // multiple connections per IP
     session->setMultiConnectionsPerIpEnabled(m_checkBoxMultiConnectionsPerIp.isChecked());
+    // Validate HTTPS tracker certificate
+    session->setValidateHTTPSTrackerCertificate(m_checkBoxValidateHTTPSTrackerCertificate.isChecked());
+    // SSRF mitigation
+    session->setSSRFMitigationEnabled(m_checkBoxSSRFMitigation.isChecked());
+    // Disallow connection to peers on privileged ports
+    session->setBlockPeersOnPrivilegedPorts(m_checkBoxBlockPeersOnPrivilegedPorts.isChecked());
     // Recheck torrents on completion
     pref->recheckTorrentsOnCompletion(m_checkBoxRecheckCompleted.isChecked());
     // Transfer list refresh interval
@@ -225,12 +261,14 @@ void AdvancedSettings::saveAdvancedSettings()
     pref->resolvePeerCountries(m_checkBoxResolveCountries.isChecked());
     pref->resolvePeerHostNames(m_checkBoxResolveHosts.isChecked());
     // Network interface
-    if (m_comboBoxInterface.currentIndex() == 0) {
+    if (m_comboBoxInterface.currentIndex() == 0)
+    {
         // All interfaces (default)
         session->setNetworkInterface(QString());
         session->setNetworkInterfaceName(QString());
     }
-    else {
+    else
+    {
         session->setNetworkInterface(m_comboBoxInterface.itemData(m_comboBoxInterface.currentIndex()).toString());
         session->setNetworkInterfaceName(m_comboBoxInterface.currentText());
     }
@@ -244,21 +282,30 @@ void AdvancedSettings::saveAdvancedSettings()
     // Construct a QHostAddress to filter malformed strings
     const QHostAddress addr(m_lineEditAnnounceIP.text().trimmed());
     session->setAnnounceIP(addr.toString());
+    // Max concurrent HTTP announces
+    session->setMaxConcurrentHTTPAnnounces(m_spinBoxMaxConcurrentHTTPAnnounces.value());
     // Stop tracker timeout
     session->setStopTrackerTimeout(m_spinBoxStopTrackerTimeout.value());
     // Auto ban Unknown Peer
     session->setAutoBanUnknownPeer(m_autoBanUnknownPeer.isChecked());
     // Auto ban Bittorrent Media Player Peer
     session->setAutoBanBTPlayerPeer(m_autoBanBTPlayerPeer.isChecked());
-
     // Program notification
     MainWindow *const mainWindow = static_cast<Application*>(QCoreApplication::instance())->mainWindow();
     mainWindow->setNotificationsEnabled(m_checkBoxProgramNotifications.isChecked());
     mainWindow->setTorrentAddedNotificationsEnabled(m_checkBoxTorrentAddedNotifications.isChecked());
+#if (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)) && defined(QT_DBUS_LIB)
+    mainWindow->setNotificationTimeout(m_spinBoxNotificationTimeout.value());
+#endif
+    // Reannounce to all trackers when ip/port changed
+    session->setReannounceWhenAddressChangedEnabled(m_checkBoxReannounceWhenAddressChanged.isChecked());
     // Misc GUI properties
     mainWindow->setDownloadTrackerFavicon(m_checkBoxTrackerFavicon.isChecked());
     AddNewTorrentDialog::setSavePathHistoryLength(m_spinBoxSavePathHistoryLength.value());
     pref->setSpeedWidgetEnabled(m_checkBoxSpeedWidgetEnabled.isChecked());
+#ifndef Q_OS_MACOS
+    pref->setIconsInMenusEnabled(m_checkBoxIconsInMenusEnabled.isChecked());
+#endif
 
     // Tracker
     pref->setTrackerPort(m_spinBoxTrackerPort.value());
@@ -274,8 +321,13 @@ void AdvancedSettings::saveAdvancedSettings()
 
     session->setAnnounceToAllTrackers(m_checkBoxAnnounceAllTrackers.isChecked());
     session->setAnnounceToAllTiers(m_checkBoxAnnounceAllTiers.isChecked());
+
+    session->setPeerTurnover(m_spinBoxPeerTurnover.value());
+    session->setPeerTurnoverCutoff(m_spinBoxPeerTurnoverCutoff.value());
+    session->setPeerTurnoverInterval(m_spinBoxPeerTurnoverInterval.value());
 }
 
+#ifndef QBT_USES_LIBTORRENT2
 void AdvancedSettings::updateCacheSpinSuffix(int value)
 {
     if (value == 0)
@@ -285,6 +337,7 @@ void AdvancedSettings::updateCacheSpinSuffix(int value)
     else
         m_spinBoxCache.setSuffix(tr(" MiB"));
 }
+#endif
 
 void AdvancedSettings::updateSaveResumeDataIntervalSuffix(const int value)
 {
@@ -308,21 +361,25 @@ void AdvancedSettings::updateInterfaceAddressCombo()
 
     const auto populateCombo = [this](const QHostAddress &addr)
     {
-        if (addr.protocol() == QAbstractSocket::IPv4Protocol) {
+        if (addr.protocol() == QAbstractSocket::IPv4Protocol)
+        {
             const QString str = addr.toString();
             m_comboBoxInterfaceAddress.addItem(str, str);
         }
-        else if (addr.protocol() == QAbstractSocket::IPv6Protocol) {
+        else if (addr.protocol() == QAbstractSocket::IPv6Protocol)
+        {
             const QString str = Utils::Net::canonicalIPv6Addr(addr).toString();
             m_comboBoxInterfaceAddress.addItem(str, str);
         }
     };
 
-    if (ifaceName.isEmpty()) {
+    if (ifaceName.isEmpty())
+    {
         for (const QHostAddress &addr : asConst(QNetworkInterface::allAddresses()))
             populateCombo(addr);
     }
-    else {
+    else
+    {
         const QNetworkInterface iface = QNetworkInterface::interfaceFromName(ifaceName);
         const QList<QNetworkAddressEntry> addresses = iface.addressEntries();
         for (const QNetworkAddressEntry &entry : addresses)
@@ -348,17 +405,22 @@ void AdvancedSettings::loadAdvancedSettings()
     static_cast<QLabel *>(cellWidget(QBITTORRENT_HEADER, PROPERTY))->setAlignment(Qt::AlignCenter | Qt::AlignVCenter);
 
     auto *labelLibtorrentLink = new QLabel(
-        makeLink(QLatin1String("https://www.libtorrent.org/reference.html")
+        makeLink(QLatin1String("https://www.libtorrent.org/reference-Settings.html")
                  , tr("Open documentation"))
         , this);
     labelLibtorrentLink->setOpenExternalLinks(true);
     addRow(LIBTORRENT_HEADER, QString::fromLatin1("<b>%1</b>").arg(tr("libtorrent Section")), labelLibtorrentLink);
     static_cast<QLabel *>(cellWidget(LIBTORRENT_HEADER, PROPERTY))->setAlignment(Qt::AlignCenter | Qt::AlignVCenter);
 
+    m_comboBoxResumeDataStorage.addItems({tr("Fastresume files"), tr("SQLite database (experimental)")});
+    m_comboBoxResumeDataStorage.setCurrentIndex((session->resumeDataStorageType() == BitTorrent::ResumeDataStorageType::Legacy) ? 0 : 1);
+    addRow(RESUME_DATA_STORAGE, tr("Resume data storage type (requires restart)"), &m_comboBoxResumeDataStorage);
+
 #if defined(Q_OS_WIN)
     m_comboBoxOSMemoryPriority.addItems({tr("Normal"), tr("Below normal"), tr("Medium"), tr("Low"), tr("Very low")});
     int OSMemoryPriorityIndex = 0;
-    switch (session->getOSMemoryPriority()) {
+    switch (session->getOSMemoryPriority())
+    {
     default:
     case BitTorrent::OSMemoryPriority::Normal:
         OSMemoryPriorityIndex = 0;
@@ -388,6 +450,16 @@ void AdvancedSettings::loadAdvancedSettings()
     m_spinBoxAsyncIOThreads.setValue(session->asyncIOThreads());
     addRow(ASYNC_IO_THREADS, (tr("Asynchronous I/O threads") + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#aio_threads", "(?)"))
             , &m_spinBoxAsyncIOThreads);
+
+#ifdef QBT_USES_LIBTORRENT2
+    // Hashing threads
+    m_spinBoxHashingThreads.setMinimum(1);
+    m_spinBoxHashingThreads.setMaximum(1024);
+    m_spinBoxHashingThreads.setValue(session->hashingThreads());
+    addRow(HASHING_THREADS, (tr("Hashing threads") + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#hashing_threads", "(?)"))
+            , &m_spinBoxHashingThreads);
+#endif
+
     // File pool size
     m_spinBoxFilePoolSize.setMinimum(1);
     m_spinBoxFilePoolSize.setMaximum(std::numeric_limits<int>::max());
@@ -408,7 +480,7 @@ void AdvancedSettings::loadAdvancedSettings()
     m_spinBoxCheckingMemUsage.setSuffix(tr(" MiB"));
     addRow(CHECKING_MEM_USAGE, (tr("Outstanding memory when checking torrents") + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#checking_mem_usage", "(?)"))
             , &m_spinBoxCheckingMemUsage);
-
+#ifndef QBT_USES_LIBTORRENT2
     // Disk write cache
     m_spinBoxCache.setMinimum(-1);
     // When build as 32bit binary, set the maximum at less than 2GB to prevent crashes.
@@ -420,6 +492,8 @@ void AdvancedSettings::loadAdvancedSettings()
 #endif
     m_spinBoxCache.setValue(session->diskCacheSize());
     updateCacheSpinSuffix(m_spinBoxCache.value());
+    connect(&m_spinBoxCache, qOverload<int>(&QSpinBox::valueChanged)
+            , this, &AdvancedSettings::updateCacheSpinSuffix);
     addRow(DISK_CACHE, (tr("Disk cache") + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#cache_size", "(?)"))
             , &m_spinBoxCache);
     // Disk cache expiry
@@ -429,19 +503,20 @@ void AdvancedSettings::loadAdvancedSettings()
     m_spinBoxCacheTTL.setSuffix(tr(" s", " seconds"));
     addRow(DISK_CACHE_TTL, (tr("Disk cache expiry interval") + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#cache_expiry", "(?)"))
             , &m_spinBoxCacheTTL);
+#endif
     // Enable OS cache
     m_checkBoxOsCache.setChecked(session->useOSCache());
     addRow(OS_CACHE, (tr("Enable OS cache") + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#disk_io_write_mode", "(?)"))
             , &m_checkBoxOsCache);
+#ifndef QBT_USES_LIBTORRENT2
     // Coalesce reads & writes
     m_checkBoxCoalesceRW.setChecked(session->isCoalesceReadWriteEnabled());
     addRow(COALESCE_RW, (tr("Coalesce reads & writes") + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#coalesce_reads", "(?)"))
             , &m_checkBoxCoalesceRW);
-#if (LIBTORRENT_VERSION_NUM >= 10202)
+#endif
     // Piece extent affinity
     m_checkBoxPieceExtentAffinity.setChecked(session->usePieceExtentAffinity());
     addRow(PIECE_EXTENT_AFFINITY, (tr("Use piece extent affinity") + ' ' + makeLink("https://libtorrent.org/single-page-ref.html#piece_extent_affinity", "(?)")), &m_checkBoxPieceExtentAffinity);
-#endif
     // Suggest mode
     m_checkBoxSuggestMode.setChecked(session->isSuggestModeEnabled());
     addRow(SUGGEST_MODE, (tr("Send upload piece suggestions") + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#suggest_mode", "(?)"))
@@ -465,6 +540,12 @@ void AdvancedSettings::loadAdvancedSettings()
     m_spinBoxSendBufferWatermarkFactor.setValue(session->sendBufferWatermarkFactor());
     addRow(SEND_BUF_WATERMARK_FACTOR, (tr("Send buffer watermark factor") + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#send_buffer_watermark_factor", "(?)"))
             , &m_spinBoxSendBufferWatermarkFactor);
+    // Outgoing connections per second
+    m_spinBoxConnectionSpeed.setMinimum(0);
+    m_spinBoxConnectionSpeed.setMaximum(std::numeric_limits<int>::max());
+    m_spinBoxConnectionSpeed.setValue(session->connectionSpeed());
+    addRow(CONNECTION_SPEED, (tr("Outgoing connections per second") + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#connection_speed", "(?)"))
+            , &m_spinBoxConnectionSpeed);
     // Socket listen backlog size
     m_spinBoxSocketBacklogSize.setMinimum(1);
     m_spinBoxSocketBacklogSize.setMaximum(std::numeric_limits<int>::max());
@@ -475,19 +556,24 @@ void AdvancedSettings::loadAdvancedSettings()
     m_spinBoxSaveResumeDataInterval.setMinimum(0);
     m_spinBoxSaveResumeDataInterval.setMaximum(std::numeric_limits<int>::max());
     m_spinBoxSaveResumeDataInterval.setValue(session->saveResumeDataInterval());
+    connect(&m_spinBoxSaveResumeDataInterval, qOverload<int>(&QSpinBox::valueChanged)
+        , this, &AdvancedSettings::updateSaveResumeDataIntervalSuffix);
     updateSaveResumeDataIntervalSuffix(m_spinBoxSaveResumeDataInterval.value());
     addRow(SAVE_RESUME_DATA_INTERVAL, tr("Save resume data interval", "How often the fastresume file is saved."), &m_spinBoxSaveResumeDataInterval);
     // Outgoing port Min
     m_spinBoxOutgoingPortsMin.setMinimum(0);
     m_spinBoxOutgoingPortsMin.setMaximum(65535);
     m_spinBoxOutgoingPortsMin.setValue(session->outgoingPortsMin());
-    addRow(OUTGOING_PORT_MIN, tr("Outgoing ports (Min) [0: Disabled]"), &m_spinBoxOutgoingPortsMin);
+    addRow(OUTGOING_PORT_MIN, (tr("Outgoing ports (Min) [0: Disabled]")
+        + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#outgoing_port", "(?)"))
+        , &m_spinBoxOutgoingPortsMin);
     // Outgoing port Min
     m_spinBoxOutgoingPortsMax.setMinimum(0);
     m_spinBoxOutgoingPortsMax.setMaximum(65535);
     m_spinBoxOutgoingPortsMax.setValue(session->outgoingPortsMax());
-    addRow(OUTGOING_PORT_MAX, tr("Outgoing ports (Max) [0: Disabled]"), &m_spinBoxOutgoingPortsMax);
-#if (LIBTORRENT_VERSION_NUM >= 10206)
+    addRow(OUTGOING_PORT_MAX, (tr("Outgoing ports (Max) [0: Disabled]")
+        + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#outgoing_port", "(?)"))
+        , &m_spinBoxOutgoingPortsMax);
     // UPnP lease duration
     m_spinBoxUPnPLeaseDuration.setMinimum(0);
     m_spinBoxUPnPLeaseDuration.setMaximum(std::numeric_limits<int>::max());
@@ -495,16 +581,41 @@ void AdvancedSettings::loadAdvancedSettings()
     m_spinBoxUPnPLeaseDuration.setSuffix(tr(" s", " seconds"));
     addRow(UPNP_LEASE_DURATION, (tr("UPnP lease duration [0: Permanent lease]") + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#upnp_lease_duration", "(?)"))
         , &m_spinBoxUPnPLeaseDuration);
-#endif
+    // Type of service
+    m_spinBoxPeerToS.setMinimum(0);
+    m_spinBoxPeerToS.setMaximum(255);
+    m_spinBoxPeerToS.setValue(session->peerToS());
+    addRow(PEER_TOS, (tr("Type of service (ToS) for connections to peers") + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#peer_tos", "(?)"))
+        , &m_spinBoxPeerToS);
     // uTP-TCP mixed mode
     m_comboBoxUtpMixedMode.addItems({tr("Prefer TCP"), tr("Peer proportional (throttles TCP)")});
     m_comboBoxUtpMixedMode.setCurrentIndex(static_cast<int>(session->utpMixedMode()));
     addRow(UTP_MIX_MODE, (tr("%1-TCP mixed mode algorithm", "uTP-TCP mixed mode algorithm").arg(C_UTP)
             + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#mixed_mode_algorithm", "(?)"))
             , &m_comboBoxUtpMixedMode);
+    // Support internationalized domain name (IDN)
+    m_checkBoxIDNSupport.setChecked(session->isIDNSupportEnabled());
+    addRow(IDN_SUPPORT, (tr("Support internationalized domain name (IDN)")
+            + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#allow_idna", "(?)"))
+            , &m_checkBoxIDNSupport);
     // multiple connections per IP
     m_checkBoxMultiConnectionsPerIp.setChecked(session->multiConnectionsPerIpEnabled());
-    addRow(MULTI_CONNECTIONS_PER_IP, tr("Allow multiple connections from the same IP address"), &m_checkBoxMultiConnectionsPerIp);
+    addRow(MULTI_CONNECTIONS_PER_IP, (tr("Allow multiple connections from the same IP address")
+            + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#allow_multiple_connections_per_ip", "(?)"))
+            , &m_checkBoxMultiConnectionsPerIp);
+    // Validate HTTPS tracker certificate
+    m_checkBoxValidateHTTPSTrackerCertificate.setChecked(session->validateHTTPSTrackerCertificate());
+    addRow(VALIDATE_HTTPS_TRACKER_CERTIFICATE, (tr("Validate HTTPS tracker certificates")
+            + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#validate_https_trackers", "(?)"))
+            , &m_checkBoxValidateHTTPSTrackerCertificate);
+    // SSRF mitigation
+    m_checkBoxSSRFMitigation.setChecked(session->isSSRFMitigationEnabled());
+    addRow(SSRF_MITIGATION, (tr("Server-side request forgery (SSRF) mitigation")
+        + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#ssrf_mitigation", "(?)"))
+        , &m_checkBoxSSRFMitigation);
+    // Disallow connection to peers on privileged ports
+    m_checkBoxBlockPeersOnPrivilegedPorts.setChecked(session->blockPeersOnPrivilegedPorts());
+    addRow(BLOCK_PEERS_ON_PRIVILEGED_PORTS, (tr("Disallow connection to peers on privileged ports") + ' ' + makeLink("https://libtorrent.org/single-page-ref.html#no_connect_privileged_ports", "(?)")), &m_checkBoxBlockPeersOnPrivilegedPorts);
     // Recheck completed torrents
     m_checkBoxRecheckCompleted.setChecked(pref->recheckTorrentsOnCompletion());
     addRow(RECHECK_COMPLETED, tr("Recheck torrents on completion"), &m_checkBoxRecheckCompleted);
@@ -525,32 +636,47 @@ void AdvancedSettings::loadAdvancedSettings()
     const QString currentInterface = session->networkInterface();
     bool interfaceExists = currentInterface.isEmpty();
     int i = 1;
-    for (const QNetworkInterface &iface : asConst(QNetworkInterface::allInterfaces())) {
+    for (const QNetworkInterface &iface : asConst(QNetworkInterface::allInterfaces()))
+    {
         m_comboBoxInterface.addItem(iface.humanReadableName(), iface.name());
-        if (!currentInterface.isEmpty() && (iface.name() == currentInterface)) {
+        if (!currentInterface.isEmpty() && (iface.name() == currentInterface))
+        {
             m_comboBoxInterface.setCurrentIndex(i);
             interfaceExists = true;
         }
         ++i;
     }
     // Saved interface does not exist, show it anyway
-    if (!interfaceExists) {
+    if (!interfaceExists)
+    {
         m_comboBoxInterface.addItem(session->networkInterfaceName(), currentInterface);
         m_comboBoxInterface.setCurrentIndex(i);
     }
-    addRow(NETWORK_IFACE, tr("Network Interface (requires restart)"), &m_comboBoxInterface);
+    connect(&m_comboBoxInterface, qOverload<int>(&QComboBox::currentIndexChanged)
+        , this, &AdvancedSettings::updateInterfaceAddressCombo);
+    addRow(NETWORK_IFACE, tr("Network interface"), &m_comboBoxInterface);
     // Network interface address
     updateInterfaceAddressCombo();
-    addRow(NETWORK_IFACE_ADDRESS, tr("Optional IP Address to bind to (requires restart)"), &m_comboBoxInterfaceAddress);
+    addRow(NETWORK_IFACE_ADDRESS, tr("Optional IP address to bind to"), &m_comboBoxInterfaceAddress);
     // Announce IP
     m_lineEditAnnounceIP.setText(session->announceIP());
-    addRow(ANNOUNCE_IP, tr("IP Address to report to trackers (requires restart)"), &m_lineEditAnnounceIP);
+    addRow(ANNOUNCE_IP, (tr("IP address reported to trackers (requires restart)")
+        + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#announce_ip", "(?)"))
+        , &m_lineEditAnnounceIP);
     // Auto Ban Unknown Peer from China
     m_autoBanUnknownPeer.setChecked(session->isAutoBanUnknownPeerEnabled());
-    addRow(CONFIRM_AUTO_BAN, tr("Auto Ban Unknown Peer from China"), &m_autoBanUnknownPeer);
+    addRow(CONFIRM_AUTO_BAN_UNKNOWN_PEER, tr("Auto Ban Unknown Peer from China"), &m_autoBanUnknownPeer);
     // Auto Ban Bittorrent Media Player Peer
     m_autoBanBTPlayerPeer.setChecked(session->isAutoBanBTPlayerPeerEnabled());
     addRow(CONFIRM_AUTO_BAN_BT_Player, tr("Auto Ban Bittorrent Media Player Peer"), &m_autoBanBTPlayerPeer);
+    // Max concurrent HTTP announces
+    m_spinBoxMaxConcurrentHTTPAnnounces.setMaximum(std::numeric_limits<int>::max());
+    m_spinBoxMaxConcurrentHTTPAnnounces.setValue(session->maxConcurrentHTTPAnnounces());
+    addRow(MAX_CONCURRENT_HTTP_ANNOUNCES, (tr("Max concurrent HTTP announces") + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#max_concurrent_http_announces", "(?)"))
+           , &m_spinBoxMaxConcurrentHTTPAnnounces);
+    // Stop tracker timeout
+    m_spinBoxStopTrackerTimeout.setValue(session->stopTrackerTimeout());
+    m_spinBoxStopTrackerTimeout.setSuffix(tr(" s", " seconds"));
     addRow(STOP_TRACKER_TIMEOUT, (tr("Stop tracker timeout") + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#stop_tracker_timeout", "(?)"))
            , &m_spinBoxStopTrackerTimeout);
 
@@ -561,6 +687,18 @@ void AdvancedSettings::loadAdvancedSettings()
     // Torrent added notifications
     m_checkBoxTorrentAddedNotifications.setChecked(mainWindow->isTorrentAddedNotificationsEnabled());
     addRow(TORRENT_ADDED_NOTIFICATIONS, tr("Display notifications for added torrents"), &m_checkBoxTorrentAddedNotifications);
+#if (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)) && defined(QT_DBUS_LIB)
+    // Notification timeout
+    m_spinBoxNotificationTimeout.setMinimum(-1);
+    m_spinBoxNotificationTimeout.setMaximum(std::numeric_limits<int>::max());
+    m_spinBoxNotificationTimeout.setValue(mainWindow->getNotificationTimeout());
+    m_spinBoxNotificationTimeout.setSpecialValueText(tr("System default"));
+    m_spinBoxNotificationTimeout.setSuffix(tr(" ms", " milliseconds"));
+    addRow(NOTIFICATION_TIMEOUT, tr("Notification timeout [0: infinite]"), &m_spinBoxNotificationTimeout);
+#endif
+    // Reannounce to all trackers when ip/port changed
+    m_checkBoxReannounceWhenAddressChanged.setChecked(session->isReannounceWhenAddressChangedEnabled());
+    addRow(REANNOUNCE_WHEN_ADDRESS_CHANGED, tr("Reannounce to all trackers when IP or port changed"), &m_checkBoxReannounceWhenAddressChanged);
     // Download tracker's favicon
     m_checkBoxTrackerFavicon.setChecked(mainWindow->isDownloadTrackerFavicon());
     addRow(DOWNLOAD_TRACKER_FAVICON, tr("Download tracker's favicon"), &m_checkBoxTrackerFavicon);
@@ -571,6 +709,11 @@ void AdvancedSettings::loadAdvancedSettings()
     // Enable speed graphs
     m_checkBoxSpeedWidgetEnabled.setChecked(pref->isSpeedWidgetEnabled());
     addRow(ENABLE_SPEED_WIDGET, tr("Enable speed graphs"), &m_checkBoxSpeedWidgetEnabled);
+#ifndef Q_OS_MACOS
+    // Enable icons in menus
+    m_checkBoxIconsInMenusEnabled.setChecked(pref->iconsInMenusEnabled());
+    addRow(ENABLE_ICONS_IN_MENUS, tr("Enable icons in menus"), &m_checkBoxIconsInMenusEnabled);
+#endif
     // Tracker State
     m_checkBoxTrackerStatus.setChecked(session->isTrackerEnabled());
     addRow(TRACKER_STATUS, tr("Enable embedded tracker"), &m_checkBoxTrackerStatus);
@@ -600,11 +743,34 @@ void AdvancedSettings::loadAdvancedSettings()
 
     // Announce to all trackers in a tier
     m_checkBoxAnnounceAllTrackers.setChecked(session->announceToAllTrackers());
-    addRow(ANNOUNCE_ALL_TRACKERS, tr("Always announce to all trackers in a tier"), &m_checkBoxAnnounceAllTrackers);
+    addRow(ANNOUNCE_ALL_TRACKERS, (tr("Always announce to all trackers in a tier")
+        + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#announce_to_all_trackers", "(?)"))
+        , &m_checkBoxAnnounceAllTrackers);
 
     // Announce to all tiers
     m_checkBoxAnnounceAllTiers.setChecked(session->announceToAllTiers());
-    addRow(ANNOUNCE_ALL_TIERS, tr("Always announce to all tiers"), &m_checkBoxAnnounceAllTiers);
+    addRow(ANNOUNCE_ALL_TIERS, (tr("Always announce to all tiers")
+        + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#announce_to_all_tiers", "(?)"))
+        , &m_checkBoxAnnounceAllTiers);
+
+    m_spinBoxPeerTurnover.setMinimum(0);
+    m_spinBoxPeerTurnover.setMaximum(100);
+    m_spinBoxPeerTurnover.setValue(session->peerTurnover());
+    m_spinBoxPeerTurnover.setSuffix(" %");
+    addRow(PEER_TURNOVER, (tr("Peer turnover disconnect percentage") + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#peer_turnover", "(?)"))
+            , &m_spinBoxPeerTurnover);
+    m_spinBoxPeerTurnoverCutoff.setMinimum(0);
+    m_spinBoxPeerTurnoverCutoff.setMaximum(100);
+    m_spinBoxPeerTurnoverCutoff.setSuffix(" %");
+    m_spinBoxPeerTurnoverCutoff.setValue(session->peerTurnoverCutoff());
+    addRow(PEER_TURNOVER_CUTOFF, (tr("Peer turnover threshold percentage") + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#peer_turnover", "(?)"))
+            , &m_spinBoxPeerTurnoverCutoff);
+    m_spinBoxPeerTurnoverInterval.setMinimum(30);
+    m_spinBoxPeerTurnoverInterval.setMaximum(3600);
+    m_spinBoxPeerTurnoverInterval.setSuffix(tr(" s", " seconds"));
+    m_spinBoxPeerTurnoverInterval.setValue(session->peerTurnoverInterval());
+    addRow(PEER_TURNOVER_INTERVAL, (tr("Peer turnover disconnect interval") + ' ' + makeLink("https://www.libtorrent.org/reference-Settings.html#peer_turnover", "(?)"))
+            , &m_spinBoxPeerTurnoverInterval);
 }
 
 template <typename T>
@@ -616,12 +782,12 @@ void AdvancedSettings::addRow(const int row, const QString &text, T *widget)
     setCellWidget(row, PROPERTY, label);
     setCellWidget(row, VALUE, widget);
 
-    if (std::is_same<T, QCheckBox>::value)
-        connect(widget, SIGNAL(stateChanged(int)), this, SIGNAL(settingsChanged()));
-    else if (std::is_same<T, QSpinBox>::value)
-        connect(widget, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
-    else if (std::is_same<T, QComboBox>::value)
-        connect(widget, SIGNAL(currentIndexChanged(int)), this, SIGNAL(settingsChanged()));
-    else if (std::is_same<T, QLineEdit>::value)
-        connect(widget, SIGNAL(textChanged(QString)), this, SIGNAL(settingsChanged()));
+    if constexpr (std::is_same_v<T, QCheckBox>)
+        connect(widget, &QCheckBox::stateChanged, this, &AdvancedSettings::settingsChanged);
+    else if constexpr (std::is_same_v<T, QSpinBox>)
+        connect(widget, qOverload<int>(&QSpinBox::valueChanged), this, &AdvancedSettings::settingsChanged);
+    else if constexpr (std::is_same_v<T, QComboBox>)
+        connect(widget, qOverload<int>(&QComboBox::currentIndexChanged), this, &AdvancedSettings::settingsChanged);
+    else if constexpr (std::is_same_v<T, QLineEdit>)
+        connect(widget, &QLineEdit::textChanged, this, &AdvancedSettings::settingsChanged);
 }

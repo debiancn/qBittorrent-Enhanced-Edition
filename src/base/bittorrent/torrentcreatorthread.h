@@ -26,20 +26,32 @@
  * exception statement from your version.
  */
 
-#ifndef BITTORRENT_TORRENTCREATORTHREAD_H
-#define BITTORRENT_TORRENTCREATORTHREAD_H
+#pragma once
 
 #include <QStringList>
 #include <QThread>
 
 namespace BitTorrent
 {
+#ifdef QBT_USES_LIBTORRENT2
+    enum class TorrentFormat
+    {
+        V1,
+        V2,
+        Hybrid
+    };
+#endif
+
     struct TorrentCreatorParams
     {
         bool isPrivate;
+#ifdef QBT_USES_LIBTORRENT2
+        TorrentFormat torrentFormat;
+#else
         bool isAlignmentOptimized;
-        int pieceSize;
         int paddedFileSizeLimit;
+#endif
+        int pieceSize;
         QString inputPath;
         QString savePath;
         QString comment;
@@ -51,18 +63,20 @@ namespace BitTorrent
     class TorrentCreatorThread final : public QThread
     {
         Q_OBJECT
+        Q_DISABLE_COPY_MOVE(TorrentCreatorThread)
 
     public:
-        TorrentCreatorThread(QObject *parent = nullptr);
-        ~TorrentCreatorThread();
+        explicit TorrentCreatorThread(QObject *parent = nullptr);
+        ~TorrentCreatorThread() override;
 
         void create(const TorrentCreatorParams &params);
 
+#ifdef QBT_USES_LIBTORRENT2
+        static int calculateTotalPieces(const QString &inputPath, const int pieceSize, const TorrentFormat torrentFormat);
+#else
         static int calculateTotalPieces(const QString &inputPath
             , const int pieceSize, const bool isAlignmentOptimized, int paddedFileSizeLimit);
-
-    protected:
-        void run() override;
+#endif
 
     signals:
         void creationFailure(const QString &msg);
@@ -70,10 +84,10 @@ namespace BitTorrent
         void updateProgress(int progress);
 
     private:
+        void run() override;
         void sendProgressSignal(int currentPieceIdx, int totalPieces);
+        void checkInterruptionRequested() const;
 
         TorrentCreatorParams m_params;
     };
 }
-
-#endif // BITTORRENT_TORRENTCREATORTHREAD_H

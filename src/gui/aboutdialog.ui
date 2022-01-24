@@ -78,7 +78,7 @@
      </widget>
      <widget class="QWidget" name="authorTab">
       <attribute name="title">
-       <string>Author</string>
+       <string>Authors</string>
       </attribute>
       <layout class="QVBoxLayout" name="authorTabLayout">
        <item>
@@ -281,6 +281,9 @@
        </property>
        <item>
         <widget class="QTextBrowser" name="textBrowserTranslation">
+         <property name="openExternalLinks">
+          <bool>true</bool>
+         </property>
          <property name="lineWrapMode">
           <enum>QTextEdit::NoWrap</enum>
          </property>

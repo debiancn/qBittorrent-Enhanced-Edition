@@ -43,7 +43,9 @@ window.qBittorrent.PropFiles = (function() {
             createPriorityCombo: createPriorityCombo,
             updatePriorityCombo: updatePriorityCombo,
             updateData: updateData,
-            collapseIconClicked: collapseIconClicked
+            collapseIconClicked: collapseIconClicked,
+            expandFolder: expandFolder,
+            collapseFolder: collapseFolder
         };
     };
 
@@ -343,7 +345,7 @@ window.qBittorrent.PropFiles = (function() {
             // Tab changed, don't do anything
             return;
         }
-        const new_hash = torrentsTable.getCurrentTorrentHash();
+        const new_hash = torrentsTable.getCurrentTorrentID();
         if (new_hash === "") {
             torrentFilesTable.clear();
             clearTimeout(loadTorrentFilesDataTimer);
@@ -422,40 +424,46 @@ window.qBittorrent.PropFiles = (function() {
         const rootNode = new window.qBittorrent.FileTree.FolderNode();
 
         rows.forEach(function(row) {
+            const pathItems = row.fileName.split(window.qBittorrent.Filesystem.PathSeparator);
+
+            pathItems.pop(); // remove last item (i.e. file name)
             let parent = rootNode;
-            const pathFolders = row.fileName.split(window.qBittorrent.Filesystem.PathSeparator);
-            pathFolders.pop();
-            pathFolders.forEach(function(folderName) {
+            pathItems.forEach(function(folderName) {
                 if (folderName === '.unwanted')
                     return;
 
-                let parentNode = null;
+                let folderNode = null;
                 if (parent.children !== null) {
                     for (let i = 0; i < parent.children.length; ++i) {
                         const childFolder = parent.children[i];
                         if (childFolder.name === folderName) {
-                            parentNode = childFolder;
+                            folderNode = childFolder;
                             break;
                         }
                     }
                 }
-                if (parentNode === null) {
-                    parentNode = new window.qBittorrent.FileTree.FolderNode();
-                    parentNode.name = folderName;
-                    parentNode.rowId = rowId;
-                    parentNode.root = parent;
-                    parent.addChild(parentNode);
+
+                if (folderNode === null) {
+                    folderNode = new window.qBittorrent.FileTree.FolderNode();
+                    folderNode.path = (parent.path === "")
+                        ? folderName
+                        : [parent.path, folderName].join(window.qBittorrent.Filesystem.PathSeparator);
+                    folderNode.name = folderName;
+                    folderNode.rowId = rowId;
+                    folderNode.root = parent;
+                    parent.addChild(folderNode);
 
                     ++rowId;
                 }
 
-                parent = parentNode;
+                parent = folderNode;
             });
 
             const isChecked = row.checked ? TriState.Checked : TriState.Unchecked;
             const remaining = (row.priority === FilePriority.Ignored) ? 0 : row.remaining;
             const childNode = new window.qBittorrent.FileTree.FileNode();
             childNode.name = row.name;
+            childNode.path = row.fileName;
             childNode.rowId = rowId;
             childNode.size = row.size;
             childNode.checked = isChecked;
@@ -487,6 +495,20 @@ window.qBittorrent.PropFiles = (function() {
             expandNode(node);
         else
             collapseNode(node);
+    };
+
+    const expandFolder = function(id) {
+        const node = torrentFilesTable.getNode(id);
+        if (node.isFolder) {
+            expandNode(node);
+        }
+    };
+
+    const collapseFolder = function(id) {
+        const node = torrentFilesTable.getNode(id);
+        if (node.isFolder) {
+            collapseNode(node);
+        }
     };
 
     const filesPriorityMenuClicked = function(priority) {
@@ -521,23 +543,22 @@ window.qBittorrent.PropFiles = (function() {
         menu: 'torrentFilesMenu',
         actions: {
             Rename: function(element, ref) {
-                const hash = torrentsTable.getCurrentTorrentHash();
+                const hash = torrentsTable.getCurrentTorrentID();
                 if (!hash) return;
                 const rowId = torrentFilesTable.selectedRowsIds()[0];
                 if (rowId === undefined) return;
                 const row = torrentFilesTable.rows[rowId];
                 if (!row) return;
-                const node = torrentFilesTable.getNode(rowId);
-                if (node.isFolder) return;
 
-                const name = row.full_data.name;
-                const fileId = row.full_data.fileId;
+                const node = torrentFilesTable.getNode(rowId);
+                const path = node.path;
 
                 new MochaUI.Window({
                     id: 'renamePage',
                     title: "QBT_TR(Renaming)QBT_TR[CONTEXT=TorrentContentTreeView]",
                     loadMethod: 'iframe',
-                    contentURL: 'rename_file.html?hash=' + hash + '&id=' + fileId + '&name=' + encodeURIComponent(name),
+                    contentURL: 'rename_file.html?hash=' + hash + '&isFolder=' + node.isFolder
+                        + '&path=' + encodeURIComponent(path),
                     scrollbars: false,
                     resizable: false,
                     maximizable: false,
@@ -570,13 +591,6 @@ window.qBittorrent.PropFiles = (function() {
                 this.hideItem('FilePrio');
             else
                 this.showItem('FilePrio');
-
-            const rowId = torrentFilesTable.selectedRowsIds()[0];
-            const node = torrentFilesTable.getNode(rowId);
-            if (node.isFolder)
-                this.hideItem('Rename');
-            else
-                this.showItem('Rename');
         }
     });
 
@@ -729,3 +743,5 @@ window.qBittorrent.PropFiles = (function() {
 
     return exports();
 })();
+
+Object.freeze(window.qBittorrent.PropFiles);

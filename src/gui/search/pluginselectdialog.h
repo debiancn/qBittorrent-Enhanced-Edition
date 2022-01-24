@@ -27,15 +27,15 @@
  * exception statement from your version.
  */
 
-#ifndef PLUGINSELECTDIALOG_H
-#define PLUGINSELECTDIALOG_H
+#pragma once
 
 #include <QDialog>
+#include <QStringList>
 
 #include "base/search/searchpluginmanager.h"
+#include "base/settingvalue.h"
 
 class QDropEvent;
-class QStringList;
 class QTreeWidgetItem;
 
 namespace Net
@@ -51,7 +51,7 @@ namespace Ui
 class PluginSelectDialog final : public QDialog
 {
     Q_OBJECT
-    Q_DISABLE_COPY(PluginSelectDialog)
+    Q_DISABLE_COPY_MOVE(PluginSelectDialog)
 
 public:
     explicit PluginSelectDialog(SearchPluginManager *pluginManager, QWidget *parent = nullptr);
@@ -92,10 +92,9 @@ private:
     void finishPluginUpdate();
 
     Ui::PluginSelectDialog *m_ui;
+    SettingValue<QSize> m_storeDialogSize;
     SearchPluginManager *m_pluginManager;
     QStringList m_updatedPlugins;
-    int m_asyncOps;
-    int m_pendingUpdates;
+    int m_asyncOps = 0;
+    int m_pendingUpdates = 0;
 };
-
-#endif // PLUGINSELECTDIALOG_H

@@ -27,12 +27,12 @@
  * exception statement from your version.
  */
 
-#ifndef AUTOMATEDRSSDOWNLOADER_H
-#define AUTOMATEDRSSDOWNLOADER_H
+#pragma once
+
+#include <utility>
 
 #include <QDialog>
 #include <QHash>
-#include <QPair>
 #include <QSet>
 
 #include "base/rss/rss_autodownloadrule.h"
@@ -53,6 +53,7 @@ namespace Ui
 class AutomatedRssDownloader : public QDialog
 {
     Q_OBJECT
+    Q_DISABLE_COPY_MOVE(AutomatedRssDownloader)
 
 public:
     explicit AutomatedRssDownloader(QWidget *parent = nullptr);
@@ -61,6 +62,7 @@ public:
 private slots:
     void on_addRuleBtn_clicked();
     void on_removeRuleBtn_clicked();
+    void on_addCategoryBtn_clicked();
     void on_exportBtn_clicked();
     void on_importBtn_clicked();
 
@@ -100,10 +102,8 @@ private:
 
     Ui::AutomatedRssDownloader *m_ui;
     QListWidgetItem *m_currentRuleItem;
-    QSet<QPair<QString, QString>> m_treeListEntries;
+    QSet<std::pair<QString, QString>> m_treeListEntries;
     RSS::AutoDownloadRule m_currentRule;
     QHash<QString, QListWidgetItem *> m_itemsByRuleName;
     QRegularExpression *m_episodeRegex;
 };
-
-#endif // AUTOMATEDRSSDOWNLOADER_H

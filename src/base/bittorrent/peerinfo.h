@@ -26,11 +26,9 @@
  * exception statement from your version.
  */
 
-#ifndef BITTORRENT_PEERINFO_H
-#define BITTORRENT_PEERINFO_H
+#pragma once
 
 #include <libtorrent/peer_info.hpp>
-#include <libtorrent/identify_client.hpp>
 
 #include <QCoreApplication>
 
@@ -38,7 +36,7 @@ class QBitArray;
 
 namespace BitTorrent
 {
-    class TorrentHandle;
+    class Torrent;
     struct PeerAddress;
 
     class PeerInfo
@@ -47,7 +45,7 @@ namespace BitTorrent
 
     public:
         PeerInfo() = default;
-        PeerInfo(const TorrentHandle *torrent, const lt::peer_info &nativeInfo);
+        PeerInfo(const Torrent *torrent, const lt::peer_info &nativeInfo);
 
         bool fromDHT() const;
         bool fromPeX() const;
@@ -79,10 +77,8 @@ namespace BitTorrent
         bool isPlaintextEncrypted() const;
 
         PeerAddress address() const;
-        int port() const;
         QString client() const;
-        QString pid() const;
-        QString pidtoclient() const;
+        QString peerId() const;
         qreal progress() const;
         int payloadUpSpeed() const;
         int payloadDownSpeed() const;
@@ -93,20 +89,18 @@ namespace BitTorrent
         qreal relevance() const;
         QString flags() const;
         QString flagsDescription() const;
-#ifndef DISABLE_COUNTRIES_RESOLUTION
         QString country() const;
-#endif
         int downloadingPieceIndex() const;
 
     private:
-        void calcRelevance(const TorrentHandle *torrent);
+        void calcRelevance(const Torrent *torrent);
         void determineFlags();
 
         lt::peer_info m_nativeInfo = {};
         qreal m_relevance = 0;
         QString m_flags;
         QString m_flagsDescription;
+
+        mutable QString m_country;
     };
 }
-
-#endif // BITTORRENT_PEERINFO_H

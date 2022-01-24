@@ -108,15 +108,7 @@
 
     \sa QFile::QFile()
 */
-QtLockedFile::QtLockedFile()
-    : QFile()
-{
-#ifdef Q_OS_WIN
-    wmutex = 0;
-    rmutex = 0;
-#endif
-    m_lock_mode = NoLock;
-}
+QtLockedFile::QtLockedFile() = default;
 
 /*!
     Constructs an unlocked QtLockedFile object with file \a name. This
@@ -128,11 +120,6 @@ QtLockedFile::QtLockedFile()
 QtLockedFile::QtLockedFile(const QString &name)
     : QFile(name)
 {
-#ifdef Q_OS_WIN
-    wmutex = 0;
-    rmutex = 0;
-#endif
-    m_lock_mode = NoLock;
 }
 
 /*!
@@ -150,7 +137,8 @@ QtLockedFile::QtLockedFile(const QString &name)
 */
 bool QtLockedFile::open(const OpenMode mode)
 {
-    if (mode & QIODevice::Truncate) {
+    if (mode & QIODevice::Truncate)
+    {
         qWarning("QtLockedFile::open(): Truncate mode not allowed.");
         return false;
     }
@@ -165,7 +153,7 @@ bool QtLockedFile::open(const OpenMode mode)
 */
 bool QtLockedFile::isLocked() const
 {
-    return m_lock_mode != NoLock;
+    return m_lockMode != NoLock;
 }
 
 /*!
@@ -176,7 +164,7 @@ bool QtLockedFile::isLocked() const
 */
 QtLockedFile::LockMode QtLockedFile::lockMode() const
 {
-    return m_lock_mode;
+    return m_lockMode;
 }
 
 /*!
@@ -186,8 +174,8 @@ QtLockedFile::LockMode QtLockedFile::lockMode() const
     can be locked.
 
     If \a block is true, this function will block until the lock is
-    aquired. If \a block is false, this function returns \e false
-    immediately if the lock cannot be aquired.
+    acquired. If \a block is false, this function returns \e false
+    immediately if the lock cannot be acquired.
 
     If this object already has a lock of type \a mode, this function
     returns \e true immediately. If this object has a lock of a
