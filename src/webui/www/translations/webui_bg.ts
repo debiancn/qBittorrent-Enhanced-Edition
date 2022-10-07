@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="bg" version="2.1">
+<TS version="2.1" language="bg">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -571,6 +571,10 @@
     <message>
         <source>RSS</source>
         <translation>RSS</translation>
+    </message>
+    <message>
+        <source>Filters Sidebar</source>
+        <translation type="vanished">Странична лента на филтри</translation>
     </message>
 </context>
 <context>
@@ -1477,6 +1481,22 @@
         <source>Server-side request forgery (SSRF) mitigation:</source>
         <translation>Подправяне на заявка от страна на сървъра (SSRF) смекчаване</translation>
     </message>
+    <message>
+        <source>Disk queue size:</source>
+        <translation type="vanished">Размер на опашката на диска:</translation>
+    </message>
+    <message>
+        <source>Log performance warnings</source>
+        <translation type="vanished">Вписвай предупреждения за производителност</translation>
+    </message>
+    <message>
+        <source>Maximum outstanding requests to a single peer:</source>
+        <translation type="vanished">Максимален брой неизпълнени заявки към един участник:</translation>
+    </message>
+    <message>
+        <source>Max active checking torrents:</source>
+        <translation type="vanished">Макс. активни проверки на торент:</translation>
+    </message>
 </context>
 <context>
     <name>PeerListWidget</name>
@@ -1554,7 +1574,7 @@
     </message>
     <message>
         <source>Add peers...</source>
-        <translation type="unfinished" />
+        <translation>Добави участници...</translation>
     </message>
 </context>
 <context>
@@ -2249,8 +2269,12 @@
         <translation>Напредък</translation>
     </message>
     <message>
+        <source>Total Size</source>
+        <translation type="vanished">Общ размер</translation>
+    </message>
+    <message>
         <source>Size</source>
-        <translation>Размер</translation>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -3027,11 +3051,11 @@
     </message>
     <message>
         <source>qBittorrent Mascot</source>
-        <translation type="unfinished" />
+        <translation>qBittorrent Талисман</translation>
     </message>
     <message>
         <source>qBittorrent icon</source>
-        <translation type="unfinished" />
+        <translation>qBittorrent икона</translation>
     </message>
 </context>
 <context>

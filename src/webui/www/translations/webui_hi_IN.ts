@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="hi_IN" version="2.1">
+<TS version="2.1" language="hi_IN">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -1561,7 +1561,7 @@
     <message>
         <source>Normal</source>
         <comment>Normal (priority)</comment>
-        <translation>साधारण</translation>
+        <translation>सामान्य</translation>
     </message>
     <message>
         <source>High</source>
@@ -2249,7 +2249,7 @@
     </message>
     <message>
         <source>Size</source>
-        <translation>आकार</translation>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -3309,7 +3309,7 @@
     </message>
     <message>
         <source>Normal range: &lt;b&gt;1x25-40;&lt;/b&gt; matches episodes 25 through 40 of season one</source>
-        <translation>सामान्य चाप: &lt;b&gt;1x25-40;&lt;/b&gt; सीजन एक के 25 से 40 तक एपिसोडों का मिलान करता है</translation>
+        <translation>सामान्य सीमा: &lt;b&gt;1x25-40;&lt;/b&gt; सीजन एक के 25 से 40 तक एपिसोडों का मिलान करता है</translation>
     </message>
     <message>
         <source>Please type the new rule name</source>

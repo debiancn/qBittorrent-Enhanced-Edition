@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="he" version="2.1">
+<TS version="2.1" language="he">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -47,7 +47,7 @@
     <name>CategoryFilterModel</name>
     <message>
         <source>All</source>
-        <translation>הכל</translation>
+        <translation>הכול</translation>
     </message>
     <message>
         <source>Uncategorized</source>
@@ -412,7 +412,7 @@
     </message>
     <message>
         <source>Resume All</source>
-        <translation>המשך הכל</translation>
+        <translation>המשך הכול</translation>
     </message>
     <message>
         <source>Statistics</source>
@@ -432,7 +432,7 @@
     </message>
     <message>
         <source>Pause All</source>
-        <translation>השהה הכל</translation>
+        <translation>השהה הכול</translation>
     </message>
     <message>
         <source>Add Torrent File...</source>
@@ -570,6 +570,10 @@
     <message>
         <source>RSS</source>
         <translation>RSS</translation>
+    </message>
+    <message>
+        <source>Filters Sidebar</source>
+        <translation type="vanished">סרגל צד של מסננים</translation>
     </message>
 </context>
 <context>
@@ -1476,6 +1480,22 @@
         <source>Server-side request forgery (SSRF) mitigation:</source>
         <translation>שיכוך של זיוף בקשות צד־שרת (SSRF):</translation>
     </message>
+    <message>
+        <source>Disk queue size:</source>
+        <translation type="vanished">גודל תור בדיסק:</translation>
+    </message>
+    <message>
+        <source>Log performance warnings</source>
+        <translation type="vanished">כתוב ביומן אזהרות ביצוע</translation>
+    </message>
+    <message>
+        <source>Maximum outstanding requests to a single peer:</source>
+        <translation type="vanished">בקשות חריגות מרביות אל עמית יחיד:</translation>
+    </message>
+    <message>
+        <source>Max active checking torrents:</source>
+        <translation type="vanished">טורנטים נבדקים פעילים מרביים:</translation>
+    </message>
 </context>
 <context>
     <name>PeerListWidget</name>
@@ -1890,7 +1910,7 @@
     <message>
         <source>All (0)</source>
         <comment>this is for the status filter</comment>
-        <translation>הכל (0)</translation>
+        <translation>הכול (0)</translation>
     </message>
     <message>
         <source>Downloading (0)</source>
@@ -1926,7 +1946,7 @@
     </message>
     <message>
         <source>All (%1)</source>
-        <translation>הכל (%1)</translation>
+        <translation>הכול (%1)</translation>
     </message>
     <message>
         <source>Downloading (%1)</source>
@@ -2248,8 +2268,12 @@
         <translation>התקדמות</translation>
     </message>
     <message>
+        <source>Total Size</source>
+        <translation type="vanished">גודל כולל</translation>
+    </message>
+    <message>
         <source>Size</source>
-        <translation>גודל</translation>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -2516,7 +2540,7 @@
     </message>
     <message>
         <source>Remove All</source>
-        <translation>הסר הכל</translation>
+        <translation>הסר הכול</translation>
     </message>
     <message>
         <source>Name</source>
@@ -2939,7 +2963,7 @@
     <name>TagFilterModel</name>
     <message>
         <source>All</source>
-        <translation>הכל</translation>
+        <translation>הכול</translation>
     </message>
     <message>
         <source>Untagged</source>
@@ -3106,7 +3130,7 @@
     </message>
     <message>
         <source>Update all</source>
-        <translation>עדכן הכל</translation>
+        <translation>עדכן הכול</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -3442,7 +3466,7 @@ Supports the formats: S01E01, 1x1, 2017.12.31 and 31.12.2017 (Date formats also 
     </message>
     <message>
         <source>All (%1)</source>
-        <translation>הכל (%1)</translation>
+        <translation>הכול (%1)</translation>
     </message>
     <message>
         <source>Trackerless (%1)</source>

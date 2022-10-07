@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="sl" version="2.1">
+<TS version="2.1" language="sl">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -305,7 +305,7 @@
     </message>
     <message>
         <source>Free space: %1</source>
-        <translation type="unfinished" />
+        <translation>Nezaseden prostor: %1</translation>
     </message>
     <message>
         <source>Torrent inactivity timer must be greater than 0.</source>
@@ -337,27 +337,27 @@
     </message>
     <message>
         <source>JavaScript Required! You must enable JavaScript for the Web UI to work properly</source>
-        <translation type="unfinished" />
+        <translation>Zahtevan JavaScript! Za uspešno delovanje spletnega uporabniškega vmesnika (Web UI) je potrebno omogočiti JavaScript.</translation>
     </message>
     <message>
         <source>Name cannot be empty</source>
-        <translation type="unfinished" />
+        <translation>Ime ne sme biti prazno</translation>
     </message>
     <message>
         <source>Name is unchanged</source>
-        <translation type="unfinished" />
+        <translation>Ime je nespremenjeno</translation>
     </message>
     <message>
         <source>Failed to update name</source>
-        <translation type="unfinished" />
+        <translation>Imena ni bilo mogoče spremeniti.</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished" />
+        <translation>OK</translation>
     </message>
     <message>
         <source>The port used for incoming connections must be between 0 and 65535.</source>
-        <translation type="unfinished" />
+        <translation>Vrata, uporabljena za dohodne povezave, morajo biti med 0 in 65535.</translation>
     </message>
     <message>
         <source>Original author</source>
@@ -570,6 +570,10 @@
     <message>
         <source>RSS</source>
         <translation>RSS</translation>
+    </message>
+    <message>
+        <source>Filters Sidebar</source>
+        <translation type="vanished">Stranska vrstica s filtri</translation>
     </message>
 </context>
 <context>
@@ -978,7 +982,7 @@
     </message>
     <message>
         <source>Enable Cross-Site Request Forgery (CSRF) protection</source>
-        <translation type="unfinished" />
+        <translation>Omogoči zaščito pred ponarejanjem spletnih zahtev (CSRF)</translation>
     </message>
     <message>
         <source>Delete .torrent files afterwards</source>
@@ -1553,7 +1557,7 @@
     </message>
     <message>
         <source>Add peers...</source>
-        <translation type="unfinished" />
+        <translation>Dodaj soležnike ...</translation>
     </message>
 </context>
 <context>
@@ -1575,7 +1579,7 @@
     </message>
     <message>
         <source>Mixed</source>
-        <translation type="unfinished" />
+        <translation>Mešano</translation>
     </message>
     <message>
         <source>Do not download</source>
@@ -1762,11 +1766,11 @@
     </message>
     <message>
         <source>Info Hash v2:</source>
-        <translation type="unfinished" />
+        <translation>Razpršilo v2:</translation>
     </message>
     <message>
         <source>Info Hash v1:</source>
-        <translation type="unfinished" />
+        <translation>Razpršilo v1:</translation>
     </message>
     <message>
         <source>N/A</source>
@@ -1797,7 +1801,7 @@
     </message>
     <message>
         <source>Other...</source>
-        <translation type="unfinished" />
+        <translation>Drugo...</translation>
     </message>
     <message>
         <source>Type folder here</source>
@@ -2480,7 +2484,7 @@
     </message>
     <message>
         <source>New name</source>
-        <translation type="unfinished" />
+        <translation>Novo ime:</translation>
     </message>
     <message>
         <source>Set location</source>
@@ -3018,7 +3022,7 @@
     </message>
     <message>
         <source>Authors</source>
-        <translation type="unfinished" />
+        <translation>Avtorji</translation>
     </message>
     <message>
         <source>France</source>

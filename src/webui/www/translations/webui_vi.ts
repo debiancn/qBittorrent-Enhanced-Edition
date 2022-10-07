@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="vi" version="2.1">
+<TS version="2.1" language="vi">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -129,11 +129,11 @@
     </message>
     <message>
         <source>Maximum number of connections limit must be greater than 0 or disabled.</source>
-        <translation>Giới hạn số lượng tối đa các kết nối phải lớn hơn 0 nếu không sẽ bị vô hiệu hóa.</translation>
+        <translation>Giới hạn số lượng kết nối tối đa phải lớn hơn 0 hoặc bị tắt.</translation>
     </message>
     <message>
         <source>Maximum number of connections per torrent limit must be greater than 0 or disabled.</source>
-        <translation>Số lượng kết nối tối đa cho mỗi giới hạn torrent phải lớn hơn 0 hoặc bị vô hiệu hóa.</translation>
+        <translation>Số lượng kết nối tối đa cho mỗi giới hạn torrent phải lớn hơn 0 hoặc bị tắt.</translation>
     </message>
     <message>
         <source>Maximum number of upload slots per torrent limit must be greater than 0 or disabled.</source>
@@ -198,7 +198,7 @@
     </message>
     <message>
         <source>Cookie:</source>
-        <translation type="unfinished" />
+        <translation>Cookie:</translation>
     </message>
     <message>
         <source>More information</source>
@@ -273,7 +273,7 @@
     </message>
     <message>
         <source>Are you sure you want to delete the selected torrents from the transfer list?</source>
-        <translation>Bạn có chắc chắn muốn xóa các torrent đã chọn khỏi danh sách chuyển không?</translation>
+        <translation>Bạn có chắc muốn xóa các torrent đã chọn khỏi danh sách trao đổi không?</translation>
     </message>
     <message>
         <source>Save</source>
@@ -357,7 +357,7 @@
     </message>
     <message>
         <source>The port used for incoming connections must be between 0 and 65535.</source>
-        <translation>Cổng được dùng cho các kết nối đến phải nằm trong khoảng từ 0 đến 65535.</translation>
+        <translation>Cổng dùng cho các kết nối đến nằm trong khoảng từ 0 đến 65535.</translation>
     </message>
     <message>
         <source>Original author</source>
@@ -404,7 +404,7 @@
     </message>
     <message>
         <source>Speed in Title Bar</source>
-        <translation>Tốc độ trên thanh tiêu đề</translation>
+        <translation>Tốc Độ Trên Thanh Tiêu Đề</translation>
     </message>
     <message>
         <source>Donate!</source>
@@ -464,7 +464,7 @@
     </message>
     <message>
         <source>Are you sure you want to quit qBittorrent?</source>
-        <translation>Bạn có chắc chắn muốn thoát khỏi qBittorrent không?</translation>
+        <translation>Bạn có chắc muốn thoát qBittorrent không?</translation>
     </message>
     <message>
         <source>[D: %1, U: %2] qBittorrent %3</source>
@@ -570,6 +570,10 @@
     <message>
         <source>RSS</source>
         <translation>RSS</translation>
+    </message>
+    <message>
+        <source>Filters Sidebar</source>
+        <translation type="vanished">Bộ Lọc Thanh Bên</translation>
     </message>
 </context>
 <context>
@@ -1250,7 +1254,7 @@
     </message>
     <message>
         <source>Upload slots behavior:</source>
-        <translation>Tải lên hành vi vị trí:</translation>
+        <translation>Hành vi các lượt tải lên:</translation>
     </message>
     <message>
         <source>MiB</source>
@@ -1366,7 +1370,7 @@
     </message>
     <message>
         <source>Max concurrent HTTP announces (requires libtorrent &gt;= 1.2.7):</source>
-        <translation>Thông báo HTTP đồng thời tối đa (yêu cầu libtorrent&gt; = 1.2.7):</translation>
+        <translation>Thông báo HTTP đồng thời tối đa (yêu cầu libtorrent &gt;= 1.2.7):</translation>
     </message>
     <message>
         <source> min</source>
@@ -1382,7 +1386,7 @@
     </message>
     <message>
         <source>Disallow connection to peers on privileged ports:</source>
-        <translation>Không cho phép kết nối ngang hàng trên các cổng đặc quyền:</translation>
+        <translation>Cấm kết nối ngang hàng trên các cổng đặc quyền:</translation>
     </message>
     <message>
         <source>Enable auto downloading of RSS torrents</source>
@@ -1442,7 +1446,7 @@
     </message>
     <message>
         <source>%K: Torrent ID</source>
-        <translation type="unfinished" />
+        <translation>%K: ID Torrent </translation>
     </message>
     <message>
         <source>Reannounce to all trackers when IP or port changed:</source>
@@ -1475,6 +1479,18 @@
     <message>
         <source>Server-side request forgery (SSRF) mitigation:</source>
         <translation>Giảm thiểu giả mạo yêu cầu phía máy chủ (SSRF):</translation>
+    </message>
+    <message>
+        <source>Disk queue size:</source>
+        <translation type="vanished">Kích thước hàng đợi đĩa:</translation>
+    </message>
+    <message>
+        <source>Log performance warnings</source>
+        <translation type="vanished">Ghi nhật ký cảnh báo hiệu suất</translation>
+    </message>
+    <message>
+        <source>Maximum outstanding requests to a single peer:</source>
+        <translation type="vanished">Số lượng yêu cầu tồn đọng tối đa tới một máy ngang hàng:</translation>
     </message>
 </context>
 <context>
@@ -1553,7 +1569,7 @@
     </message>
     <message>
         <source>Add peers...</source>
-        <translation type="unfinished" />
+        <translation>Thêm máy ngang hàng...</translation>
     </message>
 </context>
 <context>
@@ -1698,7 +1714,7 @@
     </message>
     <message>
         <source>Completed On:</source>
-        <translation>Hoàn Thành Lúc:</translation>
+        <translation>Đã Xong Lúc:</translation>
     </message>
     <message>
         <source>Created On:</source>
@@ -2064,7 +2080,7 @@
     <message>
         <source>Completed On</source>
         <comment>Torrent was completed on 01/01/2010 08:00</comment>
-        <translation>Hoàn Thành Lúc</translation>
+        <translation>Đã Xong Lúc</translation>
     </message>
     <message>
         <source>Tracker</source>
@@ -2205,7 +2221,7 @@
     </message>
     <message>
         <source>Add a new tracker...</source>
-        <translation>Thêm trình máy dõi mới...</translation>
+        <translation>Thêm máy theo dõi mới...</translation>
     </message>
     <message>
         <source>Edit tracker URL...</source>
@@ -2248,8 +2264,12 @@
         <translation>Tiến độ</translation>
     </message>
     <message>
+        <source>Total Size</source>
+        <translation type="vanished">Tổng Kích Thước</translation>
+    </message>
+    <message>
         <source>Size</source>
-        <translation>Kích cỡ</translation>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -2585,7 +2605,7 @@
     </message>
     <message>
         <source>Also delete the files on the hard disk</source>
-        <translation>Đồng thời xóa các tập tin trên ổ đĩa</translation>
+        <translation>Đồng thời xóa tệp trên ổ đĩa</translation>
     </message>
     <message>
         <source>Deletion confirmation - qBittorrent</source>
@@ -2676,7 +2696,7 @@
     </message>
     <message>
         <source>%1y %2d</source>
-        <translation type="unfinished" />
+        <translation>%1năm %2ngày</translation>
     </message>
 </context>
 <context>
@@ -2854,7 +2874,7 @@
     </message>
     <message>
         <source>Url</source>
-        <translation type="unfinished" />
+        <translation>Url</translation>
     </message>
     <message>
         <source>Enabled</source>
@@ -2982,7 +3002,7 @@
     </message>
     <message>
         <source>An advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar.</source>
-        <translation>Một ứng dụng khách BitTorrent nâng cao được lập trình bằng C ++, dựa trên bộ công cụ Qt và libtorrent-rasterbar.</translation>
+        <translation>Một ứng dụng khách BitTorrent nâng cao được lập trình bằng C++, dựa trên bộ công cụ Qt và libtorrent-rasterbar.</translation>
     </message>
     <message>
         <source>Name:</source>
@@ -3026,11 +3046,11 @@
     </message>
     <message>
         <source>qBittorrent Mascot</source>
-        <translation type="unfinished" />
+        <translation>Linh Vật qBittorrent</translation>
     </message>
     <message>
         <source>qBittorrent icon</source>
-        <translation type="unfinished" />
+        <translation>biểu tượng qBittorrent</translation>
     </message>
 </context>
 <context>
@@ -3273,7 +3293,7 @@
     </message>
     <message>
         <source>Are you sure you want to clear the list of downloaded episodes for the selected rule?</source>
-        <translation>Bạn có chắc chắn muốn xóa danh sách các tập đã tải xuống cho quy tắc đã chọn không?</translation>
+        <translation>Bạn có chắc muốn xóa danh sách các tập đã tải xuống cho quy tắc đã chọn không?</translation>
     </message>
     <message>
         <source>Must Contain:</source>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="lt" version="2.1">
+<TS version="2.1" language="lt">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -2249,7 +2249,7 @@
     </message>
     <message>
         <source>Size</source>
-        <translation>Dydis</translation>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>

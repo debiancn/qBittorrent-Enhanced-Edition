@@ -113,9 +113,9 @@ namespace
     {
         QPixmap pixmapForExtension(const QString &ext) const override
         {
-            const QString extWithDot = QLatin1Char('.') + ext;
+            const std::wstring extWStr = QString(QLatin1Char('.') + ext).toStdWString();
             SHFILEINFO sfi {};
-            HRESULT hr = ::SHGetFileInfoW(extWithDot.toStdWString().c_str(),
+            HRESULT hr = ::SHGetFileInfoW(extWStr.c_str(),
                 FILE_ATTRIBUTE_NORMAL, &sfi, sizeof(sfi), SHGFI_ICON | SHGFI_USEFILEATTRIBUTES);
             if (FAILED(hr))
                 return {};
@@ -313,7 +313,16 @@ bool TorrentContentModel::setData(const QModelIndex &index, const QVariant &valu
             item->setName(value.toString());
             break;
         case TorrentContentModelItem::COL_PRIO:
-            item->setPriority(static_cast<BitTorrent::DownloadPriority>(value.toInt()));
+            {
+                const BitTorrent::DownloadPriority previousPrio = item->priority();
+                const auto newPrio = static_cast<BitTorrent::DownloadPriority>(value.toInt());
+                item->setPriority(newPrio);
+                if ((newPrio != previousPrio) && ((newPrio == BitTorrent::DownloadPriority::Ignored)
+                        || (previousPrio == BitTorrent::DownloadPriority::Ignored)))
+                {
+                    emit filteredFilesChanged();
+                }
+            }
             break;
         default:
             return false;

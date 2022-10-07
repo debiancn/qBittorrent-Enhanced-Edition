@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="nb" version="2.1">
+<TS version="2.1" language="nb">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -570,6 +570,10 @@
     <message>
         <source>RSS</source>
         <translation>RSS</translation>
+    </message>
+    <message>
+        <source>Filters Sidebar</source>
+        <translation type="vanished">Sidestolpe med filter</translation>
     </message>
 </context>
 <context>
@@ -1476,6 +1480,22 @@
         <source>Server-side request forgery (SSRF) mitigation:</source>
         <translation>Forebygging av forfalskede forespørsler på tjenersiden (SSRF):</translation>
     </message>
+    <message>
+        <source>Disk queue size:</source>
+        <translation type="vanished">Køstørrelse på disk:</translation>
+    </message>
+    <message>
+        <source>Log performance warnings</source>
+        <translation type="vanished">Varsel om logg-ytelse</translation>
+    </message>
+    <message>
+        <source>Maximum outstanding requests to a single peer:</source>
+        <translation type="vanished">Største antall utestående forespørsler hos én likemann:</translation>
+    </message>
+    <message>
+        <source>Max active checking torrents:</source>
+        <translation type="vanished">Største antall aktive kontroller av torrenter:</translation>
+    </message>
 </context>
 <context>
     <name>PeerListWidget</name>
@@ -1553,7 +1573,7 @@
     </message>
     <message>
         <source>Add peers...</source>
-        <translation type="unfinished" />
+        <translation>Legg til likemenn …</translation>
     </message>
 </context>
 <context>
@@ -2248,8 +2268,12 @@
         <translation>Framdrift</translation>
     </message>
     <message>
+        <source>Total Size</source>
+        <translation type="vanished">Total størrelse</translation>
+    </message>
+    <message>
         <source>Size</source>
-        <translation>Størrelse</translation>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -3026,11 +3050,11 @@
     </message>
     <message>
         <source>qBittorrent Mascot</source>
-        <translation type="unfinished" />
+        <translation>qBittorrent-maskot</translation>
     </message>
     <message>
         <source>qBittorrent icon</source>
-        <translation type="unfinished" />
+        <translation>qBittorrent-ikon</translation>
     </message>
 </context>
 <context>

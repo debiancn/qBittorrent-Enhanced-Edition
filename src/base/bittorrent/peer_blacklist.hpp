@@ -14,7 +14,7 @@
 // bad peer filter
 bool is_bad_peer(const lt::peer_info& info)
 {
-  std::regex id_filter("-(XL|SD|XF|QD|BN|DL)(\\d+)-");
+  std::regex id_filter("-(XL|SD|XF|QD|BN|DL|TS)(\\d+)-");
   std::regex ua_filter(R"((\d+.\d+.\d+.\d+|cacao_torrent))");
   return std::regex_match(info.pid.data(), info.pid.data() + 8, id_filter) || std::regex_match(info.client, ua_filter);
 }
@@ -37,7 +37,10 @@ bool is_offline_downloader(const lt::peer_info& info)
 // BitTorrent Media Player Peer filter
 bool is_bittorrent_media_player(const lt::peer_info& info)
 {
-  std::regex player_filter("-(UW\\w{4})-");
+  if (info.client.find("StellarPlayer") != std::string::npos) {
+    return true;
+  }
+  std::regex player_filter("-(UW\\w{4}|SP(([0-2]\\d{3})|(3[0-5]\\d{2})))-");
   return !!std::regex_match(info.pid.data(), info.pid.data() + 8, player_filter);
 }
 

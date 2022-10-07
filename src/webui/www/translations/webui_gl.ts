@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="gl" version="2.1">
+<TS version="2.1" language="gl">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -1554,7 +1554,7 @@ Non use caracteres especiais no nome da categoría.</translation>
     </message>
     <message>
         <source>Add peers...</source>
-        <translation type="unfinished" />
+        <translation>Engadir pares...</translation>
     </message>
 </context>
 <context>
@@ -2250,7 +2250,7 @@ Non use caracteres especiais no nome da categoría.</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation>Tamaño</translation>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>

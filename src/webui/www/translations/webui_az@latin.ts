@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="az@latin" version="2.1">
+<TS version="2.1" language="az@latin">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -570,6 +570,10 @@
     <message>
         <source>RSS</source>
         <translation>RSS</translation>
+    </message>
+    <message>
+        <source>Filters Sidebar</source>
+        <translation type="vanished">Filtrlər yan paneli</translation>
     </message>
 </context>
 <context>
@@ -1476,6 +1480,22 @@
         <source>Server-side request forgery (SSRF) mitigation:</source>
         <translation>Server tərəfindən saxta sorğulardan (SSRF) qorunma:</translation>
     </message>
+    <message>
+        <source>Disk queue size:</source>
+        <translation type="vanished">Disk növbəsi ölçüsü:</translation>
+    </message>
+    <message>
+        <source>Log performance warnings</source>
+        <translation type="vanished">Performans xəbərdarlıqlarını qeydə alamaq</translation>
+    </message>
+    <message>
+        <source>Maximum outstanding requests to a single peer:</source>
+        <translation type="vanished">Hər iştirakçıya düşən ən çox icra olunmamış sorğu:</translation>
+    </message>
+    <message>
+        <source>Max active checking torrents:</source>
+        <translation type="vanished">Ən çox aktiv torrent yoxlaması:</translation>
+    </message>
 </context>
 <context>
     <name>PeerListWidget</name>
@@ -2248,8 +2268,12 @@
         <translation>Gedişat</translation>
     </message>
     <message>
+        <source>Total Size</source>
+        <translation type="vanished">Ümumi ölçü</translation>
+    </message>
+    <message>
         <source>Size</source>
-        <translation>Ölçü</translation>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>

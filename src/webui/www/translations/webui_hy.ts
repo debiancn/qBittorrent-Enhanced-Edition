@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="hy" version="2.1">
+<TS version="2.1" language="hy">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -2164,10 +2164,6 @@
         <translation>Հաղորդագրություն</translation>
     </message>
     <message>
-        <source>Downloaded</source>
-        <translation type="unfinished" />
-    </message>
-    <message>
         <source>Tracker URL:</source>
         <translation type="unfinished" />
     </message>
@@ -2249,6 +2245,10 @@
     </message>
     <message>
         <source>Size</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Downloaded</source>
         <translation type="unfinished" />
     </message>
 </context>

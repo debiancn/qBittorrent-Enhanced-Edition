@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="pl" version="2.1">
+<TS version="2.1" language="pl">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -570,6 +570,10 @@
     <message>
         <source>RSS</source>
         <translation>RSS</translation>
+    </message>
+    <message>
+        <source>Filters Sidebar</source>
+        <translation type="vanished">Pasek boczny filtrów</translation>
     </message>
 </context>
 <context>
@@ -1476,6 +1480,22 @@
         <source>Server-side request forgery (SSRF) mitigation:</source>
         <translation>Zapobieganie fałszowaniu żądań po stronie serwera (SSRF):</translation>
     </message>
+    <message>
+        <source>Disk queue size:</source>
+        <translation type="vanished">Rozmiar kolejki dysku:</translation>
+    </message>
+    <message>
+        <source>Log performance warnings</source>
+        <translation type="vanished">Rejestruj ostrzeżenia dotyczące wydajności</translation>
+    </message>
+    <message>
+        <source>Maximum outstanding requests to a single peer:</source>
+        <translation type="vanished">Maksymalne zaległe żądania do pojedynczego partnera:</translation>
+    </message>
+    <message>
+        <source>Max active checking torrents:</source>
+        <translation type="vanished">Maksimum aktywnego sprawdzania torrentów:</translation>
+    </message>
 </context>
 <context>
     <name>PeerListWidget</name>
@@ -2248,8 +2268,12 @@
         <translation>Postęp</translation>
     </message>
     <message>
+        <source>Total Size</source>
+        <translation type="vanished">Całkowity rozmiar</translation>
+    </message>
+    <message>
         <source>Size</source>
-        <translation>Rozmiar</translation>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>

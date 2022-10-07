@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="zh" version="2.1">
+<TS version="2.1" language="zh">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -570,6 +570,10 @@
     <message>
         <source>RSS</source>
         <translation>RSS</translation>
+    </message>
+    <message>
+        <source>Filters Sidebar</source>
+        <translation type="vanished">筛选器侧边栏</translation>
     </message>
 </context>
 <context>
@@ -1476,6 +1480,22 @@
         <source>Server-side request forgery (SSRF) mitigation:</source>
         <translation>服务器端请求伪造（SSRF）攻击缓解：</translation>
     </message>
+    <message>
+        <source>Disk queue size:</source>
+        <translation type="vanished">磁盘队列大小：</translation>
+    </message>
+    <message>
+        <source>Log performance warnings</source>
+        <translation type="vanished">记录性能警报</translation>
+    </message>
+    <message>
+        <source>Maximum outstanding requests to a single peer:</source>
+        <translation type="vanished">单一 peer 的最大未完成请求：</translation>
+    </message>
+    <message>
+        <source>Max active checking torrents:</source>
+        <translation type="vanished">最大活跃检查种子数：</translation>
+    </message>
 </context>
 <context>
     <name>PeerListWidget</name>
@@ -2248,8 +2268,12 @@
         <translation>进度</translation>
     </message>
     <message>
+        <source>Total Size</source>
+        <translation type="vanished">总大小</translation>
+    </message>
+    <message>
         <source>Size</source>
-        <translation>大小</translation>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>

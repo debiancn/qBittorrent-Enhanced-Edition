@@ -2164,10 +2164,6 @@
         <translation type="unfinished" />
     </message>
     <message>
-        <source>Downloaded</source>
-        <translation type="unfinished" />
-    </message>
-    <message>
         <source>Tracker URL:</source>
         <translation type="unfinished" />
     </message>
@@ -2249,6 +2245,10 @@
     </message>
     <message>
         <source>Size</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Downloaded</source>
         <translation type="unfinished" />
     </message>
 </context>

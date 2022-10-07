@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="lv_LV" version="2.1">
+<TS version="2.1" language="lv_LV">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -570,6 +570,10 @@
     <message>
         <source>RSS</source>
         <translation>RSS</translation>
+    </message>
+    <message>
+        <source>Filters Sidebar</source>
+        <translation type="vanished">Filtru sāna josla</translation>
     </message>
 </context>
 <context>
@@ -1476,6 +1480,14 @@
         <source>Server-side request forgery (SSRF) mitigation:</source>
         <translation>Servera puses pieprasījumu viltošanas (SSRF) aizsardzība:</translation>
     </message>
+    <message>
+        <source>Log performance warnings</source>
+        <translation type="vanished">Reģistrēt darbības brīdinājumus</translation>
+    </message>
+    <message>
+        <source>Max active checking torrents:</source>
+        <translation type="vanished">Atļautais aktīvo pārbaužu skaits:</translation>
+    </message>
 </context>
 <context>
     <name>PeerListWidget</name>
@@ -1553,7 +1565,7 @@
     </message>
     <message>
         <source>Add peers...</source>
-        <translation type="unfinished" />
+        <translation>Pievienot koplietotājus...</translation>
     </message>
 </context>
 <context>
@@ -2248,8 +2260,12 @@
         <translation>Progress</translation>
     </message>
     <message>
+        <source>Total Size</source>
+        <translation type="vanished">Kopējais izmērs</translation>
+    </message>
+    <message>
         <source>Size</source>
-        <translation>Izmērs</translation>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -3026,11 +3042,11 @@
     </message>
     <message>
         <source>qBittorrent Mascot</source>
-        <translation type="unfinished" />
+        <translation>qBittorrent talismans</translation>
     </message>
     <message>
         <source>qBittorrent icon</source>
-        <translation type="unfinished" />
+        <translation>qBittorrent ikona</translation>
     </message>
 </context>
 <context>

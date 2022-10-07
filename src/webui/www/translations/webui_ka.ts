@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="ka" version="2.1">
+<TS version="2.1" language="ka">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -2249,7 +2249,7 @@
     </message>
     <message>
         <source>Size</source>
-        <translation>ზომა</translation>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -2982,7 +2982,7 @@
     </message>
     <message>
         <source>An advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar.</source>
-        <translation type="unfinished" />
+        <translation>Qt toolkit-სა და libtorrent-rasterbar-ზე დაფუძნებული, C++-ში დაპროგრამებული მოწინავე BitTorrent კლიენტი.</translation>
     </message>
     <message>
         <source>Name:</source>
@@ -3018,7 +3018,7 @@
     </message>
     <message>
         <source>Authors</source>
-        <translation type="unfinished" />
+        <translation>ავტორები</translation>
     </message>
     <message>
         <source>France</source>

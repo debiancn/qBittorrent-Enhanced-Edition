@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="el" version="2.1">
+<TS version="2.1" language="el">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -570,6 +570,10 @@
     <message>
         <source>RSS</source>
         <translation>RSS</translation>
+    </message>
+    <message>
+        <source>Filters Sidebar</source>
+        <translation type="vanished">Πλαϊνή γραμμή φίλτρων</translation>
     </message>
 </context>
 <context>
@@ -1476,6 +1480,22 @@
         <source>Server-side request forgery (SSRF) mitigation:</source>
         <translation>Μετριασμός Server-side request forgery (SSRF):</translation>
     </message>
+    <message>
+        <source>Disk queue size:</source>
+        <translation type="vanished">Μέγεθος ουράς δίσκου:</translation>
+    </message>
+    <message>
+        <source>Log performance warnings</source>
+        <translation type="vanished">Προειδοποιήσεις απόδοσης καταγραφής</translation>
+    </message>
+    <message>
+        <source>Maximum outstanding requests to a single peer:</source>
+        <translation type="vanished">Μέγιστα εκκρεμή αιτήματα σε μοναδικό peer:</translation>
+    </message>
+    <message>
+        <source>Max active checking torrents:</source>
+        <translation type="vanished">Μέγιστος ενεργός έλεγχος torrents:</translation>
+    </message>
 </context>
 <context>
     <name>PeerListWidget</name>
@@ -2248,8 +2268,12 @@
         <translation>Πρόοδος</translation>
     </message>
     <message>
+        <source>Total Size</source>
+        <translation type="vanished">Συνολικό Μέγεθος</translation>
+    </message>
+    <message>
         <source>Size</source>
-        <translation>Μέγεθος</translation>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>

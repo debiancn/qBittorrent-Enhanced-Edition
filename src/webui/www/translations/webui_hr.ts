@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="hr" version="2.1">
+<TS version="2.1" language="hr">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -28,11 +28,11 @@
     </message>
     <message>
         <source>Content layout:</source>
-        <translation type="unfinished" />
+        <translation>Izgled sadržaja:</translation>
     </message>
     <message>
         <source>Original</source>
-        <translation type="unfinished" />
+        <translation>Original</translation>
     </message>
     <message>
         <source>Create subfolder</source>
@@ -40,7 +40,7 @@
     </message>
     <message>
         <source>Don't create subfolder</source>
-        <translation type="unfinished" />
+        <translation>Ne stvaraj podmapu</translation>
     </message>
 </context>
 <context>
@@ -169,7 +169,7 @@
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished" />
+        <translation>Korisničko ime</translation>
     </message>
     <message>
         <source>Password</source>
@@ -580,7 +580,7 @@
     </message>
     <message>
         <source>Downloads</source>
-        <translation type="unfinished" />
+        <translation>Preuzimanja</translation>
     </message>
     <message>
         <source>Connection</source>
@@ -600,11 +600,11 @@
     </message>
     <message>
         <source>Language</source>
-        <translation type="unfinished" />
+        <translation>Jezik</translation>
     </message>
     <message>
         <source>User Interface Language:</source>
-        <translation type="unfinished" />
+        <translation>Jezik korisničkog sučelja:</translation>
     </message>
     <message>
         <source>Email notification upon download completion</source>
@@ -616,7 +616,7 @@
     </message>
     <message>
         <source>IP Filtering</source>
-        <translation type="unfinished" />
+        <translation>IP filtriranje</translation>
     </message>
     <message>
         <source>Schedule the use of alternative rate limits</source>
@@ -800,7 +800,7 @@
     </message>
     <message>
         <source>Download:</source>
-        <translation type="unfinished" />
+        <translation>Preuzimanje:</translation>
     </message>
     <message>
         <source>Alternative Rate Limits</source>
@@ -1579,7 +1579,7 @@
     </message>
     <message>
         <source>Do not download</source>
-        <translation type="unfinished" />
+        <translation>Ne preuzimaj</translation>
     </message>
 </context>
 <context>
@@ -2165,7 +2165,7 @@
     </message>
     <message>
         <source>Downloaded</source>
-        <translation type="unfinished" />
+        <translation>Preuzeto</translation>
     </message>
     <message>
         <source>Tracker URL:</source>
@@ -2950,7 +2950,7 @@
     <name>AboutDialog</name>
     <message>
         <source>Bug Tracker:</source>
-        <translation type="unfinished" />
+        <translation>Praćenje grešaka:</translation>
     </message>
     <message>
         <source>About</source>
@@ -2958,7 +2958,7 @@
     </message>
     <message>
         <source>Forum:</source>
-        <translation type="unfinished" />
+        <translation>Forum:</translation>
     </message>
     <message>
         <source>E-mail:</source>
@@ -2970,7 +2970,7 @@
     </message>
     <message>
         <source>Home Page:</source>
-        <translation type="unfinished" />
+        <translation>Početna stranica:</translation>
     </message>
     <message>
         <source>Greece</source>
@@ -2982,7 +2982,7 @@
     </message>
     <message>
         <source>An advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar.</source>
-        <translation type="unfinished" />
+        <translation>Napredni BitTorrent klijent programiran u C++, baziran na Qt alatima i libtorrent-rasterbaru.</translation>
     </message>
     <message>
         <source>Name:</source>
@@ -3002,7 +3002,7 @@
     </message>
     <message>
         <source>qBittorrent was built with the following libraries:</source>
-        <translation type="unfinished" />
+        <translation>qBittorrent je napravljen pomoću sljedećh biblioteka:</translation>
     </message>
     <message>
         <source>Nationality:</source>
@@ -3014,11 +3014,11 @@
     </message>
     <message>
         <source>The free IP to Country Lite database by DB-IP is used for resolving the countries of peers. The database is licensed under the Creative Commons Attribution 4.0 International License</source>
-        <translation type="unfinished" />
+        <translation>Besplatna baza podataka IP to Country Lite od strane DB-IP-a koristi se za razrješavanje zemalja peerova. Baza podataka je licencirana pod međunarodnom licencom Creative Commons Attribution 4.0</translation>
     </message>
     <message>
         <source>Authors</source>
-        <translation type="unfinished" />
+        <translation>Autori</translation>
     </message>
     <message>
         <source>France</source>
@@ -3056,7 +3056,7 @@
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished" />
+        <translation>Preuzimanje</translation>
     </message>
     <message>
         <source>Name</source>
@@ -3072,7 +3072,7 @@
     </message>
     <message>
         <source>Download link</source>
-        <translation type="unfinished" />
+        <translation>Link preuzimanja</translation>
     </message>
 </context>
 <context>
@@ -3182,7 +3182,7 @@
     </message>
     <message>
         <source>Download torrent</source>
-        <translation type="unfinished" />
+        <translation>Preuzimanje torrenta</translation>
     </message>
 </context>
 <context>

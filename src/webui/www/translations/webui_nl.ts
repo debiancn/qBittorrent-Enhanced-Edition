@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="nl" version="2.1">
+<TS version="2.1" language="nl">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -570,6 +570,10 @@
     <message>
         <source>RSS</source>
         <translation>RSS</translation>
+    </message>
+    <message>
+        <source>Filters Sidebar</source>
+        <translation type="vanished">Filter-zijbalk</translation>
     </message>
 </context>
 <context>
@@ -1476,6 +1480,22 @@
         <source>Server-side request forgery (SSRF) mitigation:</source>
         <translation>Beperking van verzoekvervalsing aan de serverzijde (SSRF):</translation>
     </message>
+    <message>
+        <source>Disk queue size:</source>
+        <translation type="vanished">Grootte van wachtrij op schijf:</translation>
+    </message>
+    <message>
+        <source>Log performance warnings</source>
+        <translation type="vanished">Prestatiewaarschuwingen loggen</translation>
+    </message>
+    <message>
+        <source>Maximum outstanding requests to a single peer:</source>
+        <translation type="vanished">Maximum aantal openstaande verzoeken aan een enkele peer:</translation>
+    </message>
+    <message>
+        <source>Max active checking torrents:</source>
+        <translation type="vanished">Maximum aantal actieve controlerende torrents:</translation>
+    </message>
 </context>
 <context>
     <name>PeerListWidget</name>
@@ -2248,8 +2268,12 @@
         <translation>Voortgang</translation>
     </message>
     <message>
+        <source>Total Size</source>
+        <translation type="vanished">Totale grootte</translation>
+    </message>
+    <message>
         <source>Size</source>
-        <translation>Grootte</translation>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>

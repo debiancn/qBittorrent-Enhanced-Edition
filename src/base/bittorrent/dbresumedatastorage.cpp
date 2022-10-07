@@ -43,6 +43,7 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QSqlRecord>
 #include <QThread>
 #include <QVector>
 
@@ -206,7 +207,7 @@ BitTorrent::DBResumeDataStorage::DBResumeDataStorage(const QString &dbPath, QObj
     else
     {
         const int dbVersion = currentDBVersion();
-        if (dbVersion == 1)
+        if ((dbVersion == 1) || !db.record(DB_TABLE_TORRENTS).contains(DB_COLUMN_DOWNLOAD_PATH.name))
             updateDBFromVersion1();
     }
 
@@ -325,9 +326,6 @@ std::optional<BitTorrent::LoadTorrentParams> BitTorrent::DBResumeDataStorage::lo
     lt::error_code ec;
     const lt::bdecode_node root = lt::bdecode(allData, ec);
 
-    resumeData.downloadPath = Profile::instance()->fromPortablePath(
-                Utils::Fs::toUniformPath(fromLTString(root.dict_find_string_value("qBt-downloadPath"))));
-
     lt::add_torrent_params &p = resumeData.ltAddTorrentParams;
 
     p = lt::read_resume_data(root, ec);
@@ -425,6 +423,7 @@ void BitTorrent::DBResumeDataStorage::createDB() const
             makeColumnDefinition(DB_COLUMN_CATEGORY, "TEXT"),
             makeColumnDefinition(DB_COLUMN_TAGS, "TEXT"),
             makeColumnDefinition(DB_COLUMN_TARGET_SAVE_PATH, "TEXT"),
+            makeColumnDefinition(DB_COLUMN_DOWNLOAD_PATH, "TEXT"),
             makeColumnDefinition(DB_COLUMN_CONTENT_LAYOUT, "TEXT NOT NULL"),
             makeColumnDefinition(DB_COLUMN_RATIO_LIMIT, "INTEGER NOT NULL"),
             makeColumnDefinition(DB_COLUMN_SEEDING_TIME_LIMIT, "INTEGER NOT NULL"),

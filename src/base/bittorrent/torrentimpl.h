@@ -224,6 +224,7 @@ namespace BitTorrent
         void clearPeers() override;
 
         QString createMagnetURI() const override;
+        nonstd::expected<void, QString> exportToFile(const QString &path) const;
 
         bool needSaveResumeData() const;
 
@@ -232,7 +233,6 @@ namespace BitTorrent
 
         void handleAlert(const lt::alert *a);
         void handleStateUpdate(const lt::torrent_status &nativeStatus);
-        void handleDownloadPathChanged();
         void handleCategoryOptionsChanged();
         void handleAppendExtensionToggled();
         void saveResumeData();
@@ -255,7 +255,6 @@ namespace BitTorrent
         void handleFileRenamedAlert(const lt::file_renamed_alert *p);
         void handleFileRenameFailedAlert(const lt::file_rename_failed_alert *p);
         void handleMetadataReceivedAlert(const lt::metadata_received_alert *p);
-        void handlePerformanceAlert(const lt::performance_alert *p) const;
         void handleSaveResumeDataAlert(const lt::save_resume_data_alert *p);
         void handleSaveResumeDataFailedAlert(const lt::save_resume_data_failed_alert *p);
         void handleTorrentCheckedAlert(const lt::torrent_checked_alert *p);
@@ -286,6 +285,7 @@ namespace BitTorrent
         TorrentState m_state = TorrentState::Unknown;
         TorrentInfo m_torrentInfo;
         QStringList m_filePaths;
+        QHash<lt::file_index_t, int> m_indexMap;
         SpeedMonitor m_speedMonitor;
 
         InfoHash m_infoHash;

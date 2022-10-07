@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="et" version="2.1">
+<TS version="2.1" language="et">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -571,6 +571,10 @@
         <source>RSS</source>
         <translation>RSS</translation>
     </message>
+    <message>
+        <source>Filters Sidebar</source>
+        <translation type="vanished">Filtrite külgriba</translation>
+    </message>
 </context>
 <context>
     <name>OptionsDialog</name>
@@ -596,7 +600,7 @@
     </message>
     <message>
         <source>Web UI</source>
-        <translation type="unfinished" />
+        <translation>Web UI</translation>
     </message>
     <message>
         <source>Language</source>
@@ -764,7 +768,7 @@
     </message>
     <message>
         <source>Host:</source>
-        <translation type="unfinished" />
+        <translation>Host:</translation>
     </message>
     <message>
         <source>Port:</source>
@@ -792,7 +796,7 @@
     </message>
     <message>
         <source>Global Rate Limits</source>
-        <translation type="unfinished" />
+        <translation>Üldine kiiruse limiidid</translation>
     </message>
     <message>
         <source>Upload:</source>
@@ -804,7 +808,7 @@
     </message>
     <message>
         <source>Alternative Rate Limits</source>
-        <translation type="unfinished" />
+        <translation>Alternatiivsed kiiruse piirangud</translation>
     </message>
     <message>
         <source>From:</source>
@@ -834,7 +838,7 @@
     </message>
     <message>
         <source>Rate Limits Settings</source>
-        <translation type="unfinished" />
+        <translation>Kiiruse piirangu sätted</translation>
     </message>
     <message>
         <source>Apply rate limit to transport overhead</source>
@@ -1030,7 +1034,7 @@
     </message>
     <message>
         <source>Apply rate limit to peers on LAN</source>
-        <translation type="unfinished" />
+        <translation>Määra kiiruse limiit partneritele LAN'is</translation>
     </message>
     <message>
         <source>0 means unlimited</source>
@@ -1781,7 +1785,7 @@
     <name>ScanFoldersModel</name>
     <message>
         <source>Monitored Folder</source>
-        <translation type="unfinished" />
+        <translation>Jälgitav Kaust</translation>
     </message>
     <message>
         <source>Override Save Location</source>
@@ -1789,7 +1793,7 @@
     </message>
     <message>
         <source>Monitored folder</source>
-        <translation type="unfinished" />
+        <translation>Jälgitav kaust</translation>
     </message>
     <message>
         <source>Default save location</source>
@@ -2249,7 +2253,7 @@
     </message>
     <message>
         <source>Size</source>
-        <translation>Suurus</translation>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -3150,7 +3154,7 @@
     </message>
     <message>
         <source>New subscription</source>
-        <translation type="unfinished" />
+        <translation>Uus tellimus</translation>
     </message>
     <message>
         <source>Update</source>
@@ -3178,7 +3182,7 @@
     </message>
     <message>
         <source>New subscription...</source>
-        <translation type="unfinished" />
+        <translation>Uus tellimus...</translation>
     </message>
     <message>
         <source>Download torrent</source>
@@ -3293,7 +3297,7 @@
     </message>
     <message>
         <source>Single number: &lt;b&gt;1x25;&lt;/b&gt; matches episode 25 of season one</source>
-        <translation type="unfinished" />
+        <translation>Ühekordne number: &lt;b&gt;1x25;&lt;/b&gt; ühtib osa 25-ga, esimesest hooajast</translation>
     </message>
     <message>
         <source>Three range types for episodes are supported: </source>
@@ -3309,7 +3313,7 @@
     </message>
     <message>
         <source>Normal range: &lt;b&gt;1x25-40;&lt;/b&gt; matches episodes 25 through 40 of season one</source>
-        <translation type="unfinished" />
+        <translation>Tavaline vahemik: &lt;b&gt;1x25-40;&lt;/b&gt; ühtib osadega 25 kuni 40, esimesest hooajast</translation>
     </message>
     <message>
         <source>Please type the new rule name</source>
@@ -3410,7 +3414,8 @@
     <message>
         <source>Smart Episode Filter will check the episode number to prevent downloading of duplicates.
 Supports the formats: S01E01, 1x1, 2017.12.31 and 31.12.2017 (Date formats also support - as a separator)</source>
-        <translation type="unfinished" />
+        <translation>Tark episoodide filter kontrollib episoodi numbrit, et vältida korduvaid duplikaatide allalaadimist.
+Toetab formaate: S01E01, 1x1, 2017.12.31 ja 31.12.2017 (kuupäevade formaate toetavad ka, kus - märk on vahel)</translation>
     </message>
     <message>
         <source>Torrent content layout:</source>

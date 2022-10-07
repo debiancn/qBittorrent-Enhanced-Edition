@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="sr" version="2.1">
+<TS version="2.1" language="sr">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -2164,10 +2164,6 @@
         <translation>Порука</translation>
     </message>
     <message>
-        <source>Downloaded</source>
-        <translation type="unfinished" />
-    </message>
-    <message>
         <source>Tracker URL:</source>
         <translation type="unfinished" />
     </message>
@@ -2249,6 +2245,10 @@
     </message>
     <message>
         <source>Size</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Downloaded</source>
         <translation type="unfinished" />
     </message>
 </context>
@@ -2637,17 +2637,17 @@
     <message>
         <source>PiB</source>
         <comment>pebibytes (1024 tebibytes)</comment>
-        <translation type="unfinished" />
+        <translation>PiB</translation>
     </message>
     <message>
         <source>EiB</source>
         <comment>exbibytes (1024 pebibytes)</comment>
-        <translation type="unfinished" />
+        <translation>EiB</translation>
     </message>
     <message>
         <source>/s</source>
         <comment>per second</comment>
-        <translation type="unfinished" />
+        <translation>/s</translation>
     </message>
     <message>
         <source>%1h %2m</source>
@@ -3446,7 +3446,7 @@ Supports the formats: S01E01, 1x1, 2017.12.31 and 31.12.2017 (Date formats also 
     </message>
     <message>
         <source>Trackerless (%1)</source>
-        <translation type="unfinished" />
+        <translation>Bez servera (%1)</translation>
     </message>
     <message>
         <source>Pause torrents</source>

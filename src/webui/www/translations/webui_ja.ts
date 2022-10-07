@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="ja" version="2.1">
+<TS version="2.1" language="ja">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -570,6 +570,10 @@
     <message>
         <source>RSS</source>
         <translation>RSS</translation>
+    </message>
+    <message>
+        <source>Filters Sidebar</source>
+        <translation type="vanished">フィルターサイドバー</translation>
     </message>
 </context>
 <context>
@@ -1476,6 +1480,10 @@
         <source>Server-side request forgery (SSRF) mitigation:</source>
         <translation>サーバーサイドリクエストフォージェリ(SSRF) の軽減:</translation>
     </message>
+    <message>
+        <source>Log performance warnings</source>
+        <translation type="vanished">パフォーマンス警告を記録する</translation>
+    </message>
 </context>
 <context>
     <name>PeerListWidget</name>
@@ -2249,7 +2257,7 @@
     </message>
     <message>
         <source>Size</source>
-        <translation>サイズ</translation>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>

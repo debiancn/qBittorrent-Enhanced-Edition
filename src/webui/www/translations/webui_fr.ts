@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="fr" version="2.1">
+<TS version="2.1" language="fr">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -51,7 +51,7 @@
     </message>
     <message>
         <source>Uncategorized</source>
-        <translation>Non catégorisé</translation>
+        <translation>Sans catégorie</translation>
     </message>
 </context>
 <context>
@@ -177,7 +177,7 @@
     </message>
     <message>
         <source>Login</source>
-        <translation>Identifiant</translation>
+        <translation>Se connecter</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -497,23 +497,23 @@
     </message>
     <message>
         <source>Move Up Queue</source>
-        <translation>Monter la file d'attente</translation>
+        <translation>Monter dans la file d'attente</translation>
     </message>
     <message>
         <source>Bottom of Queue</source>
-        <translation>Tout en bas de la file d'attente</translation>
+        <translation>Bas de la file d’attente</translation>
     </message>
     <message>
         <source>Move to the bottom of the queue</source>
-        <translation>Déplacer tout en bas de la file d'attente</translation>
+        <translation>Déplacer au bas de la file d’attente</translation>
     </message>
     <message>
         <source>Top of Queue</source>
-        <translation>Tout en haut de la file d'attente</translation>
+        <translation>Haut de la file d'attente</translation>
     </message>
     <message>
         <source>Move Down Queue</source>
-        <translation>Descendre la file d'attente</translation>
+        <translation>Descendre dans la file d'attente</translation>
     </message>
     <message>
         <source>Move down in the queue</source>
@@ -521,7 +521,7 @@
     </message>
     <message>
         <source>Move to the top of the queue</source>
-        <translation>Placer tout en haut de la file d'attente</translation>
+        <translation>Déplacer au haut de la file d’attente</translation>
     </message>
     <message>
         <source>Your browser does not support this feature</source>
@@ -570,6 +570,10 @@
     <message>
         <source>RSS</source>
         <translation>RSS</translation>
+    </message>
+    <message>
+        <source>Filters Sidebar</source>
+        <translation type="vanished">Barre latérale des filtres</translation>
     </message>
 </context>
 <context>
@@ -740,7 +744,7 @@
     </message>
     <message>
         <source>Proxy Server</source>
-        <translation>Serveur mandataire (proxy)</translation>
+        <translation>Serveur proxy</translation>
     </message>
     <message>
         <source>Type:</source>
@@ -970,7 +974,7 @@
     </message>
     <message>
         <source>KiB/s</source>
-        <translation>KiB/s</translation>
+        <translation>Kio/s</translation>
     </message>
     <message>
         <source>Enable clickjacking protection</source>
@@ -982,7 +986,7 @@
     </message>
     <message>
         <source>Delete .torrent files afterwards</source>
-        <translation>Supprimer ultérieurement les fichers .torrent</translation>
+        <translation>Supprimer les fichiers .torrent par la suite</translation>
     </message>
     <message>
         <source>Download rate threshold:</source>
@@ -1370,7 +1374,7 @@
     </message>
     <message>
         <source> min</source>
-        <translation>min</translation>
+        <translation> min</translation>
     </message>
     <message>
         <source>Peer turnover disconnect interval:</source>
@@ -1446,7 +1450,7 @@
     </message>
     <message>
         <source>Reannounce to all trackers when IP or port changed:</source>
-        <translation>Annoncer à nouveau à tous les trackers lorsque l'IP ou le port change :</translation>
+        <translation>Réannoncer à tous les trackers lorsque l'IP ou le port a été modifié :</translation>
     </message>
     <message>
         <source>Trusted proxies list:</source>
@@ -1475,6 +1479,22 @@
     <message>
         <source>Server-side request forgery (SSRF) mitigation:</source>
         <translation>Atténuation de la falsification des demandes côté serveur (SSRF)</translation>
+    </message>
+    <message>
+        <source>Disk queue size:</source>
+        <translation type="vanished">Taille de la file d’attente du disque :</translation>
+    </message>
+    <message>
+        <source>Log performance warnings</source>
+        <translation type="vanished">Journaliser les avertissements de performances</translation>
+    </message>
+    <message>
+        <source>Maximum outstanding requests to a single peer:</source>
+        <translation type="vanished">Requêtes en attente maximales vers un seul pair :</translation>
+    </message>
+    <message>
+        <source>Max active checking torrents:</source>
+        <translation type="vanished">Torrents actifs max en vérification :</translation>
     </message>
 </context>
 <context>
@@ -1553,7 +1573,7 @@
     </message>
     <message>
         <source>Add peers...</source>
-        <translation type="unfinished" />
+        <translation>Ajouter des pairs...</translation>
     </message>
 </context>
 <context>
@@ -1962,11 +1982,11 @@
     </message>
     <message>
         <source>Stalled Uploading (%1)</source>
-        <translation>Bloqué en envoi (%1)</translation>
+        <translation>Bloqués en envoi (%1)</translation>
     </message>
     <message>
         <source>Stalled Downloading (%1)</source>
-        <translation>Bloqué en téléchargement (%1)</translation>
+        <translation>Bloqués en téléchargement (%1)</translation>
     </message>
     <message>
         <source>Stalled Downloading (0)</source>
@@ -1982,15 +2002,15 @@
     </message>
     <message>
         <source>Stalled (%1)</source>
-        <translation>Bloqué (%1)</translation>
+        <translation>Bloqués (%1)</translation>
     </message>
     <message>
         <source>Checking (%1)</source>
-        <translation>En cours de vérification (%1)</translation>
+        <translation>En vérification (%1)</translation>
     </message>
     <message>
         <source>Checking (0)</source>
-        <translation>En cours de vérification (0)</translation>
+        <translation>En vérification (0)</translation>
     </message>
 </context>
 <context>
@@ -2248,8 +2268,12 @@
         <translation>Progression</translation>
     </message>
     <message>
+        <source>Total Size</source>
+        <translation type="vanished">Taille totale</translation>
+    </message>
+    <message>
         <source>Size</source>
-        <translation>Taille</translation>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -2292,7 +2316,7 @@
     </message>
     <message>
         <source>Queued</source>
-        <translation>En attente</translation>
+        <translation>En file d’attente</translation>
     </message>
     <message>
         <source>Errored</source>
@@ -2316,7 +2340,7 @@
     </message>
     <message>
         <source>Queued for checking</source>
-        <translation>En attente de vérification</translation>
+        <translation>En file d’attente pour vérification</translation>
     </message>
     <message>
         <source>Downloading</source>
@@ -2328,7 +2352,7 @@
     </message>
     <message>
         <source>Stalled</source>
-        <translation>En attente</translation>
+        <translation>Bloqué</translation>
     </message>
     <message>
         <source>%1 (seeded for %2)</source>
@@ -2336,14 +2360,14 @@
     </message>
     <message>
         <source>[F] Downloading metadata</source>
-        <translation>[F] Téléchargement des métadonnées</translation>
+        <translation>[F] En téléchargement des métadonnées</translation>
     </message>
 </context>
 <context>
     <name>TransferListFiltersWidget</name>
     <message>
         <source>Status</source>
-        <translation>État</translation>
+        <translation>États</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -2422,7 +2446,7 @@
     <message>
         <source>Move to bottom</source>
         <comment>i.e. Move to bottom of the queue</comment>
-        <translation>Déplacer tout en bas</translation>
+        <translation>Déplacer au bas</translation>
     </message>
     <message>
         <source>Set location...</source>
@@ -2765,7 +2789,7 @@
     </message>
     <message>
         <source>Warning</source>
-        <translation>Attention</translation>
+        <translation>Avertissement</translation>
     </message>
     <message>
         <source>Increase window width to display additional filters</source>
@@ -2781,7 +2805,7 @@
     </message>
     <message>
         <source>showing</source>
-        <translation>affiché(s)</translation>
+        <translation>affichés</translation>
     </message>
 </context>
 <context>
@@ -2885,7 +2909,7 @@
     </message>
     <message>
         <source>List of peers to add (one IP per line):</source>
-        <translation>Liste des pairs à ajouter (une IP par ligne)</translation>
+        <translation>Liste des pairs à ajouter (une IP par ligne) :</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -2950,7 +2974,7 @@
     <name>AboutDialog</name>
     <message>
         <source>Bug Tracker:</source>
-        <translation>Suivi des bugs : </translation>
+        <translation>Suivi des bogues :</translation>
     </message>
     <message>
         <source>About</source>
@@ -3026,11 +3050,11 @@
     </message>
     <message>
         <source>qBittorrent Mascot</source>
-        <translation type="unfinished" />
+        <translation>Mascotte de qBittorrent</translation>
     </message>
     <message>
         <source>qBittorrent icon</source>
-        <translation type="unfinished" />
+        <translation>Icône de qBittorrent</translation>
     </message>
 </context>
 <context>
@@ -3265,7 +3289,7 @@
     </message>
     <message>
         <source>Example: </source>
-        <translation>Exemple :</translation>
+        <translation>Exemple : </translation>
     </message>
     <message>
         <source>Add new rule...</source>
@@ -3297,7 +3321,7 @@
     </message>
     <message>
         <source>Three range types for episodes are supported: </source>
-        <translation>Trois types d'intervalles d'épisodes sont pris en charge :</translation>
+        <translation>Trois types d'intervalles d'épisodes sont pris en charge : </translation>
     </message>
     <message>
         <source>Are you sure you want to remove the selected download rules?</source>
@@ -3411,7 +3435,7 @@
         <source>Smart Episode Filter will check the episode number to prevent downloading of duplicates.
 Supports the formats: S01E01, 1x1, 2017.12.31 and 31.12.2017 (Date formats also support - as a separator)</source>
         <translation>Le filtre d'épisodes intelligent vérifiera le numéro de l'épisode afin d'éviter le téléchargement de doublons.
-Les formats supportés : S01E01, 1x1, 2017.12.31 et 31.12.2017 (les formats date supportent également - comme séparateur) </translation>
+Les formats supportés : S01E01, 1x1, 2017.12.31 et 31.12.2017 (les formats date supportent également - comme séparateur)</translation>
     </message>
     <message>
         <source>Torrent content layout:</source>

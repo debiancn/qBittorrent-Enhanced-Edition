@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="ca" version="2.1">
+<TS version="2.1" language="ca">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -571,6 +571,10 @@ Si us plau, no useu cap caràcter especial al nom de la categoria.</translation>
     <message>
         <source>RSS</source>
         <translation>RSS</translation>
+    </message>
+    <message>
+        <source>Filters Sidebar</source>
+        <translation type="vanished">Barra lateral de filtres</translation>
     </message>
 </context>
 <context>
@@ -1477,6 +1481,22 @@ Si us plau, no useu cap caràcter especial al nom de la categoria.</translation>
         <source>Server-side request forgery (SSRF) mitigation:</source>
         <translation>Mitigació de la falsificació de sol·licituds del costat del servidor (SSRF):</translation>
     </message>
+    <message>
+        <source>Disk queue size:</source>
+        <translation type="vanished">Mida de la cua del disc:</translation>
+    </message>
+    <message>
+        <source>Log performance warnings</source>
+        <translation type="vanished">Registra els avisos de rendiment</translation>
+    </message>
+    <message>
+        <source>Maximum outstanding requests to a single peer:</source>
+        <translation type="vanished">Màxim de sol·licituds pendents per a un sol client:</translation>
+    </message>
+    <message>
+        <source>Max active checking torrents:</source>
+        <translation type="vanished">Màxim de torrents actius de comprovació:</translation>
+    </message>
 </context>
 <context>
     <name>PeerListWidget</name>
@@ -1554,7 +1574,7 @@ Si us plau, no useu cap caràcter especial al nom de la categoria.</translation>
     </message>
     <message>
         <source>Add peers...</source>
-        <translation type="unfinished" />
+        <translation>Afegeix clients...</translation>
     </message>
 </context>
 <context>
@@ -2249,8 +2269,12 @@ Si us plau, no useu cap caràcter especial al nom de la categoria.</translation>
         <translation>Progrés</translation>
     </message>
     <message>
+        <source>Total Size</source>
+        <translation type="vanished">Mida total</translation>
+    </message>
+    <message>
         <source>Size</source>
-        <translation>Mida</translation>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -3027,11 +3051,11 @@ Si us plau, no useu cap caràcter especial al nom de la categoria.</translation>
     </message>
     <message>
         <source>qBittorrent Mascot</source>
-        <translation type="unfinished" />
+        <translation>Mascota del qBittorrent</translation>
     </message>
     <message>
         <source>qBittorrent icon</source>
-        <translation type="unfinished" />
+        <translation>Icona del qBittorrent</translation>
     </message>
 </context>
 <context>

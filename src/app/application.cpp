@@ -65,6 +65,7 @@
 #include "base/bittorrent/session.h"
 #include "base/bittorrent/torrent.h"
 #include "base/exceptions.h"
+#include "base/global.h"
 #include "base/iconprovider.h"
 #include "base/logger.h"
 #include "base/net/downloadmanager.h"
@@ -121,6 +122,9 @@ Application::Application(int &argc, char **argv)
     , m_running(false)
     , m_shutdownAct(ShutdownDialogAction::Exit)
     , m_commandLineArgs(parseCommandLine(this->arguments()))
+#ifdef Q_OS_WIN
+    , m_storeMemoryWorkingSetLimit(SETTINGS_KEY("MemoryWorkingSetLimit"))
+#endif
     , m_storeFileLoggerEnabled(FILELOGGER_SETTINGS_KEY("Enabled"))
     , m_storeFileLoggerBackup(FILELOGGER_SETTINGS_KEY("Backup"))
     , m_storeFileLoggerDeleteOld(FILELOGGER_SETTINGS_KEY("DeleteOld"))
@@ -203,6 +207,24 @@ const QBtCommandLineParameters &Application::commandLineArgs() const
 {
     return m_commandLineArgs;
 }
+
+#ifdef Q_OS_WIN
+int Application::memoryWorkingSetLimit() const
+{
+    return m_storeMemoryWorkingSetLimit.get(512);
+}
+
+void Application::setMemoryWorkingSetLimit(const int size)
+{
+    if (size == memoryWorkingSetLimit())
+        return;
+
+    m_storeMemoryWorkingSetLimit = size;
+#ifdef QBT_USES_LIBTORRENT2
+    applyMemoryWorkingSetLimit();
+#endif
+}
+#endif
 
 bool Application::isFileLoggerEnabled() const
 {
@@ -382,14 +404,13 @@ void Application::runExternalProgram(const BitTorrent::Torrent *torrent) const
     LogMsg(tr("Torrent: %1, running external program, command: %2").arg(torrent->name(), program));
 
 #if defined(Q_OS_WIN)
-    auto programWchar = std::make_unique<wchar_t[]>(program.length() + 1);
-    program.toWCharArray(programWchar.get());
+    const std::wstring programWStr = program.toStdWString();
 
     // Need to split arguments manually because QProcess::startDetached(QString)
     // will strip off empty parameters.
     // E.g. `python.exe "1" "" "3"` will become `python.exe "1" "3"`
     int argCount = 0;
-    std::unique_ptr<LPWSTR[], decltype(&::LocalFree)> args {::CommandLineToArgvW(programWchar.get(), &argCount), ::LocalFree};
+    std::unique_ptr<LPWSTR[], decltype(&::LocalFree)> args {::CommandLineToArgvW(programWStr.c_str(), &argCount), ::LocalFree};
 
     QStringList argList;
     for (int i = 1; i < argCount; ++i)
@@ -602,6 +623,10 @@ void Application::processParams(const QStringList &params)
 
 int Application::exec(const QStringList &params)
 {
+#if (defined(Q_OS_WIN) && defined(QBT_USES_LIBTORRENT2))
+    applyMemoryWorkingSetLimit();
+#endif
+
     Net::ProxyConfigurationManager::initInstance();
     Net::DownloadManager::initInstance();
     IconProvider::initInstance();
@@ -650,8 +675,8 @@ int Application::exec(const QStringList &params)
     const auto scheme = QString::fromLatin1(pref->isWebUiHttpsEnabled() ? "https" : "http");
     const auto url = QString::fromLatin1("%1://localhost:%2\n").arg(scheme, QString::number(pref->getWebUiPort()));
     const QString mesg = QString::fromLatin1("\n******** %1 ********\n").arg(tr("Information"))
-        + tr("To control qBittorrent, access the WebUI at: %1\n").arg(url);
-    printf("%s", qUtf8Printable(mesg));
+        + tr("To control qBittorrent, access the WebUI at: %1").arg(url);
+    printf("%s\n", qUtf8Printable(mesg));
 
     if (pref->getWebUIPassword() == "ARQ77eY1NUZaQsuDHbIMCA==:0WMRkYTUWVT9wVvdDtHAjU9b3b7uB8NR1Gur2hmQCvCDpm39Q+PsJRJPaCU51dEiz+dTzh8qbPsL8WkFljQYFQ==")
     {
@@ -771,6 +796,29 @@ void Application::shutdownCleanup(QSessionManager &manager)
 }
 #endif
 
+#if (defined(Q_OS_WIN) && defined(QBT_USES_LIBTORRENT2))
+void Application::applyMemoryWorkingSetLimit()
+{
+    const SIZE_T UNIT_SIZE = 1024 * 1024; // MiB
+    const SIZE_T maxSize = memoryWorkingSetLimit() * UNIT_SIZE;
+    const SIZE_T minSize = std::min<SIZE_T>((64 * UNIT_SIZE), (maxSize / 2));
+    if (!::SetProcessWorkingSetSizeEx(::GetCurrentProcess(), minSize, maxSize, QUOTA_LIMITS_HARDWS_MAX_ENABLE))
+    {
+        const DWORD errorCode = ::GetLastError();
+        QString message;
+        LPVOID lpMsgBuf = nullptr;
+        if (::FormatMessageW((FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS)
+                         , nullptr, errorCode, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), reinterpret_cast<LPWSTR>(&lpMsgBuf), 0, nullptr))
+        {
+            message = QString::fromWCharArray(reinterpret_cast<LPWSTR>(lpMsgBuf)).trimmed();
+            ::LocalFree(lpMsgBuf);
+        }
+        LogMsg(tr("Failed to set physical memory (RAM) usage limit. Error code: %1. Error message: \"%2\"")
+               .arg(QString::number(errorCode), message), Log::WARNING);
+    }
+}
+#endif
+
 void Application::cleanup()
 {
     // cleanup() can be called multiple times during shutdown. We only need it once.
@@ -788,8 +836,9 @@ void Application::cleanup()
         m_window->hide();
 
 #ifdef Q_OS_WIN
+        const std::wstring msg = tr("Saving torrent progress...").toStdWString();
         ::ShutdownBlockReasonCreate(reinterpret_cast<HWND>(m_window->effectiveWinId())
-            , tr("Saving torrent progress...").toStdWString().c_str());
+            , msg.c_str());
 #endif // Q_OS_WIN
 
         // Do manual cleanup in MainWindow to force widgets

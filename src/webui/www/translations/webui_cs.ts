@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="cs" version="2.1">
+<TS version="2.1" language="cs">
 <context>
     <name>AboutDlg</name>
     <message>
@@ -361,7 +361,7 @@
     </message>
     <message>
         <source>Original author</source>
-        <translation type="unfinished" />
+        <translation>Původní autor</translation>
     </message>
 </context>
 <context>
@@ -570,6 +570,10 @@
     <message>
         <source>RSS</source>
         <translation>RSS</translation>
+    </message>
+    <message>
+        <source>Filters Sidebar</source>
+        <translation type="vanished">Filtry boční panel</translation>
     </message>
 </context>
 <context>
@@ -1466,7 +1470,7 @@
     </message>
     <message>
         <source>IP address reported to trackers (requires restart):</source>
-        <translation type="unfinished" />
+        <translation>IP adresa hlášená trackerům (vyžaduje restart)</translation>
     </message>
     <message>
         <source>Set to 0 to let your system pick an unused port</source>
@@ -1474,7 +1478,23 @@
     </message>
     <message>
         <source>Server-side request forgery (SSRF) mitigation:</source>
-        <translation type="unfinished" />
+        <translation>Zamezení falšování požadavků na straně serveru (SSRF):</translation>
+    </message>
+    <message>
+        <source>Disk queue size:</source>
+        <translation type="vanished">Velikost diskové fronty:</translation>
+    </message>
+    <message>
+        <source>Log performance warnings</source>
+        <translation type="vanished">Log výkonnostních varování</translation>
+    </message>
+    <message>
+        <source>Maximum outstanding requests to a single peer:</source>
+        <translation type="vanished">Maximum nezpracovaných požadavků na jeden peer:</translation>
+    </message>
+    <message>
+        <source>Max active checking torrents:</source>
+        <translation type="vanished">Maximum souběžně kontrolovaných torrentů:</translation>
     </message>
 </context>
 <context>
@@ -1553,7 +1573,7 @@
     </message>
     <message>
         <source>Add peers...</source>
-        <translation type="unfinished" />
+        <translation>Přidání peerů...</translation>
     </message>
 </context>
 <context>
@@ -2248,8 +2268,12 @@
         <translation>Průběh</translation>
     </message>
     <message>
+        <source>Total Size</source>
+        <translation type="vanished">Celková velikost</translation>
+    </message>
+    <message>
         <source>Size</source>
-        <translation>Velikost</translation>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -2777,11 +2801,11 @@
     </message>
     <message>
         <source>Results</source>
-        <translation type="unfinished" />
+        <translation>Výsledky</translation>
     </message>
     <message>
         <source>showing</source>
-        <translation type="unfinished" />
+        <translation>zobrazeno</translation>
     </message>
 </context>
 <context>
@@ -3026,11 +3050,11 @@
     </message>
     <message>
         <source>qBittorrent Mascot</source>
-        <translation type="unfinished" />
+        <translation>qBittorrent Mascot</translation>
     </message>
     <message>
         <source>qBittorrent icon</source>
-        <translation type="unfinished" />
+        <translation>ikona qBittorrent</translation>
     </message>
 </context>
 <context>
